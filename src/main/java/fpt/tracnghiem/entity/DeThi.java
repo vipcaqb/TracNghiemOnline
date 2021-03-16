@@ -20,15 +20,12 @@ public class DeThi implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="id_bo_de")
-	private int idBoDe;
+	@Column(name="id_de")
+	private int idDe;
 
-	@Column(name="id_ngan_hang_de")
-	private int idNganHangDe;
-
-	@Column(name="ten_bo_de")
+	@Column(name="ten_de")
 	@Nationalized
-	private String tenBoDe;
+	private String tenDe;
 
 	//bi-directional many-to-one association to CauHoi
 	@OneToMany(mappedBy="deThi")
@@ -56,28 +53,21 @@ public class DeThi implements Serializable {
 	public DeThi() {
 	}
 
-	public int getIdBoDe() {
-		return this.idBoDe;
+	public int getIdDe() {
+		return this.idDe;
 	}
 
-	public void setIdBoDe(int idBoDe) {
-		this.idBoDe = idBoDe;
+	public void setIdDe(int idDe) {
+		this.idDe = idDe;
 	}
 
-	public int getIdNganHangDe() {
-		return this.idNganHangDe;
+
+	public String getTenDe() {
+		return this.tenDe;
 	}
 
-	public void setIdNganHangDe(int idNganHangDe) {
-		this.idNganHangDe = idNganHangDe;
-	}
-
-	public String getTenBoDe() {
-		return this.tenBoDe;
-	}
-
-	public void setTenBoDe(String tenBoDe) {
-		this.tenBoDe = tenBoDe;
+	public void setTenDe(String tenDe) {
+		this.tenDe = tenDe;
 	}
 
 	public List<CauHoi> getCauHois() {
