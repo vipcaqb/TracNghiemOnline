@@ -1,5 +1,6 @@
 package fpt.tracnghiem.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,5 +18,8 @@ public class RoleService {
 		return roleRepository.findById(id);
 	}
 	
+	public Optional<Role> findByRoleName(String roleName){
+		return roleRepository.findByRoleName(roleName);
+	}
 	
 }

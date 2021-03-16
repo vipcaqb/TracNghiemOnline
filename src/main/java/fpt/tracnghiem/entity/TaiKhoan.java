@@ -2,8 +2,10 @@ package fpt.tracnghiem.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 
 import org.hibernate.annotations.Nationalized;
+import org.hibernate.annotations.NotFound;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -11,50 +13,57 @@ import java.util.List;
 
 
 /**
- * The persistent class for the TaiKhoan database table.
+ * The persistent class for the tai_khoan database table.
  * 
  */
 @Entity
-@Table(name="TaiKhoan")
+@Table(name="tai_khoan")
 @NamedQuery(name="TaiKhoan.findAll", query="SELECT t FROM TaiKhoan t")
 public class TaiKhoan implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(unique=true, nullable=false, length=50)
 	private String username;
 
-	@Column(length=250)
+	@Column(name="dia_chi",length = 100)
 	@Nationalized
 	private String diaChi;
 
-	@Column(length=50)
+	@Column(name="diem_tich_luy")
+	private int diemTichLuy;
+
+	@Column
+	@Email(message = "Email không hợp lệ")
 	private String email;
 
 	@Column
 	private boolean enable;
 
-	@Column(length=250)
+	@Column(name="ho_va_ten")
 	@Nationalized
 	private String hoVaTen;
 
-	@Column
-	@Temporal(TemporalType.DATE) 
+	@Column(name="ngay_sinh")
+	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date ngaySinh;
 
-	@Column(length=50)
+	@Column(name="password")
 	private String password;
 
-	@Column(length=50)
+	@Column(name="sdt",length = 20)
 	private String sdt;
 
-	@Column(length=250)
+	@Column(name="url_avatar")
 	private String urlAvatar;
+
+	//bi-directional many-to-one association to DeThi
+	@OneToMany(mappedBy="taiKhoan")
+	private List<DeThi> deThis;
 
 	//bi-directional many-to-one association to Role
 	@ManyToOne
-	@JoinColumn(name="roleId")
+	@JoinColumn(name="role_id")
 	private Role role;
 
 	//bi-directional many-to-one association to ThamGiaThi
@@ -78,6 +87,14 @@ public class TaiKhoan implements Serializable {
 
 	public void setDiaChi(String diaChi) {
 		this.diaChi = diaChi;
+	}
+
+	public int getDiemTichLuy() {
+		return this.diemTichLuy;
+	}
+
+	public void setDiemTichLuy(int diemTichLuy) {
+		this.diemTichLuy = diemTichLuy;
 	}
 
 	public String getEmail() {
@@ -104,7 +121,7 @@ public class TaiKhoan implements Serializable {
 		this.hoVaTen = hoVaTen;
 	}
 
-	public Object getNgaySinh() {
+	public Date getNgaySinh() {
 		return this.ngaySinh;
 	}
 
@@ -136,6 +153,28 @@ public class TaiKhoan implements Serializable {
 		this.urlAvatar = urlAvatar;
 	}
 
+	public List<DeThi> getDeThis() {
+		return this.deThis;
+	}
+
+	public void setDeThis(List<DeThi> deThis) {
+		this.deThis = deThis;
+	}
+
+	public DeThi addDeThi(DeThi deThi) {
+		getDeThis().add(deThi);
+		deThi.setTaiKhoan(this);
+
+		return deThi;
+	}
+
+	public DeThi removeDeThi(DeThi deThi) {
+		getDeThis().remove(deThi);
+		deThi.setTaiKhoan(null);
+
+		return deThi;
+	}
+
 	public Role getRole() {
 		return this.role;
 	}
@@ -165,5 +204,8 @@ public class TaiKhoan implements Serializable {
 
 		return thamGiaThi;
 	}
+	
+	//set random auto avatar
+	
 
 }

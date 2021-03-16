@@ -68,12 +68,13 @@ public class MainController {
 	public String  register(@ModelAttribute("taiKhoan") TaiKhoan taiKhoan) {
 		System.out.println("POST /register");
 		taiKhoan.setEnable(true);
-		Optional<Role> o = roleService.findById(1);
+		Optional<Role> o = roleService.findByRoleName("ROLE_USER");
 		if(o.isEmpty()) {
 			return "redirect:/register";
 		}
 		Role role = o.get();
 		taiKhoan.setRole(role);
+		System.out.println(taiKhoan.getUsername());
 		taiKhoan.setUrlAvatar("/img/defaultAvatar.jpg");
 		taiKhoanService.save(taiKhoan);
 		return "redirect:/login";
