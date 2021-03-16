@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<h3>Register</h3>
+	<form th:action="@{/register}" th:object="${taiKhoan}" method="post">
+		<input type="text" th:field="*{username}" placeholder="username" required="required">
+		<br>
+		<input type="password" th:field="*{password}" placeholder="password" required="required">
+		<br>
+		<input type="text" th:field="*{hoVaTen}" placeholder="Họ và tên"><br>
+		<input type="text" th:field="*{diaChi}" placeholder="diachi"><br>
+		<input type="email" th:field="*{email}" placeholder="email"><br>
+		<input type="date" th:field="*{ngaySinh}" placeholder="ngaySinh"><br>
+		<input type="text" th:field="*{sdt}" placeholder="sdt"><br>
+		
+		<input type="submit" value="Đăng ký">
+	</form>
+</body>
+</html>

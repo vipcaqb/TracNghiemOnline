@@ -1,0 +1,82 @@
+package fpt.tracnghiem.controller;
+
+import java.util.List;
+import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import fpt.tracnghiem.entity.Role;
+import fpt.tracnghiem.entity.TaiKhoan;
+import fpt.tracnghiem.service.RoleService;
+import fpt.tracnghiem.service.TaiKhoanService;
+
+@Controller
+public class MainController {
+	
+	@Autowired
+	TaiKhoanService taiKhoanService;
+	
+	@Autowired 
+	RoleService roleService;
+	@GetMapping("/")
+	public String home() {
+		return "index.html";
+	}
+	
+	@GetMapping("/login")
+	public String loginForm() {
+		
+		return "/login";
+	}
+	
+	@PostMapping("/login")
+	public String login(@RequestParam(name="username") String username, @RequestParam("password") String password,
+			HttpServletRequest req,HttpServletResponse res) {
+		System.out.println("Do POST /login");
+		List<TaiKhoan> listTaiKhoan = taiKhoanService.findByUsernameAndPassword(username, password);
+		if(listTaiKhoan.size() > 0) {
+			//luu vao session
+			HttpSession session = req.getSession();
+			session.setAttribute("user", listTaiKhoan.get(0));
+			
+			if(listTaiKhoan.get(0).getRole().getRoleName().equals("ROLE_USER")) {
+				return "redirect:/user";
+			}
+			else {
+				return "redirect:/admin";
+			}
+		}
+		return "redirect:/login";
+	}
+	
+	@GetMapping("/register")
+	public String registerForm(TaiKhoan taiKhoan) {
+		return "register";
+	}
+	
+	@PostMapping("/register")
+	public String  register(@ModelAttribute("taiKhoan") TaiKhoan taiKhoan) {
+		System.out.println("POST /register");
+		taiKhoan.setEnable(true);
+		Optional<Role> o = roleService.findById(1);
+		if(o.isEmpty()) {
+			return "redirect:/register";
+		}
+		Role role = o.get();
+		taiKhoan.setRole(role);
+		taiKhoan.setUrlAvatar("/img/defaultAvatar.jpg");
+		taiKhoanService.save(taiKhoan);
+		return "redirect:/login";
+	}
+		
+}
