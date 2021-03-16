@@ -9,27 +9,27 @@ import java.util.List;
 
 
 /**
- * The persistent class for the MonHoc database table.
+ * The persistent class for the mon_hoc database table.
  * 
  */
 @Entity
-@Table(name="MonHoc")
+@Table(name="mon_hoc")
 @NamedQuery(name="MonHoc.findAll", query="SELECT m FROM MonHoc m")
 public class MonHoc implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(unique=true, nullable=false)
+	@Column(name="id_mon_hoc")
 	private int idMonHoc;
 
-	@Column(length=255)
+	@Column(name="ten_mon_hoc")
 	@Nationalized
 	private String tenMonHoc;
 
-	//bi-directional many-to-one association to BoDeThi
+	//bi-directional many-to-one association to DeThi
 	@OneToMany(mappedBy="monHoc")
-	private List<BoDeThi> boDeThis;
+	private List<DeThi> deThis;
 
 	public MonHoc() {
 	}
@@ -50,26 +50,26 @@ public class MonHoc implements Serializable {
 		this.tenMonHoc = tenMonHoc;
 	}
 
-	public List<BoDeThi> getBoDeThis() {
-		return this.boDeThis;
+	public List<DeThi> getDeThis() {
+		return this.deThis;
 	}
 
-	public void setBoDeThis(List<BoDeThi> boDeThis) {
-		this.boDeThis = boDeThis;
+	public void setDeThis(List<DeThi> deThis) {
+		this.deThis = deThis;
 	}
 
-	public BoDeThi addBoDeThi(BoDeThi boDeThi) {
-		getBoDeThis().add(boDeThi);
-		boDeThi.setMonHoc(this);
+	public DeThi addDeThi(DeThi deThi) {
+		getDeThis().add(deThi);
+		deThi.setMonHoc(this);
 
-		return boDeThi;
+		return deThi;
 	}
 
-	public BoDeThi removeBoDeThi(BoDeThi boDeThi) {
-		getBoDeThis().remove(boDeThi);
-		boDeThi.setMonHoc(null);
+	public DeThi removeDeThi(DeThi deThi) {
+		getDeThis().remove(deThi);
+		deThi.setMonHoc(null);
 
-		return boDeThi;
+		return deThi;
 	}
 
 }

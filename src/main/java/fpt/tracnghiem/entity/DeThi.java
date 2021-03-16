@@ -9,48 +9,51 @@ import java.util.List;
 
 
 /**
- * The persistent class for the BoDeThi database table.
+ * The persistent class for the de_thi database table.
  * 
  */
 @Entity
-@Table(name="BoDeThi")
-@NamedQuery(name="BoDeThi.findAll", query="SELECT b FROM BoDeThi b")
-public class BoDeThi implements Serializable {
+@Table(name="de_thi")
+@NamedQuery(name="DeThi.findAll", query="SELECT d FROM DeThi d")
+public class DeThi implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(unique=true, nullable=false)
+	@Column(name="id_bo_de")
 	private int idBoDe;
 
-	@Column(length=255)
+	@Column(name="id_ngan_hang_de")
+	private int idNganHangDe;
+
+	@Column(name="ten_bo_de")
 	@Nationalized
 	private String tenBoDe;
 
+	//bi-directional many-to-one association to CauHoi
+	@OneToMany(mappedBy="deThi")
+	private List<CauHoi> cauHois;
+
 	//bi-directional many-to-one association to Lop
 	@ManyToOne
-	@JoinColumn(name="idLop")
+	@JoinColumn(name="id_lop")
 	private Lop lop;
 
 	//bi-directional many-to-one association to MonHoc
 	@ManyToOne
-	@JoinColumn(name="idMonHoc")
+	@JoinColumn(name="id_mon_hoc")
 	private MonHoc monHoc;
 
-	//bi-directional many-to-one association to NganHangDe
+	//bi-directional many-to-one association to TaiKhoan
 	@ManyToOne
-	@JoinColumn(name="idNganHangDe")
-	private NganHangDe nganHangDe;
-
-	//bi-directional many-to-one association to CauHoi
-	@OneToMany(mappedBy="boDeThi")
-	private List<CauHoi> cauHois;
+	@JoinColumn(name="username_nguoi_tao")
+	private TaiKhoan taiKhoan;
 
 	//bi-directional many-to-one association to ThamGiaThi
-	@OneToMany(mappedBy="boDeThi")
+	@OneToMany(mappedBy="deThi")
 	private List<ThamGiaThi> thamGiaThis;
 
-	public BoDeThi() {
+	public DeThi() {
 	}
 
 	public int getIdBoDe() {
@@ -61,12 +64,42 @@ public class BoDeThi implements Serializable {
 		this.idBoDe = idBoDe;
 	}
 
+	public int getIdNganHangDe() {
+		return this.idNganHangDe;
+	}
+
+	public void setIdNganHangDe(int idNganHangDe) {
+		this.idNganHangDe = idNganHangDe;
+	}
+
 	public String getTenBoDe() {
 		return this.tenBoDe;
 	}
 
 	public void setTenBoDe(String tenBoDe) {
 		this.tenBoDe = tenBoDe;
+	}
+
+	public List<CauHoi> getCauHois() {
+		return this.cauHois;
+	}
+
+	public void setCauHois(List<CauHoi> cauHois) {
+		this.cauHois = cauHois;
+	}
+
+	public CauHoi addCauHoi(CauHoi cauHoi) {
+		getCauHois().add(cauHoi);
+		cauHoi.setDeThi(this);
+
+		return cauHoi;
+	}
+
+	public CauHoi removeCauHoi(CauHoi cauHoi) {
+		getCauHois().remove(cauHoi);
+		cauHoi.setDeThi(null);
+
+		return cauHoi;
 	}
 
 	public Lop getLop() {
@@ -85,34 +118,12 @@ public class BoDeThi implements Serializable {
 		this.monHoc = monHoc;
 	}
 
-	public NganHangDe getNganHangDe() {
-		return this.nganHangDe;
+	public TaiKhoan getTaiKhoan() {
+		return this.taiKhoan;
 	}
 
-	public void setNganHangDe(NganHangDe nganHangDe) {
-		this.nganHangDe = nganHangDe;
-	}
-
-	public List<CauHoi> getCauHois() {
-		return this.cauHois;
-	}
-
-	public void setCauHois(List<CauHoi> cauHois) {
-		this.cauHois = cauHois;
-	}
-
-	public CauHoi addCauHoi(CauHoi cauHoi) {
-		getCauHois().add(cauHoi);
-		cauHoi.setBoDeThi(this);
-
-		return cauHoi;
-	}
-
-	public CauHoi removeCauHoi(CauHoi cauHoi) {
-		getCauHois().remove(cauHoi);
-		cauHoi.setBoDeThi(null);
-
-		return cauHoi;
+	public void setTaiKhoan(TaiKhoan taiKhoan) {
+		this.taiKhoan = taiKhoan;
 	}
 
 	public List<ThamGiaThi> getThamGiaThis() {
@@ -125,14 +136,14 @@ public class BoDeThi implements Serializable {
 
 	public ThamGiaThi addThamGiaThi(ThamGiaThi thamGiaThi) {
 		getThamGiaThis().add(thamGiaThi);
-		thamGiaThi.setBoDeThi(this);
+		thamGiaThi.setDeThi(this);
 
 		return thamGiaThi;
 	}
 
 	public ThamGiaThi removeThamGiaThi(ThamGiaThi thamGiaThi) {
 		getThamGiaThis().remove(thamGiaThi);
-		thamGiaThi.setBoDeThi(null);
+		thamGiaThi.setDeThi(null);
 
 		return thamGiaThi;
 	}

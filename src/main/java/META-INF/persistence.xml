@@ -2,15 +2,13 @@
 <persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
 	<persistence-unit name="TracNghiemOnline">
 		<class>fpt.tracnghiem.entity.Anh</class>
-		<class>fpt.tracnghiem.entity.BoDeThi</class>
 		<class>fpt.tracnghiem.entity.CauHoi</class>
+		<class>fpt.tracnghiem.entity.DeThi</class>
 		<class>fpt.tracnghiem.entity.Lop</class>
 		<class>fpt.tracnghiem.entity.MonHoc</class>
-		<class>fpt.tracnghiem.entity.NganHangDe</class>
 		<class>fpt.tracnghiem.entity.PhuongAn</class>
 		<class>fpt.tracnghiem.entity.Role</class>
 		<class>fpt.tracnghiem.entity.TaiKhoan</class>
 		<class>fpt.tracnghiem.entity.ThamGiaThi</class>
-		<class>fpt.tracnghiem.entity.ThamGiaThiPK</class>
 	</persistence-unit>
 </persistence>

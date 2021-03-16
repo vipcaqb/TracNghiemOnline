@@ -7,30 +7,30 @@ import org.hibernate.annotations.Nationalized;
 
 
 /**
- * The persistent class for the PhuongAn database table.
+ * The persistent class for the phuong_an database table.
  * 
  */
 @Entity
-@Table(name="PhuongAn")
+@Table(name="phuong_an")
 @NamedQuery(name="PhuongAn.findAll", query="SELECT p FROM PhuongAn p")
 public class PhuongAn implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(unique=true, nullable=false)
+	@Column(name="id_phuong_an")
 	private int idPhuongAn;
-	
-	@Column()
+
+	@Column(name="is_correct")
 	private boolean isCorrect;
 
-	@Column(length=1000)
+	@Column(name="noi_dung",length = 3000)
 	@Nationalized
 	private String noiDung;
 
 	//bi-directional many-to-one association to CauHoi
 	@ManyToOne
-	@JoinColumn(name="idCauHoi")
+	@JoinColumn(name="id_cau_hoi")
 	private CauHoi cauHoi;
 
 	public PhuongAn() {

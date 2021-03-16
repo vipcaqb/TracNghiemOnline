@@ -3,55 +3,54 @@ package fpt.tracnghiem.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Date;
 
 
 /**
- * The persistent class for the ThamGiaThi database table.
+ * The persistent class for the tham_gia_thi database table.
  * 
  */
 @Entity
-@Table(name="ThamGiaThi")
+@Table(name="tham_gia_thi")
 @NamedQuery(name="ThamGiaThi.findAll", query="SELECT t FROM ThamGiaThi t")
 public class ThamGiaThi implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private ThamGiaThiPK id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="id_tham_gia_thi")
+	private int idThamGiaThi;
 
-	@Column
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date ngayGioBatDau;
+	@Column(name="ngay_gio_bat_dau")
+	private Timestamp ngayGioBatDau;
 
-	@Column
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date ngayGioKetThuc;
+	@Column(name="ngay_gio_ket_thuc")
+	private Timestamp ngayGioKetThuc;
 
-	@Column(precision=53)
+	@Column(name="tong_diem")
 	private double tongDiem;
 
-	//bi-directional many-to-one association to BoDeThi
+	//bi-directional many-to-one association to DeThi
 	@ManyToOne
-	@JoinColumn(name="idBoDe", nullable=false, insertable=false, updatable=false)
-	private BoDeThi boDeThi;
+	@JoinColumn(name="id_bo_de")
+	private DeThi deThi;
 
 	//bi-directional many-to-one association to TaiKhoan
 	@ManyToOne
-	@JoinColumn(name="username", nullable=false, insertable=false, updatable=false)
+	@JoinColumn(name="username")
 	private TaiKhoan taiKhoan;
 
 	public ThamGiaThi() {
 	}
 
-	public ThamGiaThiPK getId() {
-		return this.id;
+	public int getIdThamGiaThi() {
+		return this.idThamGiaThi;
 	}
 
-	public void setId(ThamGiaThiPK id) {
-		this.id = id;
+	public void setIdThamGiaThi(int idThamGiaThi) {
+		this.idThamGiaThi = idThamGiaThi;
 	}
 
-	public Date getNgayGioBatDau() {
+	public Timestamp getNgayGioBatDau() {
 		return this.ngayGioBatDau;
 	}
 
@@ -59,7 +58,7 @@ public class ThamGiaThi implements Serializable {
 		this.ngayGioBatDau = ngayGioBatDau;
 	}
 
-	public Date getNgayGioKetThuc() {
+	public Timestamp getNgayGioKetThuc() {
 		return this.ngayGioKetThuc;
 	}
 
@@ -75,12 +74,12 @@ public class ThamGiaThi implements Serializable {
 		this.tongDiem = tongDiem;
 	}
 
-	public BoDeThi getBoDeThi() {
-		return this.boDeThi;
+	public DeThi getDeThi() {
+		return this.deThi;
 	}
 
-	public void setBoDeThi(BoDeThi boDeThi) {
-		this.boDeThi = boDeThi;
+	public void setDeThi(DeThi deThi) {
+		this.deThi = deThi;
 	}
 
 	public TaiKhoan getTaiKhoan() {

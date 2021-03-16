@@ -9,36 +9,32 @@ import java.util.List;
 
 
 /**
- * The persistent class for the CauHoi database table.
+ * The persistent class for the cau_hoi database table.
  * 
  */
 @Entity
-@Table(name="CauHoi")
+@Table(name="cau_hoi")
 @NamedQuery(name="CauHoi.findAll", query="SELECT c FROM CauHoi c")
 public class CauHoi implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(unique=true, nullable=false)
+	@Column(name="id_cau_hoi")
 	private int idCauHoi;
 
-	@Column(length=1000)
+	@Column(name="giai_thich",length = 3000)
 	@Nationalized
 	private String giaiThich;
-
-	@Column(name="MaDe", length=50)
-	@Nationalized
-	private String maDe;
 
 	//bi-directional many-to-one association to Anh
 	@OneToMany(mappedBy="cauHoi")
 	private List<Anh> anhs;
 
-	//bi-directional many-to-one association to BoDeThi
+	//bi-directional many-to-one association to DeThi
 	@ManyToOne
-	@JoinColumn(name="idBoDe")
-	private BoDeThi boDeThi;
+	@JoinColumn(name="id_bo_de")
+	private DeThi deThi;
 
 	//bi-directional many-to-one association to PhuongAn
 	@OneToMany(mappedBy="cauHoi")
@@ -63,14 +59,6 @@ public class CauHoi implements Serializable {
 		this.giaiThich = giaiThich;
 	}
 
-	public String getMaDe() {
-		return this.maDe;
-	}
-
-	public void setMaDe(String maDe) {
-		this.maDe = maDe;
-	}
-
 	public List<Anh> getAnhs() {
 		return this.anhs;
 	}
@@ -93,12 +81,12 @@ public class CauHoi implements Serializable {
 		return anh;
 	}
 
-	public BoDeThi getBoDeThi() {
-		return this.boDeThi;
+	public DeThi getDeThi() {
+		return this.deThi;
 	}
 
-	public void setBoDeThi(BoDeThi boDeThi) {
-		this.boDeThi = boDeThi;
+	public void setDeThi(DeThi deThi) {
+		this.deThi = deThi;
 	}
 
 	public List<PhuongAn> getPhuongAns() {

@@ -5,26 +5,26 @@ import javax.persistence.*;
 
 
 /**
- * The persistent class for the Anh database table.
+ * The persistent class for the anh database table.
  * 
  */
 @Entity
-@Table(name="Anh")
+@Table(name="anh")
 @NamedQuery(name="Anh.findAll", query="SELECT a FROM Anh a")
 public class Anh implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(unique=true, nullable=false)
+	@Column(name="id_anh")
 	private int idAnh;
 
-	@Column(length=50)
+	@Column(name="url",length = 100)
 	private String url;
 
 	//bi-directional many-to-one association to CauHoi
 	@ManyToOne
-	@JoinColumn(name="idCauHoi")
+	@JoinColumn(name="id_cau_hoi")
 	private CauHoi cauHoi;
 
 	public Anh() {

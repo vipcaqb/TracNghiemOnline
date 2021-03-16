@@ -6,21 +6,21 @@ import java.util.List;
 
 
 /**
- * The persistent class for the Role database table.
+ * The persistent class for the role database table.
  * 
  */
 @Entity
-@Table(name="Role")
+@Table(name="role")
 @NamedQuery(name="Role.findAll", query="SELECT r FROM Role r")
 public class Role implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(unique=true, nullable=false)
+	@Column(name="role_id")
 	private int roleId;
 
-	@Column(length=50)
+	@Column(name="role_name")
 	private String roleName;
 
 	//bi-directional many-to-one association to TaiKhoan
@@ -33,6 +33,7 @@ public class Role implements Serializable {
 	public Role(String roleName) {
 		this.roleName = roleName;
 	}
+
 
 	public int getRoleId() {
 		return this.roleId;

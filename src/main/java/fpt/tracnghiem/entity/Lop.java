@@ -9,29 +9,33 @@ import java.util.List;
 
 
 /**
- * The persistent class for the Lop database table.
+ * The persistent class for the lop database table.
  * 
  */
 @Entity
-@Table(name="Lop")
+@Table(name="lop")
 @NamedQuery(name="Lop.findAll", query="SELECT l FROM Lop l")
 public class Lop implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(unique=true, nullable=false)
+	@Column(name="id_lop")
 	private int idLop;
 
-	@Column(length=250)
+	@Column(name="ten_lop")
 	@Nationalized
 	private String tenLop;
 
-	//bi-directional many-to-one association to BoDeThi
+	//bi-directional many-to-one association to DeThi
 	@OneToMany(mappedBy="lop")
-	private List<BoDeThi> boDeThis;
+	private List<DeThi> deThis;
 
 	public Lop() {
+	}
+	
+	public Lop(String tenLop) {
+		this.tenLop=tenLop;
 	}
 
 	public int getIdLop() {
@@ -50,26 +54,26 @@ public class Lop implements Serializable {
 		this.tenLop = tenLop;
 	}
 
-	public List<BoDeThi> getBoDeThis() {
-		return this.boDeThis;
+	public List<DeThi> getDeThis() {
+		return this.deThis;
 	}
 
-	public void setBoDeThis(List<BoDeThi> boDeThis) {
-		this.boDeThis = boDeThis;
+	public void setDeThis(List<DeThi> deThis) {
+		this.deThis = deThis;
 	}
 
-	public BoDeThi addBoDeThi(BoDeThi boDeThi) {
-		getBoDeThis().add(boDeThi);
-		boDeThi.setLop(this);
+	public DeThi addDeThi(DeThi deThi) {
+		getDeThis().add(deThi);
+		deThi.setLop(this);
 
-		return boDeThi;
+		return deThi;
 	}
 
-	public BoDeThi removeBoDeThi(BoDeThi boDeThi) {
-		getBoDeThis().remove(boDeThi);
-		boDeThi.setLop(null);
+	public DeThi removeDeThi(DeThi deThi) {
+		getDeThis().remove(deThi);
+		deThi.setLop(null);
 
-		return boDeThi;
+		return deThi;
 	}
 
 }
