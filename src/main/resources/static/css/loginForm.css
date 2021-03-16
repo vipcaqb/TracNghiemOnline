@@ -1,0 +1,57 @@
+html,
+body{
+ height: 100%;
+ width: 100%;
+ background-image: url("/image/baytroi.jpg");
+}
+
+.container-fluid {
+  /* background:  #E6CCB2; */
+  /* background: #03071E; */
+  background-size: cover;
+  color: rgb(0, 0, 0);
+  height: 100%;
+  text-align: center;
+  align-items: center;
+  justify-content:center;
+  width: 100%;
+}
+
+.row_head {
+  margin: auto;
+  max-width: 300px;
+  justify-content:center;
+  text-align: center !important;
+  padding: 50px 0;
+}
+
+.row_center {
+  margin: 0 auto;
+  justify-content:center;
+  text-align: center !important;
+}
+
+.head {
+  padding-bottom: 20px;
+}
+
+.user_form {
+  margin-top: 10px ;
+  margin-bottom: 10px;
+}
+
+.jumbotron {
+  padding: 10px 80px;
+}
+
+.row_head {
+  color: rgb(255, 255, 255);
+}
+
+.facebook {
+  color: #fff;
+}
+
+.reg_DK {
+  padding: 0 120px;
+}
