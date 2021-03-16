@@ -26,6 +26,10 @@ public class CauHoi implements Serializable {
 	@Column(name="giai_thich",length = 3000)
 	@Nationalized
 	private String giaiThich;
+	
+	@Column(name="noi_dung",length = 3000)
+	@Nationalized
+	private String noiDung;
 
 	//bi-directional many-to-one association to Anh
 	@OneToMany(mappedBy="cauHoi")
@@ -87,6 +91,16 @@ public class CauHoi implements Serializable {
 
 	public void setDeThi(DeThi deThi) {
 		this.deThi = deThi;
+	}
+	
+	
+
+	public String getNoiDung() {
+		return noiDung;
+	}
+
+	public void setNoiDung(String noiDung) {
+		this.noiDung = noiDung;
 	}
 
 	public List<PhuongAn> getPhuongAns() {

@@ -76,7 +76,12 @@ public class MainController {
 		taiKhoan.setRole(role);
 		System.out.println(taiKhoan.getUsername());
 		taiKhoan.setUrlAvatar("/img/defaultAvatar.jpg");
-		taiKhoanService.save(taiKhoan);
+		try {
+			taiKhoanService.save(taiKhoan);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "redirect:/register";
+		}
 		return "redirect:/login";
 	}
 		

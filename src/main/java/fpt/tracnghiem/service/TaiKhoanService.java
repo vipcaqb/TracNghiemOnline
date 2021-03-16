@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import fpt.tracnghiem.entity.TaiKhoan;
@@ -14,9 +15,16 @@ public class TaiKhoanService {
 	@Autowired
 	TaiKhoanRepository taiKhoanRepository;
 
-	public TaiKhoan save(TaiKhoan taiKhoan) {
-		return taiKhoanRepository.save(taiKhoan);
+	public TaiKhoan save(TaiKhoan taiKhoan) throws Exception {
+		Optional<TaiKhoan> o = taiKhoanRepository.findById(taiKhoan.getUsername());
+		if(o.isPresent()) {
+			throw new DuplicateKeyException("Usename đã tồn tại");
+		}
+		else {
+			return taiKhoanRepository.save(taiKhoan);
+		}
 	}
+	
 
 	public Optional<TaiKhoan> findById(String id) {
 		return taiKhoanRepository.findById(id);
