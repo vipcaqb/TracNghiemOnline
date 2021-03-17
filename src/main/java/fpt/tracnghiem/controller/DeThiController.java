@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,15 +38,16 @@ public class DeThiController {
 	private MonHocService monHocService;
 
 	@RequestMapping(value = "/manageExam")
-	public ModelAndView ShowAllContest() {
-		ModelAndView mav = new ModelAndView();
+	public String ShowAllContest(Model model) {
+//		ModelAndView mav = new ModelAndView();
 //		List<DeThi> listExam =(ArrayList<DeThi>) deThiService.findAllDeThi();
 //		mav.addObject("listExam", listExam);
-		List<ExamInformation> examInfomations = (ArrayList<ExamInformation>) deThiService.getExamInformation();
-		mav.addObject("listExam", examInfomations);
+//		List<ExamInformation> examInfomations = (ArrayList<ExamInformation>) deThiService.getExamInformation();
+//		mav.addObject("listExam", examInfomations);
 
-		mav.setViewName("/creator/manageExam");
-		return mav;
+//		mav.setViewName("/creator/manageExam");
+		
+		return findPaginated(1, model);
 	}
 
 	@GetMapping(value = "/addExam")
@@ -111,5 +114,26 @@ public class DeThiController {
 		deThiService.DeleteById(id);
 		mav.setViewName("redirect:/manageExam");
 		return mav;
+	}
+	// pagination 
+	@GetMapping("/manageExam/page/{pageNo}")
+	public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model) {
+	    int pageSize = 3;
+	    Page <DeThi> page = deThiService.findPaginated(pageNo, pageSize);
+	    List<DeThi> listDeThis = page.getContent();
+	   // Page<DeThi> page = deThiService.findPaginated(pageNo, pageSize);
+	    //List<DeThi> examInformations = page.getContent();
+	    //List<DeThi> examInformations = page.getContent();
+	   // List<DeThi> examInfomations = (ArrayList<ExamInformation>) deThiService.getExamInformation();
+	    //examInfomations = page.getContent();
+	    model.addAttribute("listExam", listDeThis);
+	    
+	    model.addAttribute("currentPage", pageNo);
+	    model.addAttribute("totalPages", page.getTotalPages());
+	    model.addAttribute("totalItems", page.getTotalElements());
+	    
+	    
+		
+		return "creator/manageExam";
 	}
 }

@@ -4,19 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import fpt.tracnghiem.entity.Anh;
 import fpt.tracnghiem.entity.CauHoi;
+import fpt.tracnghiem.entity.DeThi;
 import fpt.tracnghiem.entity.PhuongAn;
+import fpt.tracnghiem.repository.DeThiRepository;
 import fpt.tracnghiem.service.CauHoiService;
 
 @RestController
 public class TestController {
 	@Autowired
 	CauHoiService cauHoiService;
+	
+	@Autowired
+	DeThiRepository deThiRepository;
+	
 	@PostMapping("/testCauHoi")
 	public String test() {
 		CauHoi cauHoi = new CauHoi();
@@ -39,5 +47,13 @@ public class TestController {
 		a2.setCauHoi(cauHoi);
 		cauHoiService.save(cauHoi, listPhuongAn, listAnh);
 		return "OK";
+	}
+
+	@GetMapping("/test")
+	public ModelAndView test2() {
+		List<DeThi> listDeThi = deThiRepository.findAll();
+		ModelAndView mav =new ModelAndView("index");
+		mav.addObject("listDeThi",listDeThi);
+		return mav;
 	}
 }
