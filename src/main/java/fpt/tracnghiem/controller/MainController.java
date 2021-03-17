@@ -48,12 +48,17 @@ public class MainController {
 			//luu vao session
 			HttpSession session = req.getSession();
 			session.setAttribute("user", listTaiKhoan.get(0));
-			
-			if(listTaiKhoan.get(0).getRole().getRoleName().equals("ROLE_USER")) {
+			String nameAccount=listTaiKhoan.get(0).getRole().getRoleName();
+			System.out.println(nameAccount);
+			if(nameAccount.equals("ROLE_USER")) {
 				return "redirect:/user";
 			}
-			else {
+			else if(nameAccount.equals("ROLE_ADMIN")){
 				return "redirect:/admin";
+			}
+			else if(nameAccount.equals("ROLE_CREATER"))
+			{
+				return "redirect:/manageExam";
 			}
 		}
 		return "redirect:/login";
