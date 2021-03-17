@@ -1,6 +1,12 @@
 package fpt.tracnghiem.model;
 
-public class ExamInformation {
+import javax.swing.text.html.parser.TagElement;
+
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
+
+public class ExamInformation{
 	private int idDe;
 	private String tenDe;
 	private String tenMonHoc;

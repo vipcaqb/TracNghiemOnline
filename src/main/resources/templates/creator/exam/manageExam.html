@@ -44,8 +44,10 @@
 
 							<td th:utext="${exam.idDe}"></td>
 							<td th:utext="${exam.tenDe}"></td>
-							<td th:utext="${exam.tenMonHoc}" th:if="@{exam.tenMonHoc!=null}"></td>
-							<td th:utext="${exam.tenLop}"></td>
+							<td th:utext="${exam.monHoc.tenMonHoc}" th:if="${exam.monHoc!=null}"></td>
+							<td th:unless="${exam.monHoc}">NULL</td>
+							<td th:utext="${exam.lop.tenLop}" th:if="${exam.lop!=null}"></td>
+							<td th:unless="${exam.lop}">NULL</td>
 							 <td><a th:href="@{'/deleteExam/'+${exam.idDe}}">Delete</a>
 							</td>
 							<td><a th:href="@{'/editExam/'+${exam.idDe}}">Edit</a></td>
@@ -60,6 +62,30 @@
 
 			</form>
 
+		</div>
+		<!-- pagination -->
+		<div th:if="${totalPages > 1}">
+			<div class="row col-sm-10">
+				<div class="col-sm-2">Total Rows: [[${totalItems}]]</div>
+				<div class="col-sm-1">
+					<span th:each="i: ${#numbers.sequence(1, totalPages)}"> <a
+						th:if="${currentPage != i}" th:href="@{'/manageExam/page/' + ${i}}">[[${i}]]</a>
+						<span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp;
+						&nbsp;
+					</span>
+				</div>
+				<div class="col-sm-1">
+					<a th:if="${currentPage < totalPages}"
+						th:href="@{'/manageExam/page/' + ${currentPage + 1}}">Next</a> <span
+						th:unless="${currentPage < totalPages}">Next</span>
+				</div>
+
+				<div class="col-sm-1">
+					<a th:if="${currentPage < totalPages}"
+						th:href="@{'/manageExam/page/' + ${totalPages}}">Last</a> <span
+						th:unless="${currentPage < totalPages}">Last</span>
+				</div>
+			</div>
 		</div>
 
 	</div>
