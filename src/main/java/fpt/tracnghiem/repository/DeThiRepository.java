@@ -13,5 +13,6 @@ import fpt.tracnghiem.model.ExamInformation;
 @Repository
 public interface DeThiRepository  extends JpaRepository<DeThi, Integer>{
 	@Query("SELECT NEW fpt.tracnghiem.model.ExamInformation (a.idDe,a.tenDe, b.tenMonHoc, c.tenLop) FROM DeThi a INNER JOIN Lop c ON a.lop.idLop = c.idLop INNER JOIN MonHoc b ON a.monHoc.idMonHoc = b.idMonHoc")
+
 	List<ExamInformation> getExamInformation();
 }

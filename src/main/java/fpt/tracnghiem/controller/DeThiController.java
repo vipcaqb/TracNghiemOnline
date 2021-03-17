@@ -59,7 +59,7 @@ public class DeThiController {
 		mav.addObject("dsMonHoc", dsMonHoc);
 		mav.addObject("exam", deThi);
 		mav.addObject("Lop", lops);
-		mav.setViewName("/creator/addExam");
+		mav.setViewName("/creator/exam/addExam");
 		return mav;
 	}
 
@@ -77,7 +77,7 @@ public class DeThiController {
 		} else {
 			mav.setViewName("redirect:/manageExam");
 		}
-		mav.setViewName("/creator/editExam");
+		mav.setViewName("/creator/exam/editExam");
 		return mav;
 	}
 	@PostMapping(value = "/editExam/{id}")
