@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<form th:action="@{/addExam}" th:object="${exam}" method="POST">
+
+		<label>TenDe</label> <input type="text" th:field="*{TenDe}" /><br /> <label>Lớp</label>
+		<select th:field="*{Lop}">
+			<th:block th:each="lop : ${Lop}">
+				<option th:value="${lop.IdLop}" th:utext="${lop.TenLop}"></option>
+			</th:block>
+		</select>
+			<br/>
+		 <label>Mon Hoc</label>
+		
+		 <select th:field="*{MonHoc}">
+			<th:block th:each="monHoc : ${dsMonHoc}">
+				<option th:value="${monHoc.IdMonHoc}" th:utext="${monHoc.TenMonHoc}"></option>
+			</th:block>
+		</select><br />
+	<button type="submit">Submit</button>
+
+
+	</form>
+
+</body>
+</html>
