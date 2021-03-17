@@ -19,11 +19,11 @@ public class MonHoc implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_mon_hoc")
 	private int idMonHoc;
 
-	@Column(name="ten_mon_hoc")
+	@Column(name="ten_mon_hoc",unique = true)
 	@Nationalized
 	private String tenMonHoc;
 
@@ -33,7 +33,11 @@ public class MonHoc implements Serializable {
 
 	public MonHoc() {
 	}
-
+	
+	public MonHoc(String tenMonHoc) {
+		this.tenMonHoc = tenMonHoc;
+	}
+	
 	public int getIdMonHoc() {
 		return this.idMonHoc;
 	}

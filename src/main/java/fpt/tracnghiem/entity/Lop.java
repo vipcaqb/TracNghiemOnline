@@ -19,11 +19,11 @@ public class Lop implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_lop")
 	private int idLop;
 
-	@Column(name="ten_lop")
+	@Column(name="ten_lop",unique = true)
 	@Nationalized
 	private String tenLop;
 

@@ -8,90 +8,126 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import fpt.tracnghiem.entity.Lop;
+import fpt.tracnghiem.entity.MonHoc;
 import fpt.tracnghiem.entity.Role;
 import fpt.tracnghiem.entity.TaiKhoan;
 import fpt.tracnghiem.repository.LopRepository;
+import fpt.tracnghiem.repository.MonHocRepository;
 import fpt.tracnghiem.repository.RoleRepository;
 import fpt.tracnghiem.repository.TaiKhoanRepository;
 
 @Component
-public class DataSeedingListener implements ApplicationListener<ContextRefreshedEvent>  {
-	
+public class DataSeedingListener implements ApplicationListener<ContextRefreshedEvent> {
+
 	@Autowired
 	RoleRepository roleRepository;
-	
-	@Autowired 
+
+	@Autowired
 	LopRepository lopRepository;
-	
+
 	@Autowired
 	TaiKhoanRepository taiKhoanRepository;
+	
+	@Autowired
+	MonHocRepository monHocRepository;
 
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
-		
-		//Tự động sinh các ROLE trong database khi còn thiếu
-		
-		if(roleRepository.findByRoleName("ROLE_USER").isEmpty()) {
+
+		// Tự động sinh các ROLE trong database khi còn thiếu
+
+		if (roleRepository.findByRoleName("ROLE_USER").isEmpty()) {
 			roleRepository.save(new Role("ROLE_USER"));
 		}
-		
-		if(roleRepository.findByRoleName("ROLE_CREATER").isEmpty()) {
+
+		if (roleRepository.findByRoleName("ROLE_CREATER").isEmpty()) {
 			roleRepository.save(new Role("ROLE_CREATER"));
 		}
-		
-		if(roleRepository.findByRoleName("ROLE_ADMIN").isEmpty()) {
+
+		if (roleRepository.findByRoleName("ROLE_ADMIN").isEmpty()) {
 			roleRepository.save(new Role("ROLE_ADMIN"));
 		}
-		
-		//Tự động sinh dữ liệu lớp từ 1 đến 12
-		
-		if(lopRepository.findByTenLop("Lớp 1").isEmpty()) {
+
+		// Tự động sinh dữ liệu lớp từ 1 đến 12
+
+		if (lopRepository.findByTenLop("Lớp 1").isEmpty()) {
 			lopRepository.save(new Lop("Lớp 1"));
 		}
-		if(lopRepository.findByTenLop("Lớp 2").isEmpty()) {
+		if (lopRepository.findByTenLop("Lớp 2").isEmpty()) {
 			lopRepository.save(new Lop("Lớp 2"));
 		}
-		if(lopRepository.findByTenLop("Lớp 3").isEmpty()) {
+		if (lopRepository.findByTenLop("Lớp 3").isEmpty()) {
 			lopRepository.save(new Lop("Lớp 3"));
 		}
-		if(lopRepository.findByTenLop("Lớp 4").isEmpty()) {
+		if (lopRepository.findByTenLop("Lớp 4").isEmpty()) {
 			lopRepository.save(new Lop("Lớp 4"));
 		}
-		if(lopRepository.findByTenLop("Lớp 5").isEmpty()) {
+		if (lopRepository.findByTenLop("Lớp 5").isEmpty()) {
 			lopRepository.save(new Lop("Lớp 5"));
 		}
-		if(lopRepository.findByTenLop("Lớp 6").isEmpty()) {
+		if (lopRepository.findByTenLop("Lớp 6").isEmpty()) {
 			lopRepository.save(new Lop("Lớp 6"));
 		}
-		if(lopRepository.findByTenLop("Lớp 7").isEmpty()) {
+		if (lopRepository.findByTenLop("Lớp 7").isEmpty()) {
 			lopRepository.save(new Lop("Lớp 7"));
 		}
-		if(lopRepository.findByTenLop("Lớp 8").isEmpty()) {
+		if (lopRepository.findByTenLop("Lớp 8").isEmpty()) {
 			lopRepository.save(new Lop("Lớp 8"));
 		}
-		if(lopRepository.findByTenLop("Lớp 9").isEmpty()) {
+		if (lopRepository.findByTenLop("Lớp 9").isEmpty()) {
 			lopRepository.save(new Lop("Lớp 9"));
 		}
-		if(lopRepository.findByTenLop("Lớp 10").isEmpty()) {
+		if (lopRepository.findByTenLop("Lớp 10").isEmpty()) {
 			lopRepository.save(new Lop("Lớp 10"));
 		}
-		if(lopRepository.findByTenLop("Lớp 11").isEmpty()) {
+		if (lopRepository.findByTenLop("Lớp 11").isEmpty()) {
 			lopRepository.save(new Lop("Lớp 11"));
 		}
-		if(lopRepository.findByTenLop("Lớp 12").isEmpty()) {
+		if (lopRepository.findByTenLop("Lớp 12").isEmpty()) {
 			lopRepository.save(new Lop("Lớp 12"));
 		}
-		
-		//tao 1 tai khoan la ROLE_USER
-		if(taiKhoanRepository.findById("test").isEmpty()) {
-			TaiKhoan tk = new TaiKhoan("test","123");
-			Optional<Role> x= roleRepository.findByRoleName("ROLE_USER");
-			if(x.isPresent()) {
+
+		// tao 1 tai khoan la ROLE_USER
+		if (taiKhoanRepository.findById("test").isEmpty()) {
+			TaiKhoan tk = new TaiKhoan("test", "123");
+			Optional<Role> x = roleRepository.findByRoleName("ROLE_USER");
+			if (x.isPresent()) {
+				tk.setRole(x.get());
+			}
+			taiKhoanRepository.save(tk);
+		}
+
+		// tao 1 tai khoan la ROLE_ADMIN
+		if (taiKhoanRepository.findById("admin").isEmpty()) {
+			TaiKhoan tk = new TaiKhoan("admin", "123");
+			Optional<Role> x = roleRepository.findByRoleName("ROLE_ADMIN");
+			if (x.isPresent()) {
+				tk.setRole(x.get());
+			}
+			taiKhoanRepository.save(tk);
+		}
+
+		// tao 1 tai khoan la ROLE_CREATER
+		if (taiKhoanRepository.findById("creater").isEmpty()) {
+			TaiKhoan tk = new TaiKhoan("creater", "123");
+			Optional<Role> x = roleRepository.findByRoleName("ROLE_CREATER");
+			if (x.isPresent()) {
 				tk.setRole(x.get());
 			}
 			taiKhoanRepository.save(tk);
 		}
 		
+		//Tao 1 số môn học
+		if(monHocRepository.findByTenMonHoc("Toán").isEmpty()) {
+			monHocRepository.save(new MonHoc("Toán"));
+		}
+		if(monHocRepository.findByTenMonHoc("Văn").isEmpty()) {
+			monHocRepository.save(new MonHoc("Văn"));
+		}
+		if(monHocRepository.findByTenMonHoc("Anh").isEmpty()) {
+			monHocRepository.save(new MonHoc("Anh"));
+		}
+
 	}
 
 }
