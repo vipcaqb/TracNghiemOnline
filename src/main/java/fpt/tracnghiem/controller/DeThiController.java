@@ -43,7 +43,7 @@ public class DeThiController {
 		List<ExamInformation> examInfomations = (ArrayList<ExamInformation>) deThiService.getExamInformation();
 		mav.addObject("listExam", examInfomations);
 
-		mav.setViewName("/creator/manageExam");
+		mav.setViewName("/creator/exam/manageExam");
 		return mav;
 	}
 
@@ -56,7 +56,7 @@ public class DeThiController {
 		mav.addObject("dsMonHoc", dsMonHoc);
 		mav.addObject("exam", deThi);
 		mav.addObject("Lop", lops);
-		mav.setViewName("/creator/addExam");
+		mav.setViewName("/creator/exam/addExam");
 		return mav;
 	}
 
@@ -74,7 +74,7 @@ public class DeThiController {
 		} else {
 			mav.setViewName("redirect:/manageExam");
 		}
-		mav.setViewName("/creator/editExam");
+		mav.setViewName("/creator/exam/editExam");
 		return mav;
 	}
 	@PostMapping(value = "/editExam/{id}")
