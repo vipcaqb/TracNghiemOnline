@@ -35,19 +35,21 @@
 							<th>Tên đề</th>
 							<th>Tên môn học</th>
 							<th>Tên Lớp</th>
+							<th>Sửa</th>
+							<th>Xóa</th>
+							<th>Thêm câu hỏi</th>
 			
 						</tr>
 						<tr th:each="exam : ${listExam}">
 
 							<td th:utext="${exam.idDe}"></td>
 							<td th:utext="${exam.tenDe}"></td>
-							<td th:utext="${exam.tenMonHoc}"></td>
+							<td th:utext="${exam.tenMonHoc}" th:if="@{exam.tenMonHoc!=null}"></td>
 							<td th:utext="${exam.tenLop}"></td>
-							
 							 <td><a th:href="@{'/deleteExam/'+${exam.idDe}}">Delete</a>
 							</td>
-							<td><a
-								th:href="@{'/editExam/'+${exam.idDe}}">Edit</a></td>
+							<td><a th:href="@{'/editExam/'+${exam.idDe}}">Edit</a></td>
+							<td><a th:href="@{'/addQuestion/'+${exam.idDe}}">Thêm câu hỏi</a></td>
 						</tr>
 					</table>
 
