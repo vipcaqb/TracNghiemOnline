@@ -27,7 +27,17 @@ public class Anh implements Serializable {
 	@JoinColumn(name="id_cau_hoi")
 	private CauHoi cauHoi;
 
+	@Override
+	public String toString() {
+		return "Anh [idAnh=" + idAnh + ", url=" + url + ", cauHoi=" + cauHoi + "]";
+	}
+
 	public Anh() {
+	}
+	
+	public Anh(String url,CauHoi cauHoi) {
+		this.url = url;
+		this.cauHoi=cauHoi;
 	}
 
 	public int getIdAnh() {

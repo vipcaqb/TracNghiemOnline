@@ -1,5 +1,7 @@
 package fpt.tracnghiem.config;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -7,8 +9,10 @@ import org.springframework.stereotype.Component;
 
 import fpt.tracnghiem.entity.Lop;
 import fpt.tracnghiem.entity.Role;
+import fpt.tracnghiem.entity.TaiKhoan;
 import fpt.tracnghiem.repository.LopRepository;
 import fpt.tracnghiem.repository.RoleRepository;
+import fpt.tracnghiem.repository.TaiKhoanRepository;
 
 @Component
 public class DataSeedingListener implements ApplicationListener<ContextRefreshedEvent>  {
@@ -19,6 +23,8 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 	@Autowired 
 	LopRepository lopRepository;
 	
+	@Autowired
+	TaiKhoanRepository taiKhoanRepository;
 
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -75,6 +81,17 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 		if(lopRepository.findByTenLop("Lớp 12").isEmpty()) {
 			lopRepository.save(new Lop("Lớp 12"));
 		}
+		
+		//tao 1 tai khoan la ROLE_USER
+		if(taiKhoanRepository.findById("test").isEmpty()) {
+			TaiKhoan tk = new TaiKhoan("test","123");
+			Optional<Role> x= roleRepository.findByRoleName("ROLE_USER");
+			if(x.isPresent()) {
+				tk.setRole(x.get());
+			}
+			taiKhoanRepository.save(tk);
+		}
+		
 	}
 
 }

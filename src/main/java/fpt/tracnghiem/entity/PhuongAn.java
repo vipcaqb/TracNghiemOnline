@@ -35,6 +35,17 @@ public class PhuongAn implements Serializable {
 
 	public PhuongAn() {
 	}
+	
+	@Override
+	public String toString() {
+		return "PhuongAn [idPhuongAn=" + idPhuongAn + ", isCorrect=" + isCorrect + ", noiDung=" + noiDung + "]";
+	}
+
+	public PhuongAn(String noiDung,boolean isCorrect,CauHoi cauHoi) {
+		this.noiDung=noiDung;
+		this.isCorrect=isCorrect;
+		this.cauHoi=cauHoi;
+	}
 
 	public int getIdPhuongAn() {
 		return this.idPhuongAn;
