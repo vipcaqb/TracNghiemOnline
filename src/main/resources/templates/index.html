@@ -1,10 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
 <body>
 	<h1> Home page</h1>
+	<ul>
+		<th:block th:each="item : ${listDeThi}">
+			<li th:utext="${item.idDe}">
+			</li>
+			<li th:utext="${item.lop.tenLop}" th:if="${item.lop!=null}">
+			</li>
+			<li th:utext="${item.monHoc.tenMonHoc}">
+			</li>
+			<br/>
+		</th:block>
+	</ul>
 </body>
 </html>

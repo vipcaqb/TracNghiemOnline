@@ -9,18 +9,23 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
 import fpt.tracnghiem.entity.Anh;
 import fpt.tracnghiem.entity.CauHoi;
+import fpt.tracnghiem.entity.DeThi;
 import fpt.tracnghiem.entity.PhuongAn;
+import fpt.tracnghiem.repository.DeThiRepository;
 import fpt.tracnghiem.service.CauHoiService;
 
 @RestController
 public class TestController {
 	@Autowired
 	CauHoiService cauHoiService;
+	
+	@Autowired
+	DeThiRepository deThiRepository;
+	
 	@PostMapping("/testCauHoi")
 	public String test() {
 		CauHoi cauHoi = new CauHoi();
@@ -44,7 +49,7 @@ public class TestController {
 		cauHoiService.save(cauHoi, listPhuongAn, listAnh,1);
 		return "OK";
 	}
-	
+
 	@GetMapping("/test")
 	public ModelAndView test2() {
 		ModelAndView mav = new ModelAndView("creator/base");
