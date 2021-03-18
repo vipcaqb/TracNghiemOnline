@@ -5,6 +5,7 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.Nationalized;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -26,6 +27,20 @@ public class DeThi implements Serializable {
 	@Column(name="ten_de")
 	@Nationalized
 	private String tenDe;
+	
+	@Column(name="mo_ta",length = 1000)
+	@Nationalized
+	private String moTa;
+	
+	@Column(name="ngay_tao")
+	@Temporal(TemporalType.TIME)
+	private Date ngayTao;
+	
+	@Column(length = 1000)
+	private boolean hienThiDapAnVaGiaiThich;
+	
+	@Column()
+	private int thoiGianThi;
 
 	//bi-directional many-to-one association to CauHoi
 	@OneToMany(mappedBy="deThi")
