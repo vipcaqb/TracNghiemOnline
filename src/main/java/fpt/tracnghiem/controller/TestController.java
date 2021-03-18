@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
 import fpt.tracnghiem.entity.Anh;
 import fpt.tracnghiem.entity.CauHoi;
@@ -37,7 +41,13 @@ public class TestController {
 		a2.setIdAnh(1);
 		a2.setUrl("bbb");
 		a2.setCauHoi(cauHoi);
-		cauHoiService.save(cauHoi, listPhuongAn, listAnh);
+		cauHoiService.save(cauHoi, listPhuongAn, listAnh,1);
 		return "OK";
+	}
+	
+	@GetMapping("/test")
+	public ModelAndView test2() {
+		ModelAndView mav = new ModelAndView("creator/base");
+		return mav;
 	}
 }

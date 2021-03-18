@@ -101,8 +101,11 @@ public class CauHoi implements Serializable {
 	public void setDeThi(DeThi deThi) {
 		this.deThi = deThi;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "CauHoi [idCauHoi=" + idCauHoi + ", giaiThich=" + giaiThich + ", noiDung=" + noiDung + "]";
+	}
 
 	public String getNoiDung() {
 		return noiDung;
