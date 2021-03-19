@@ -39,7 +39,7 @@
 				</ul>
 			</td>
 			<td>
-				<a class="btn btn-info">Sửa</a>
+				<a class="btn btn-info" th:href="@{'/manageExam/'+${idDe}+'/editQuestion/'+${cauHoi.idCauHoi}}">Sửa</a>
 				<form th:action="@{'/deleteQuestion/'+${cauHoi.idCauHoi}}" method="post">
 					<input class="btn btn-danger" type="submit" value="Xóa">
 				</form>

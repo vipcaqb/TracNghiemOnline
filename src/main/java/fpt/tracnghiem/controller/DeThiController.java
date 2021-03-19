@@ -28,19 +28,42 @@ import fpt.tracnghiem.service.DeThiService;
 import fpt.tracnghiem.service.LopService;
 import fpt.tracnghiem.service.MonHocService;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DeThiController.
+ */
 @Controller
 public class DeThiController {
+	
+	/** The de thi service. */
 	@Autowired
 	private DeThiService deThiService;
+	
+	/** The lop service. */
 	@Autowired
 	private LopService lopService;
+	
+	/** The mon hoc service. */
 	@Autowired
 	private MonHocService monHocService;
 
+	/**
+	 * Hiển thị danh sách các đề thi.
+	 *
+	 * @param model the model
+	 * @return the string
+	 */
+	
 	@RequestMapping(value = "/manageExam")
 	public String ShowAllContest(Model model) {
 		return findPaginated(1, model);
 	}
+	
+	/**
+	 * Hiển thị giao diện thêm đề thi.
+	 *
+	 * @return the model and view
+	 */
 
 	@GetMapping(value = "/addExam")
 	public ModelAndView showFormAdd() {
@@ -54,6 +77,13 @@ public class DeThiController {
 		mav.setViewName("/creator/exam/addExam");
 		return mav;
 	}
+	
+	/**
+	 * Hiển thị giao diện sửa câu hỏi.
+	 *
+	 * @param id the id
+	 * @return the model and view
+	 */
 
 	@GetMapping(value = "/editExam/{id}")
 	public ModelAndView editShowForm(@PathVariable int id) {
@@ -72,6 +102,17 @@ public class DeThiController {
 		mav.setViewName("/creator/exam/editExam");
 		return mav;
 	}
+	
+	/**
+	 * Thực hiện sửa câu hỏi .
+	 *
+	 * @param request the request
+	 * @param response the response
+	 * @param deThi the de thi
+	 * @param id the id
+	 * @return the model and view
+	 */
+	
 	@PostMapping(value = "/editExam/{id}")
 	public ModelAndView editExamSubmit(HttpServletRequest request, HttpServletResponse response, @ModelAttribute DeThi deThi,@PathVariable int id){
 		ModelAndView mav = new ModelAndView();
@@ -85,7 +126,15 @@ public class DeThiController {
 		mav.setViewName("redirect:/manageExam");
 		return mav;
 	}
-
+	
+	/**
+	 * Adds the exam.
+	 *
+	 * @param request the request
+	 * @param response the response
+	 * @param deThi the de thi
+	 * @return the model and view
+	 */
 	@PostMapping(value = "/addExam")
 	public ModelAndView addExam(HttpServletRequest request, HttpServletResponse response, @ModelAttribute DeThi deThi) {
 		HttpSession session = request.getSession();
@@ -100,6 +149,12 @@ public class DeThiController {
 		return mav;
 	}
 
+	/**
+	 * Delete by id.
+	 *
+	 * @param id the id
+	 * @return the model and view
+	 */
 	@RequestMapping(value = "deleteExam/{id}")
 	public ModelAndView deleteById(@PathVariable int id) {
 		ModelAndView mav = new ModelAndView();
@@ -107,6 +162,14 @@ public class DeThiController {
 		mav.setViewName("redirect:/manageExam");
 		return mav;
 	}
+	
+	/**
+	 * Find paginated.
+	 *
+	 * @param pageNo the page no
+	 * @param model the model
+	 * @return the string
+	 */
 	// pagination 
 	@GetMapping("/manageExam/page/{pageNo}")
 	public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model) {
