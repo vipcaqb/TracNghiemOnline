@@ -24,6 +24,7 @@ import fpt.tracnghiem.entity.Lop;
 import fpt.tracnghiem.entity.MonHoc;
 import fpt.tracnghiem.entity.TaiKhoan;
 import fpt.tracnghiem.model.ExamInformation;
+import fpt.tracnghiem.service.CauHoiService;
 import fpt.tracnghiem.service.DeThiService;
 import fpt.tracnghiem.service.LopService;
 import fpt.tracnghiem.service.MonHocService;
@@ -36,7 +37,8 @@ public class DeThiController {
 	private LopService lopService;
 	@Autowired
 	private MonHocService monHocService;
-
+	@Autowired
+	private CauHoiService cauHoiService;
 	@RequestMapping(value = "/manageExam")
 	public String ShowAllContest(Model model) {
 //		ModelAndView mav = new ModelAndView();
@@ -111,8 +113,11 @@ public class DeThiController {
 	@RequestMapping(value = "deleteExam/{id}")
 	public ModelAndView deleteById(@PathVariable int id) {
 		ModelAndView mav = new ModelAndView();
-		deThiService.DeleteById(id);
+		Optional<DeThi> deThi = deThiService.findById(id);
+		
+		deThiService.deleteByDeThi(deThi.get());
 		mav.setViewName("redirect:/manageExam");
+		
 		return mav;
 	}
 	// pagination 
@@ -127,13 +132,9 @@ public class DeThiController {
 	   // List<DeThi> examInfomations = (ArrayList<ExamInformation>) deThiService.getExamInformation();
 	    //examInfomations = page.getContent();
 	    model.addAttribute("listExam", listDeThis);
-	    
 	    model.addAttribute("currentPage", pageNo);
 	    model.addAttribute("totalPages", page.getTotalPages());
 	    model.addAttribute("totalItems", page.getTotalElements());
-	    
-	    
-		
-		return "creator/manageExam";
+		return "creator/exam/manageExam";
 	}
 }

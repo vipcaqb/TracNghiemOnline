@@ -111,4 +111,5 @@ public class CauHoiService {
 		cauHoiRepository.delete(cauHoi);
 		System.out.println("Xóa câu hỏi và các thông tin liên quan thành công!");
 	}
+
 }

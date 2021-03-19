@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
 <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
@@ -16,9 +16,9 @@
 	</nav>
 	
 	<section class="container">
-		<h4>Mã đề: 01 - Đề thi toán cao cấp</h4>
-		<a class="btn btn-success" href="/manageExam/1/addQuestion">Thêm thủ công</a>
-		<a class="btn btn-primary">Thêm bằng file excel</a>
+		<h4> Mã đề: [[${idDe}]]- [[${tenDe}]]</h4>
+		<a class="btn btn-success" th:href="@{'/manageExam/'+${idDe} +'/addQuestion'}">Thêm thủ công</a>
+		<a th:href="@{'/addQuestionExcel/'+${idDe}}" class="btn btn-primary">Thêm bằng file excel</a>
 		
 		<table class="table table-bordered mt-2">
 		<tr>
