@@ -16,9 +16,10 @@
 	</nav>
 	
 	<section class="container">
-		<h4>Đề 01: Toán cao cấp</h4>
-		<a class="btn btn-success" href="/manageExam/1/addQuestion">Thêm thủ công</a>
-		<a class="btn btn-primary">Thêm bằng file excel</a>
+		<h4> Mã đề: [[${idDe}]]- [[${tenDe}]]</h4>
+		<a class="btn btn-success" th:href="@{'/manageExam/'+${idDe} +'/addQuestion'}">Thêm thủ công</a>
+		<a th:href="@{'/addQuestionExcel/'+${idDe}}" class="btn btn-primary">Thêm bằng file excel</a>
+
 		
 		<table class="table table-bordered mt-2">
 		<tr>

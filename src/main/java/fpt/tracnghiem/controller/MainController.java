@@ -43,13 +43,15 @@ public class MainController {
 	public String login(@RequestParam(name="username") String username, @RequestParam("password") String password,
 			HttpServletRequest req,HttpServletResponse res) {
 		System.out.println("Do POST /login");
+		System.out.println(username+"-"+ password);
 		List<TaiKhoan> listTaiKhoan = taiKhoanService.findByUsernameAndPassword(username, password);
+		System.out.println(listTaiKhoan);
 		if(listTaiKhoan.size() > 0) {
 			//luu vao session
 			HttpSession session = req.getSession();
 			session.setAttribute("user", listTaiKhoan.get(0));
 			String nameAccount=listTaiKhoan.get(0).getRole().getRoleName();
-			System.out.println(nameAccount);
+		
 			if(nameAccount.equals("ROLE_USER")) {
 				return "redirect:/user";
 			}

@@ -3,33 +3,28 @@
 <head>
 <meta charset="utf-8">
 <title>Insert title here</title>
-<link rel="stylesheet" media="screen"
-	href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 </head>
 <body>
-	<div class="row profile">
+<nav th:insert="creator/shared/menu::menu">
+	</nav>
+	<nav th:insert="creator/shared/sidebar::sidebar">
+	</nav>
+	<div class="row">
 		<div class="col-md-2">
-			<div class="profile-sidebar">
-				<div class="profile-userpic">
-					<img
-						src="http://keenthemes.com/preview/metronic/theme/assets/admin/pages/media/profile/profile_user.jpg"
-						class="img-responsive" alt="">
-				</div>
-				<div class="profile-usermenu">
-					<ul class="nav">
-						<li><a href="/manageExam"> <i
-								class="glyphicon glyphicon-home"></i> Quản lý Đề thi
-						</a></li>
-					</ul>
-				</div>
-			</div>
+			
 		</div>
 		<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
 			<form>
-				<div class="form-group">
-					<a th:href="@{/addExam}">thêm đề thi</a>
-					<table border="1">
+				<div class="form-group" align="right" >
+					<a th:href="@{/addExam}" class="btn btn-success" > thêm đề thi</a>
+					<table border="1" class="table table-striped" style="margin-top: 10px">
 						<tr>
 							<th>ID</th>
 							<th>Tên đề</th>
@@ -48,51 +43,60 @@
 							<td th:unless="${exam.monHoc}">NULL</td>
 							<td th:utext="${exam.lop.tenLop}" th:if="${exam.lop!=null}"></td>
 							<td th:unless="${exam.lop}">NULL</td>
-							 <td><a th:href="@{'/deleteExam/'+${exam.idDe}}">Delete</a>
+							 <td style="color: #ffca0a"> <i class="fas fa-edit"></i><a  th:href="@{'/editExam/'+${exam.idDe}}">Sửa</a>
 							</td>
-							<td><a th:href="@{'/editExam/'+${exam.idDe}}">Edit</a></td>
-							<td><a th:href="@{'/addQuestion/'+${exam.idDe}}">Thêm câu hỏi</a></td>
+							<td style="color: #ff6347"> <i class="fas fa-trash-alt"></i><a th:href="@{'/deleteExam/'+${exam.idDe}}">Xóa</a></td>
+						<td style="color: blue;"> <i class="far fa-plus-square"></i><a th:href="@{'/manageExam/'+${exam.idDe}}+'/manageQuestion'">Thêm câu hỏi</a></td>
 						</tr>
 					</table>
 
 
 				</div>
 
-				<button type="submit" name="btn" value="1" class="btn btn-primary">Submit</button>
+			
 
 			</form>
 
 		</div>
 		<!-- pagination -->
-		<div th:if="${totalPages > 1}">
-			<div class="row col-sm-10">
-				<div class="col-sm-2">Total Rows: [[${totalItems}]]</div>
-				<div class="col-sm-1">
-					<span th:each="i: ${#numbers.sequence(1, totalPages)}"> <a
+	</div>
+	<div th:if="${totalPages > 1}">
+			<div class="row ">
+			
+				<div class="col-sm-2"></div>
+				<div class="col-sm-4" style="margin-top: 5px;">Tổng số đề: [[${totalItems}]]</div>
+				<div class="pagination col-sm-6">
+					
+					<span th:each="i: ${#numbers.sequence(1, totalPages)}" class="page-item" > <a class="page-link" 
 						th:if="${currentPage != i}" th:href="@{'/manageExam/page/' + ${i}}">[[${i}]]</a>
-						<span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp;
+						<span class="page-link" style="background-color:blue;color: white; " th:unless="${currentPage != i}">[[${i}]]</span> &nbsp;
 						&nbsp;
 					</span>
+					
+					<!-- next -->
+					<span class="page-item">
+					<a th:if="${currentPage < totalPages}"  class="page-link" 
+						th:href="@{'/manageExam/page/' + ${currentPage + 1}}">Next</a>
+						</span>
+						<span class="page-item">
+						 <span class="page-link" 
+						th:unless="${currentPage < totalPages}" style="color: gray">Next</span>
+					</span>
+					<!-- last -->	
+					<span class="page-item">
+						<a th:if="${currentPage < totalPages}" class="page-link"
+						th:href="@{'/manageExam/page/' + ${totalPages}}">Last</a>
+						 <span style="color: gray;"
+						th:unless="${currentPage < totalPages}" class="page-link">Last</span>
+					</span>
 				</div>
-				<div class="col-sm-1">
-					<a th:if="${currentPage < totalPages}"
-						th:href="@{'/manageExam/page/' + ${currentPage + 1}}">Next</a> <span
-						th:unless="${currentPage < totalPages}">Next</span>
-				</div>
-
-				<div class="col-sm-1">
-					<a th:if="${currentPage < totalPages}"
-						th:href="@{'/manageExam/page/' + ${totalPages}}">Last</a> <span
-						th:unless="${currentPage < totalPages}">Last</span>
-				</div>
+				
 			</div>
 		</div>
 
-	</div>
-
-	<script src="//code.jquery.com/jquery.js"></script>
-	<script
-		src="//netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-
+	
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

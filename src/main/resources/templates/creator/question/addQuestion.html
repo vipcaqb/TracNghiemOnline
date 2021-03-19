@@ -20,7 +20,7 @@
 		<div class= "row border">
 			<div class="col-7">
 		
-				<form class=" d-flex flex-column" th:object="${cauHoi}" th:action="@{/manageExam/1/addQuestion}" method="post">
+				<form class=" d-flex flex-column" th:object="${cauHoi}" th:action="@{'/manageExam/'+${idDe}+'/addQuestion'}" method="post">
 					<p> Câu hỏi 1: </p>
 					<input type="file" >
 					<textarea th:field="*{noiDung}" ></textarea>

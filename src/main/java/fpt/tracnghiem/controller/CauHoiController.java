@@ -22,17 +22,24 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sun.xml.bind.v2.TODO;
 
 import fpt.tracnghiem.entity.CauHoi;
+import fpt.tracnghiem.entity.DeThi;
 import fpt.tracnghiem.entity.PhuongAn;
 import fpt.tracnghiem.model.MyCounter;
 import fpt.tracnghiem.service.CauHoiService;
+import fpt.tracnghiem.service.DeThiService;
 
 @Controller
 public class CauHoiController {
 	@Autowired
 	CauHoiService cauHoiService;
-	
-	@RequestMapping(value = {"/manageExam/{idExam}/manageQuestion/{pageNumber}",
-			"/manageExam/{idExam}/manageQuestion"}, method = RequestMethod.GET)
+	@Autowired
+	private DeThiService deThiService;
+	/**
+	 * Tải giao diện quản lý
+	 * */
+	@RequestMapping(value = { "/manageExam/{idExam}/manageQuestion/{pageNumber}",
+			"/manageExam/{idExam}/manageQuestion" }, method = RequestMethod.GET)
+
 	public String manageQuestionUI(@PathVariable(name = "idExam") Integer idDe,
 			@PathVariable(name = "pageNumber",required = false) Integer pageNumber, ModelMap model) {
 		if (pageNumber == null) {
@@ -42,6 +49,11 @@ public class CauHoiController {
 			pageNumber = 1;
 		}
 		Page<CauHoi> pageCauHoi = cauHoiService.findAllByIdDeThi(idDe, pageNumber - 1);
+		Optional<DeThi> dethi = deThiService.findById(idDe);
+		if(dethi.isPresent()) {
+			model.addAttribute("tenDe",dethi.get().getTenDe());
+		}
+		
 		model.addAttribute("pageCauHoi",pageCauHoi);
 		model.addAttribute("idDe",idDe);
 		model.addAttribute("pageNumber",pageNumber);
@@ -54,9 +66,11 @@ public class CauHoiController {
 	 * */
 	@RequestMapping(value="/manageExam/{idExam}/addQuestion",method = RequestMethod.GET)
 	public String addQuestionUI(@PathVariable(name = "idExam") Integer idDe,CauHoi cauHoi,Model model) {
+
+		model.addAttribute("idDe",idDe);
+
 		List<CauHoi> listCauHoi = cauHoiService.findAllByIdDeThi(idDe);
 		model.addAttribute("listCauHoi",listCauHoi);
-		
 		MyCounter myCounter = new MyCounter();
 		model.addAttribute("myCounter",myCounter);
 		return "creator/question/addQuestion";
@@ -72,7 +86,7 @@ public class CauHoiController {
 			@RequestParam(name = "phuongAn") List<String> listNoiDungPhuongAn,
 			@RequestParam(name = "isCorrect",required = false) List<Integer> listCorrect
 			) {
-		System.out.println("OK");
+		System.out.println(idDe);
 		int size;
 		//Thêm phương án
 		List<PhuongAn> listPhuongAn = new ArrayList<PhuongAn>();
@@ -98,7 +112,7 @@ public class CauHoiController {
 		
 		//Thêm câu hỏi
 		cauHoiService.save(cauHoi, listPhuongAn, null, idDe);
-		return "commingsoon";
+		return "redirect:/manageExam/"+idDe+"/manageQuestion";
 	}
 	
 	@PostMapping("/deleteQuestion/{idQuestion}")
