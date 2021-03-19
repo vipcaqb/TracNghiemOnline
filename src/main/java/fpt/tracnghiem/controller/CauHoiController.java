@@ -24,6 +24,7 @@ import com.sun.xml.bind.v2.TODO;
 import fpt.tracnghiem.entity.CauHoi;
 import fpt.tracnghiem.entity.DeThi;
 import fpt.tracnghiem.entity.PhuongAn;
+import fpt.tracnghiem.model.MyCounter;
 import fpt.tracnghiem.service.CauHoiService;
 import fpt.tracnghiem.service.DeThiService;
 
@@ -38,6 +39,7 @@ public class CauHoiController {
 	 * */
 	@RequestMapping(value = { "/manageExam/{idExam}/manageQuestion/{pageNumber}",
 			"/manageExam/{idExam}/manageQuestion" }, method = RequestMethod.GET)
+
 	public String manageQuestionUI(@PathVariable(name = "idExam") Integer idDe,
 			@PathVariable(name = "pageNumber",required = false) Integer pageNumber, ModelMap model) {
 		if (pageNumber == null) {
@@ -64,7 +66,13 @@ public class CauHoiController {
 	 * */
 	@RequestMapping(value="/manageExam/{idExam}/addQuestion",method = RequestMethod.GET)
 	public String addQuestionUI(@PathVariable(name = "idExam") Integer idDe,CauHoi cauHoi,Model model) {
+
 		model.addAttribute("idDe",idDe);
+
+		List<CauHoi> listCauHoi = cauHoiService.findAllByIdDeThi(idDe);
+		model.addAttribute("listCauHoi",listCauHoi);
+		MyCounter myCounter = new MyCounter();
+		model.addAttribute("myCounter",myCounter);
 		return "creator/question/addQuestion";
 	}
 	
@@ -76,7 +84,7 @@ public class CauHoiController {
 	public String addQuestion(@PathVariable(name = "idExam") Integer idDe,
 			@ModelAttribute("cauHoi") CauHoi cauHoi,
 			@RequestParam(name = "phuongAn") List<String> listNoiDungPhuongAn,
-			@RequestParam(name = "isCorrect") List<Integer> listCorrect
+			@RequestParam(name = "isCorrect",required = false) List<Integer> listCorrect
 			) {
 		System.out.println(idDe);
 		int size;
@@ -87,12 +95,14 @@ public class CauHoiController {
 			for(Integer i= 0 ; i<size ; i++) {
 				String noiDung = listNoiDungPhuongAn.get(i);
 				Boolean isCorrect = false;
-				for (Integer item : listCorrect) {
-					if(i==item) {
-						isCorrect = true;
-					}
-					else {
-						isCorrect=false;
+				if(listCorrect!=null) {
+					for (Integer item : listCorrect) {
+						if(i==item) {
+							isCorrect = true;
+						}
+						else {
+							isCorrect=false;
+						}
 					}
 				}
 				listPhuongAn.add(new PhuongAn(noiDung,isCorrect,cauHoi));
@@ -106,9 +116,13 @@ public class CauHoiController {
 	}
 	
 	@PostMapping("/deleteQuestion/{idQuestion}")
-	public String deleteQuestion(@PathVariable(name = "idQuestion") Integer idQuestion) {
-		
-		cauHoiService.deleteCauHoiByIdCauHoi(idQuestion);
-		return "redirect:/creator/question/manageQuestion";
+	public String deleteQuestion(@PathVariable(name = "idQuestion") Integer idCauHoi) {
+		Optional<CauHoi> oCauHoi = cauHoiService.findById(idCauHoi);
+		CauHoi cauHoi = null;
+		if(oCauHoi.isPresent()) {
+			cauHoi = oCauHoi.get();
+		}
+		cauHoiService.deleteCauHoiByIdCauHoi(idCauHoi);
+		return "redirect:/manageExam/"+cauHoi.getDeThi().getIdDe()+"/manageQuestion";
 	}
 }

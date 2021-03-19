@@ -63,4 +63,6 @@ public class DeThiService {
 	public void editDeThi(DeThi deThi) {
 		deThiRepository.save(deThi);
 	}
+	
+	
 }
