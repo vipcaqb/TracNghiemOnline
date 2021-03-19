@@ -39,14 +39,6 @@ public class DeThiController {
 
 	@RequestMapping(value = "/manageExam")
 	public String ShowAllContest(Model model) {
-//		ModelAndView mav = new ModelAndView();
-//		List<DeThi> listExam =(ArrayList<DeThi>) deThiService.findAllDeThi();
-//		mav.addObject("listExam", listExam);
-//		List<ExamInformation> examInfomations = (ArrayList<ExamInformation>) deThiService.getExamInformation();
-//		mav.addObject("listExam", examInfomations);
-
-//		mav.setViewName("/creator/manageExam");
-		
 		return findPaginated(1, model);
 	}
 
@@ -121,19 +113,12 @@ public class DeThiController {
 	    int pageSize = 3;
 	    Page <DeThi> page = deThiService.findPaginated(pageNo, pageSize);
 	    List<DeThi> listDeThis = page.getContent();
-	   // Page<DeThi> page = deThiService.findPaginated(pageNo, pageSize);
-	    //List<DeThi> examInformations = page.getContent();
-	    //List<DeThi> examInformations = page.getContent();
-	   // List<DeThi> examInfomations = (ArrayList<ExamInformation>) deThiService.getExamInformation();
-	    //examInfomations = page.getContent();
 	    model.addAttribute("listExam", listDeThis);
 	    
 	    model.addAttribute("currentPage", pageNo);
 	    model.addAttribute("totalPages", page.getTotalPages());
 	    model.addAttribute("totalItems", page.getTotalElements());
-	    
-	    
 		
-		return "creator/manageExam";
+		return "creator/exam/manageExam";
 	}
 }

@@ -89,5 +89,10 @@ public class MainController {
 		}
 		return "redirect:/login";
 	}
+	
+	@GetMapping("/commingsoon")
+	public String commingsoon() {
+		return "commingsoon";
+	}
 		
 }

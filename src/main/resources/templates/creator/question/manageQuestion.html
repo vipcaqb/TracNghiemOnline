@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
 <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
@@ -16,7 +16,7 @@
 	</nav>
 	
 	<section class="container">
-		<h4>Mã đề: 01 - Đề thi toán cao cấp</h4>
+		<h4>Đề 01: Toán cao cấp</h4>
 		<a class="btn btn-success" href="/manageExam/1/addQuestion">Thêm thủ công</a>
 		<a class="btn btn-primary">Thêm bằng file excel</a>
 		
@@ -28,36 +28,42 @@
 			<th class="w-25"></th>
 		</tr>
 		<tr th:each="cauHoi : ${pageCauHoi.content}">
-			<td th:utext = "${cauHoi.noiDung}">Ai là người đâu tiên cai trị đế chế La Mã cổ đại?</td>
-			<td th:utext = "${cauHoi.giaiThich}">Ai là người đâu tiên cai trị đế chế La Mã cổ đại?Ai là người đâu tiên cai trị đế chế La Mã cổ đại?</td>
+			<td th:utext = "${cauHoi.noiDung}"></td>
+			<td th:utext = "${cauHoi.giaiThich}"></td>
 			<td>
 				<ul class="list-group">
 					<th:block th:each="phuongAn : ${cauHoi.phuongAns}">
-						<li class="list-group-item active" th:utext="${phuongAn.noiDung}" th:if="${phuongAn.isCorrect}">Leonardo vanci</li>
-						<li class="list-group-item" th:utext="${phuongAn.noiDung}" th:unless="${phuongAn.isCorrect}">Leonardo vanci</li>
+						<li class="list-group-item active" th:utext="${phuongAn.noiDung}" th:if="${phuongAn.isCorrect}"></li>
+						<li class="list-group-item" th:utext="${phuongAn.noiDung}" th:unless="${phuongAn.isCorrect}"></li>
 					</th:block>
 				</ul>
 			</td>
 			<td>
 				<a class="btn btn-info">Sửa</a>
-				<form action="" method="post">
-					<input type="submit" value="Xóa">
+				<form th:action="@{'/deleteQuestion/'+${cauHoi.idCauHoi}}" method="post">
+					<input class="btn btn-danger" type="submit" value="Xóa">
 				</form>
 			</td>
 		</tr>
 	</table>
 	<div>
 		Tổng số trang: <span th:utext="${pageCauHoi.totalPages}"></span> <br>
-		Hiển thị : <span th:utext="${pageCauHoi.size}"></span>trên tổng số: <span th:utext="${pageCauHoi.totalElements}"></span>
+		Hiển thị : <span th:utext="${pageCauHoi.size}"></span>Trên tổng số: <span th:utext="${pageCauHoi.totalElements}"></span>
 		Hiện tại: <span th:utext="${pageNumber}"></span>
 	</div>
 		<ul class="pagination justify-content-center">
 		    <li class="page-item" th:if="${hasPrevios}">
 		    <a class="page-link" th:href="@{'/manageExam/'+${idDe}+'/manageQuestion/'+${pageNumber-1}}">Previous</a></li>
-	    	<li class="page-item" th:each="i : ${#numbers.sequence(1, pageCauHoi.totalPages)}">
-	    	<a class="page-link" th:href="@{'/manageExam/'+${idDe}+'/manageQuestion/'+${i}}" th:utext="${i}">1</a>
-	    	</li>
-	    	<li class="page-item" th:if="${hasNext}"><a class="page-link" th:href="@{'/manageExam/'+${idDe}+'/manageQuestion/'+${pageNumber+1}}">Previous</a></li>
+	    	<th:block th:each="i : ${#numbers.sequence(1, pageCauHoi.totalPages)}">
+		    	<li class="page-item" th:if="${i!=pageCauHoi.number+1}">
+		    	<a class="page-link" th:href="@{'/manageExam/'+${idDe}+'/manageQuestion/'+${i}}" th:utext="${i}">1</a>
+		    	</li>
+		    	
+		    	<li class="page-item active" th:if="${i==pageCauHoi.number+1}">
+		    	<a class="page-link" th:href="@{'/manageExam/'+${idDe}+'/manageQuestion/'+${i}}" th:utext="${i}">1</a>
+		    	</li>
+	    	</th:block>
+	    	<li class="page-item" th:if="${hasNext}"><a class="page-link" th:href="@{'/manageExam/'+${idDe}+'/manageQuestion/'+${pageNumber+1}}">Next</a></li>
 		</ul>
 	</section>
 			
