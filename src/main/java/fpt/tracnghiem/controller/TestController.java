@@ -46,7 +46,7 @@ public class TestController {
 		a2.setIdAnh(1);
 		a2.setUrl("bbb");
 		a2.setCauHoi(cauHoi);
-		cauHoiService.save(cauHoi, listPhuongAn, listAnh,1);
+		cauHoiService.save(cauHoi, listPhuongAn, listAnh,2);
 		return "OK";
 	}
 
