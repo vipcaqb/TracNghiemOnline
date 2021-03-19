@@ -32,6 +32,7 @@ import fpt.tracnghiem.service.DeThiService;
 public class CauHoiController {
 	@Autowired
 	CauHoiService cauHoiService;
+
 	@Autowired
 	private DeThiService deThiService;
 	/**
@@ -39,7 +40,7 @@ public class CauHoiController {
 	 * */
 	@RequestMapping(value = { "/manageExam/{idExam}/manageQuestion/{pageNumber}",
 			"/manageExam/{idExam}/manageQuestion" }, method = RequestMethod.GET)
-
+  
 	public String manageQuestionUI(@PathVariable(name = "idExam") Integer idDe,
 			@PathVariable(name = "pageNumber",required = false) Integer pageNumber, ModelMap model) {
 		if (pageNumber == null) {
@@ -70,11 +71,81 @@ public class CauHoiController {
 		model.addAttribute("idDe",idDe);
 
 		List<CauHoi> listCauHoi = cauHoiService.findAllByIdDeThi(idDe);
-		model.addAttribute("listCauHoi",listCauHoi);
 		MyCounter myCounter = new MyCounter();
+		
 		model.addAttribute("myCounter",myCounter);
+		model.addAttribute("idDe", idDe);
+		model.addAttribute("listCauHoi",listCauHoi);
 		return "creator/question/addQuestion";
 	}
+	/**
+	 * Tải giao diện sửa câu hỏi
+	 * */
+	@RequestMapping(value = "/manageExam/{idExam}/editQuestion/{idQuestion}",method= RequestMethod.GET)
+	public String editQuestionUI(@PathVariable(name = "idExam") Integer idDe,
+			@PathVariable(name = "idQuestion") Integer idCauHoi,
+			Model model)
+	{
+		//kiểm tra xem câu hỏi hiện tại đã có trong db chưa, nếu chưa thì trả về lỗi 404
+		Optional<CauHoi> oCauHoi = cauHoiService.findById(idCauHoi);
+		if(oCauHoi.isEmpty()) {
+			return "404";
+		}
+		List<CauHoi> listCauHoi = cauHoiService.findAllByIdDeThi(idDe);
+		model.addAttribute("listCauHoi",listCauHoi);
+		
+		CauHoi cauHoi = oCauHoi.get();
+		
+		MyCounter myCounter = new MyCounter();
+		MyCounter correctCounter = new MyCounter(0);
+		model.addAttribute("myCounter",myCounter);
+		model.addAttribute("cauHoi", cauHoi);
+		model.addAttribute("idDe", idDe);
+		model.addAttribute("correctCounter",correctCounter);
+		return "creator/question/editQuestion";
+	}
+	/**
+	 * Thực hiện sửa câu hỏi
+	 * 
+	 * */
+	
+	@RequestMapping(value = "editQuestion",method= RequestMethod.POST)
+	@ResponseBody
+	public String editQuestion(@ModelAttribute(name = "cauHoi") CauHoi cauHoi,
+			@RequestParam(name = "phuongAn") List<String> listNoiDungPhuongAn,
+			@RequestParam(name = "isCorrect",required = false) List<Integer> listCorrect) {
+		System.out.println(cauHoi.toString());
+		
+		Optional<CauHoi> oCauHoi = cauHoiService.findById(cauHoi.getIdCauHoi());
+		if(oCauHoi.isEmpty()) {
+			return "404";
+		}
+		CauHoi cauHoiHienTai = oCauHoi.get();
+		
+		cauHoiHienTai.setNoiDung(cauHoi.getNoiDung());
+		cauHoiHienTai.setGiaiThich(cauHoi.getGiaiThich());
+		
+		//Đặt các giá trị correct
+		List<PhuongAn> listPhuongAnHienTai = cauHoiHienTai.getPhuongAns();
+		for(int i = 0 ; i<listPhuongAnHienTai.size();i++) {
+			listPhuongAnHienTai.get(i).setNoiDung(listNoiDungPhuongAn.get(i));
+			listPhuongAnHienTai.get(i).setIsCorrect(false);
+			for(int j =0;j<listCorrect.size();j++) {
+				if(listCorrect.get(j)==i) {
+					listPhuongAnHienTai.get(i).setIsCorrect(true);
+					break;
+				}
+			}
+		}
+		listPhuongAnHienTai.forEach(x->{
+			System.out.println(x.getIsCorrect());
+		});
+		//Thêm vào db
+		cauHoiService.save(cauHoiHienTai, listPhuongAnHienTai, null, cauHoiHienTai.getDeThi().getIdDe());
+		
+		return "OK";
+	}
+	
 	
 	/**
 	 * Tạo câu hỏi mới
@@ -86,7 +157,7 @@ public class CauHoiController {
 			@RequestParam(name = "phuongAn") List<String> listNoiDungPhuongAn,
 			@RequestParam(name = "isCorrect",required = false) List<Integer> listCorrect
 			) {
-		System.out.println(idDe);
+
 		int size;
 		//Thêm phương án
 		List<PhuongAn> listPhuongAn = new ArrayList<PhuongAn>();
