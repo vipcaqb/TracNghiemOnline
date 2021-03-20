@@ -1,0 +1,26 @@
+.form-control{
+	display: inline-block;
+	padding-top: 10px;
+}
+#text-area{
+	width: 80%;
+	margin-top: 5px;
+}
+.lop-mon{
+	margin-left: 28px
+}
+.mota{
+	margin-left: 30px
+}
+.tende{
+	margin-left: 20px
+}
+.thoigian{
+	margin-left: 5px
+}
+.lop{
+	margin-left: 45px 	
+}
+.btn-cancel{
+	margin-left: 100px
+}

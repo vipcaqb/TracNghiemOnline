@@ -1,30 +1,64 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="utf-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+<link rel="stylesheet" href="/css/ExamForm.css">
 </head>
 <body>
-	<form th:action="@{'/editExam/'+${exam.IdDe}}" th:object="${exam}" method="POST">
+<nav th:insert="creator/shared/menu::menu">
+	</nav>
+	<nav th:insert="creator/shared/sidebar::sidebar">
+	</nav>
+	
+	<div class="row">
+		<div class="col-md-2">
+			
+		</div>
+		<div class="col-sm-6">
+	<form  th:action="@{'/editExam/'+${exam.IdDe}+'/page/'+${page}}" th:object="${exam}" method="POST" class="form-group" >
 
-		<label>TenDe</label> <input type="text" th:field="*{TenDe}" /><br /> <label>Lớp</label>
-		<select th:field="*{Lop}">
+		<label>Tên Đề</label> <input required="required" class="form-control tende" type="text" th:field="*{TenDe}" style="width: 80%" />
+		<br/>
+
+		 
+		<label>Thời gian</label> <input type="number" min="1" th:field="*{ThoiGianThi}" style="width: 20%;" class="form-control thoigian"/> 
+		&nbsp;&nbsp;<label>Hiển thị đáp án và giải thích</label> <input  type="checkbox"
+			th:field="*{HienThiDapAnVaGiaiThich}"> <br/>
+		<label>Lớp</label>
+		<select th:field="*{Lop}" class="form-control lop" style="width: 22%;">
 			<th:block th:each="lop : ${Lop}">
 				<option th:value="${lop.IdLop}" th:utext="${lop.TenLop}"></option>
 			</th:block>
-		</select>
-			<br/>
-		 <label>Mon Hoc</label>
+		</select>   
 		
-		 <select th:field="*{MonHoc}">
+		<label class="mon">Mon Hoc</label>
+		<select th:field="*{MonHoc}" class="form-control " style="width: 19%;">
 			<th:block th:each="monHoc : ${dsMonHoc}">
 				<option th:value="${monHoc.IdMonHoc}" th:utext="${monHoc.TenMonHoc}"></option>
 			</th:block>
-		</select><br />
-	<button type="submit">Submit</button>
+		</select> 
+	<br/>
+	<label >Mô tả</label> <textarea id="text-area" th:field="*{MoTa}" class="form-control mota"></textarea>
+		<br/>
+		<div class="row">
+			<div class="col-sm-5"></div>
+			
+			<div class="col-sm-7"><button type="submit" class="btn btn-warning" >Sửa</button>
+			 <a class="btn btn-danger btn-cancel" th:href="@{/manageExam}">Quay lại</a></div>
+		</div>
+		
 
 
 	</form>
-
+</div>
+</div>
 </body>
 </html>

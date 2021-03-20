@@ -82,9 +82,15 @@ public class FileUploadController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			Workbook workbook = WorkbookFactory.create(new File(uploadDirectory+file.getOriginalFilename()));
-			
-			excelService.upDuLieu(workbook,idDe);
+			try {
+				//xử lý lỗi nếu thêm không thành công
+				Workbook workbook = WorkbookFactory.create(new File(uploadDirectory+file.getOriginalFilename()));
+				excelService.upDuLieu(workbook,idDe);
+			}catch (Exception e) {
+				model.addAttribute("msg", "Thêm câu hỏi không thành công, lỗi:" +e.toString()); 
+				model.addAttribute("idDe", idDe);
+				return "/creator/question/uploadstatusview";
+			}
 			
 			
 		}
@@ -93,4 +99,5 @@ public class FileUploadController {
 		return "/creator/question/uploadstatusview";
 		
 	}
+
 }
