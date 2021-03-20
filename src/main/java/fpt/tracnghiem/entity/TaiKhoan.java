@@ -78,6 +78,13 @@ public class TaiKhoan implements Serializable {
 		this.password = password;
 	}
 
+	public TaiKhoan(String username, String password, String hoVaTen) {
+		super();
+		this.username = username;
+		this.hoVaTen = hoVaTen;
+		this.password = password;
+	}
+
 	public String getUsername() {
 		return this.username;
 	}
@@ -209,6 +216,12 @@ public class TaiKhoan implements Serializable {
 
 		return thamGiaThi;
 	}
+
+	@Override
+	public String toString() {
+		return "TaiKhoan [username=" + username + ", hoVaTen=" + hoVaTen + ", password=" + password + "]";
+	}
+	
 	
 	//set random auto avatar
 	
