@@ -71,6 +71,17 @@ public class CauHoiService {
 	/**
 	 * tìm tất cả câu hỏi có idDe và nằm ở trang thứ pageNumber
 	 * */
+	
+	public List<CauHoi> findAllByIdDeThi(Integer idDe){
+		Optional<DeThi> oDeThi = deThiRepository.findById(idDe);
+		if(oDeThi.isEmpty()) {
+			throw new NotFoundException("Không tìm thấy Đề thi có id = "+ idDe);
+		}
+		DeThi deThi = oDeThi.get();
+		
+		return cauHoiRepository.findAllByDeThi(deThi);
+	}
+	
 	public Page<CauHoi> findAllByIdDeThi(Integer idDe,int pageNumber ){
 		Optional<DeThi> oDeThi = deThiRepository.findById(idDe);
 		if(oDeThi.isEmpty()) {
@@ -80,9 +91,12 @@ public class CauHoiService {
 		Pageable pageable = PageRequest.of(pageNumber, MyConstances.PAGE_SIZE);
 		return cauHoiRepository.findAllByDeThi(deThi, pageable);
 	}
+	
 	/**
-	 * Xóa câu hỏi và dữ liệu của tất cả các bảng có tham chiếu đến câu hỏi đó
-	 * */
+	 * Xóa câu hỏi và dữ liệu của tất cả các bảng có tham chiếu đến câu hỏi đó.
+	 *
+	 * @param idCauHoi the id cau hoi
+	 */
 	@Transactional
 	public void deleteCauHoiByIdCauHoi(Integer idCauHoi) {
 		Optional<CauHoi> oCauHoi = cauHoiRepository.findById(idCauHoi);
@@ -111,5 +125,24 @@ public class CauHoiService {
 		cauHoiRepository.delete(cauHoi);
 		System.out.println("Xóa câu hỏi và các thông tin liên quan thành công!");
 	}
-
+	public Optional<CauHoi> findById(Integer id) {
+		return cauHoiRepository.findById(id);
+	}
+	
+	/**
+	 * Cập nhật thông tin của câu hỏi và các thông tin tham chiếu đến nó.
+	 *
+	 * @param cauHoi the cau hoi
+	 * @param listPhuongAn the list phuong an
+	 */
+	@Transactional
+	public void update(CauHoi cauHoi,List<PhuongAn> listPhuongAn) {
+		cauHoiRepository.save(cauHoi);
+		listPhuongAn.forEach(x->{
+			phuongAnRepository.save(x);
+		});
+	}
+	
+	
+	
 }

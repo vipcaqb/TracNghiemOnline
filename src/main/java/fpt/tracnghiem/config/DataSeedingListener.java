@@ -89,7 +89,7 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 
 		// tao 1 tai khoan la ROLE_USER
 		if (taiKhoanRepository.findById("test").isEmpty()) {
-			TaiKhoan tk = new TaiKhoan("test", "123");
+			TaiKhoan tk = new TaiKhoan("test", "123","User Acc");
 			Optional<Role> x = roleRepository.findByRoleName("ROLE_USER");
 			if (x.isPresent()) {
 				tk.setRole(x.get());
@@ -99,7 +99,8 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 
 		// tao 1 tai khoan la ROLE_ADMIN
 		if (taiKhoanRepository.findById("admin").isEmpty()) {
-			TaiKhoan tk = new TaiKhoan("admin", "123");
+			TaiKhoan tk = new TaiKhoan("admin", "123", "Admin Acc");
+			
 			Optional<Role> x = roleRepository.findByRoleName("ROLE_ADMIN");
 			if (x.isPresent()) {
 				tk.setRole(x.get());
@@ -109,7 +110,7 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 
 		// tao 1 tai khoan la ROLE_CREATER
 		if (taiKhoanRepository.findById("creater").isEmpty()) {
-			TaiKhoan tk = new TaiKhoan("creater", "123");
+			TaiKhoan tk = new TaiKhoan("creater", "123","Creator Acc");
 			Optional<Role> x = roleRepository.findByRoleName("ROLE_CREATER");
 			if (x.isPresent()) {
 				tk.setRole(x.get());

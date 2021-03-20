@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Trang Chủ</title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="https://kit.fontawesome.com/0e6c29c291.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/user-homepage-style.css}">
+	<link rel="icon" type="image/png" sizes="192x192"  href="img/iconn.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/iconn.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="img/iconn.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/iconn.png">
+</head>
+<body class="bg-gray">
+	<div th:insert="user/shared/menu::menu">
+	</div>
+	
+	<div th:insert="user/shared/sidebar::sidebar">
+	</div>
+	
+	<div class="mg-main mx-auto container ">
+		<h3>Đặt nội dung ở đây</h3>
+	</div>
+	
+</body>
+</html>

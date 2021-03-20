@@ -32,28 +32,44 @@ import fpt.tracnghiem.service.DeThiService;
 import fpt.tracnghiem.service.LopService;
 import fpt.tracnghiem.service.MonHocService;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DeThiController.
+ */
 @Controller
 public class DeThiController {
+	
+	/** The de thi service. */
 	@Autowired
 	private DeThiService deThiService;
+	
+	/** The lop service. */
 	@Autowired
 	private LopService lopService;
+	
+	/** The mon hoc service. */
 	@Autowired
 	private MonHocService monHocService;
+
+	/**
+	 * Hiển thị danh sách các đề thi.
+	 *
+	 * @param model the model
+	 * @return the string
+	 */
+	
 	@Autowired
 	private CauHoiService cauHoiService;
 	@RequestMapping(value = "/manageExam")
 	public String ShowAllContest(Model model) {
-//		ModelAndView mav = new ModelAndView();
-//		List<DeThi> listExam =(ArrayList<DeThi>) deThiService.findAllDeThi();
-//		mav.addObject("listExam", listExam);
-//		List<ExamInformation> examInfomations = (ArrayList<ExamInformation>) deThiService.getExamInformation();
-//		mav.addObject("listExam", examInfomations);
-
-//		mav.setViewName("/creator/manageExam");
-		
 		return findPaginated(1, model);
 	}
+	
+	/**
+	 * Hiển thị giao diện thêm đề thi.
+	 *
+	 * @return the model and view
+	 */
 
 	@GetMapping(value = "/addExam/page/{page}")
 	public ModelAndView showFormAdd(@PathVariable int page) {
@@ -68,6 +84,13 @@ public class DeThiController {
 		mav.setViewName("/creator/exam/addExam");
 		return mav;
 	}
+	
+	/**
+	 * Hiển thị giao diện sửa câu hỏi.
+	 *
+	 * @param id the id
+	 * @return the model and view
+	 */
 
 	@GetMapping(value = "/editExam/{id}/page/{page}")
 	public ModelAndView editShowForm(@PathVariable int id,@PathVariable int page) {
@@ -86,8 +109,19 @@ public class DeThiController {
 		mav.setViewName("/creator/exam/editExam");
 		return mav;
 	}
+
+  /**
+	 * Thực hiện sửa câu hỏi .
+	 *
+	 * @param request the request
+	 * @param response the response
+	 * @param deThi the de thi
+	 * @param id the id
+	 * @return the model and view
+	 */
 	@PostMapping(value = "/editExam/{id}/page/{page}")
 	public ModelAndView editExamSubmit(HttpServletRequest request, HttpServletResponse response, @ModelAttribute DeThi deThi,@PathVariable int id,@PathVariable int page){
+
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
 		TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("user");
@@ -102,7 +136,14 @@ public class DeThiController {
 		mav.setViewName("redirect:/manageExam/page/"+page);
 		return mav;
 	}
-
+	/**
+	 * Adds the exam.
+	 *
+	 * @param request the request
+	 * @param response the response
+	 * @param deThi the de thi
+	 * @return the model and view
+	 */
 	@PostMapping(value = "/addExam/page/{page}")
 	public ModelAndView addExam(HttpServletRequest request, HttpServletResponse response, @ModelAttribute DeThi deThi,@PathVariable int page) {
 		HttpSession session = request.getSession();
@@ -118,8 +159,15 @@ public class DeThiController {
 		return mav;
 	}
 
+  /**
+	 * Delete by id.
+	 *
+	 * @param id the id
+	 * @return the model and view
+	 */
 	@RequestMapping(value = "deleteExam/{id}/page/{page}")
 	public ModelAndView deleteById(@PathVariable int id,@PathVariable int page) {
+
 		ModelAndView mav = new ModelAndView();
 		Optional<DeThi> deThi = deThiService.findById(id);
 		
@@ -128,25 +176,30 @@ public class DeThiController {
 		
 		return mav;
 	}
-	// pagination 
+	
+	/**
+	 * Find paginated.
+	 *
+	 * @param pageNo the page no
+	 * @param model the model
+	 * @return the string
+	 */
 	@GetMapping("/manageExam/page/{pageNo}")
 	public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model) {
 	    int pageSize = MyConstances.PAGE_SIZE;
 	    Page <DeThi> page = deThiService.findPaginated(pageNo, pageSize);
 	    List<DeThi> listDeThis = page.getContent();
+
 	    if(listDeThis.size()==0 && pageNo>1) {
 	    	page =deThiService.findPaginated(pageNo - 1, pageSize);
 	    	listDeThis = page.getContent();
 	    }
-	   // Page<DeThi> page = deThiService.findPaginated(pageNo, pageSize);
-	    //List<DeThi> examInformations = page.getContent();
-	    //List<DeThi> examInformations = page.getContent();
-	   // List<DeThi> examInfomations = (ArrayList<ExamInformation>) deThiService.getExamInformation();
-	    //examInfomations = page.getContent();
+
 	    model.addAttribute("listExam", listDeThis);
 	    model.addAttribute("currentPage", pageNo);
 	    model.addAttribute("totalPages", page.getTotalPages());
 	    model.addAttribute("totalItems", page.getTotalElements());
+
 		return "creator/exam/manageExam";
 	}
 }

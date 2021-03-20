@@ -1,0 +1,57 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="menu" class=" border border-gray rounded shadow-sm bg-white">
+		<section id="menu" class="">
+			<ul class=" cln justify-content-between navbar-nav my-2 mr-5 ml-5">
+				<li>
+					<h3 class="logo">
+						<span class="text-primary">
+						<i class="fas fa-book-open"></i> Trang</span> Chủ
+					</h3>
+				</li>
+				<li class="nav-item ">
+					<a class="nav-link" href="#">Home</a>
+				</li>
+				<li class="nav-item ">
+					<div class="dropdown">
+					    <button class="dropbtn">Khối A
+					      	<i class="fa fa-caret-down"></i>
+					    </button>
+					    <div class="dropdown-content">
+						    <a href="#">Toán</a>
+						    <a href="#">Lý</a>
+						    <a href="#">Hóa</a>
+						</div>
+					</div>
+				</li>
+				<li class="nav-item ">
+					<div class="dropdown">
+					    <button class="dropbtn">Khối B
+					      	<i class="fa fa-caret-down"></i>
+					    </button>
+					    <div class="dropdown-content">
+						    <a href="#">Toán</a>
+						    <a href="#">Hóa</a>
+						    <a href="#">Sinh</a>
+						</div>
+					</div>
+				</li>
+				<li class="nav-item ">
+					<div class="dropdown">
+					    <button class="dropbtn">Khối C
+					      	<i class="fa fa-caret-down"></i>
+					    </button>
+					    <div class="dropdown-content">
+						    <a href="#">Văn</a>
+						    <a href="#">Sử</a>
+						    <a href="#">Địa</a>
+						</div>
+					</div>
+				</li>
+				<li class="nav-item ">
+					<a class="nav-link" href="/login">Đăng nhập</a>
+				</li>
+			</ul>
+			
+		</section>
+	</div>
+	</html>

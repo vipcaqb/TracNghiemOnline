@@ -24,20 +24,36 @@ import com.sun.xml.bind.v2.TODO;
 import fpt.tracnghiem.entity.CauHoi;
 import fpt.tracnghiem.entity.DeThi;
 import fpt.tracnghiem.entity.PhuongAn;
+import fpt.tracnghiem.model.MyCounter;
 import fpt.tracnghiem.service.CauHoiService;
 import fpt.tracnghiem.service.DeThiService;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CauHoiController.
+ */
 @Controller
 public class CauHoiController {
+	
+	/** The cau hoi service. */
 	@Autowired
 	CauHoiService cauHoiService;
+
+	/** The de thi service. */
 	@Autowired
 	private DeThiService deThiService;
+	
 	/**
-	 * Tải giao diện quản lý
-	 * */
+	 * Tải giao diện quản lý.
+	 *
+	 * @param idDe the id de
+	 * @param pageNumber the page number
+	 * @param model the model
+	 * @return the string
+	 */
 	@RequestMapping(value = { "/manageExam/{idExam}/manageQuestion/{pageNumber}",
 			"/manageExam/{idExam}/manageQuestion" }, method = RequestMethod.GET)
+  
 	public String manageQuestionUI(@PathVariable(name = "idExam") Integer idDe,
 			@PathVariable(name = "pageNumber",required = false) Integer pageNumber, ModelMap model) {
 		if (pageNumber == null) {
@@ -59,26 +75,124 @@ public class CauHoiController {
 		model.addAttribute("hasNext",pageCauHoi.hasNext());
 		return "creator/question/manageQuestion";
 	}
+	
 	/**
-	 * tải giao diện thêm câu hỏi
-	 * */
+	 * tải giao diện thêm câu hỏi.
+	 *
+	 * @param idDe the id de
+	 * @param cauHoi the cau hoi
+	 * @param model the model
+	 * @return the string
+	 */
 	@RequestMapping(value="/manageExam/{idExam}/addQuestion",method = RequestMethod.GET)
 	public String addQuestionUI(@PathVariable(name = "idExam") Integer idDe,CauHoi cauHoi,Model model) {
+
 		model.addAttribute("idDe",idDe);
+
+		List<CauHoi> listCauHoi = cauHoiService.findAllByIdDeThi(idDe);
+		MyCounter myCounter = new MyCounter();
+		
+		model.addAttribute("myCounter",myCounter);
+		model.addAttribute("idDe", idDe);
+		model.addAttribute("listCauHoi",listCauHoi);
 		return "creator/question/addQuestion";
 	}
 	
 	/**
-	 * Tạo câu hỏi mới
-	 * */
+	 * Tải giao diện sửa câu hỏi.
+	 *
+	 * @param idDe the id de
+	 * @param idCauHoi the id cau hoi
+	 * @param model the model
+	 * @return the string
+	 */
+	@RequestMapping(value = "/manageExam/{idExam}/editQuestion/{idQuestion}",method= RequestMethod.GET)
+	public String editQuestionUI(@PathVariable(name = "idExam") Integer idDe,
+			@PathVariable(name = "idQuestion") Integer idCauHoi,
+			Model model)
+	{
+		//kiểm tra xem câu hỏi hiện tại đã có trong db chưa, nếu chưa thì trả về lỗi 404
+		Optional<CauHoi> oCauHoi = cauHoiService.findById(idCauHoi);
+		if(oCauHoi.isEmpty()) {
+			return "404";
+		}
+		List<CauHoi> listCauHoi = cauHoiService.findAllByIdDeThi(idDe);
+		model.addAttribute("listCauHoi",listCauHoi);
+		
+		CauHoi cauHoi = oCauHoi.get();
+		
+		MyCounter myCounter = new MyCounter();
+		MyCounter correctCounter = new MyCounter(0);
+		model.addAttribute("myCounter",myCounter);
+		model.addAttribute("cauHoi", cauHoi);
+		model.addAttribute("idDe", idDe);
+		model.addAttribute("correctCounter",correctCounter);
+		return "creator/question/editQuestion";
+	}
+	
+	/**
+	 * Thực hiện sửa câu hỏi.
+	 *
+	 * @param cauHoi the cau hoi
+	 * @param listNoiDungPhuongAn the list noi dung phuong an
+	 * @param listCorrect the list correct
+	 * @return the string
+	 */
+
+	@RequestMapping(value = "editQuestion",method= RequestMethod.POST)
+	@ResponseBody
+	public String editQuestion(@ModelAttribute(name = "cauHoi") CauHoi cauHoi,
+			@RequestParam(name = "phuongAn") List<String> listNoiDungPhuongAn,
+			@RequestParam(name = "isCorrect",required = false) List<Integer> listCorrect) {
+		System.out.println(cauHoi.toString());
+		
+		Optional<CauHoi> oCauHoi = cauHoiService.findById(cauHoi.getIdCauHoi());
+		if(oCauHoi.isEmpty()) {
+			return "404";
+		}
+		CauHoi cauHoiHienTai = oCauHoi.get();
+		
+		cauHoiHienTai.setNoiDung(cauHoi.getNoiDung());
+		cauHoiHienTai.setGiaiThich(cauHoi.getGiaiThich());
+		
+		//Đặt các giá trị correct
+		List<PhuongAn> listPhuongAnHienTai = cauHoiHienTai.getPhuongAns();
+		for(int i = 0 ; i<listPhuongAnHienTai.size();i++) {
+			listPhuongAnHienTai.get(i).setNoiDung(listNoiDungPhuongAn.get(i));
+			listPhuongAnHienTai.get(i).setIsCorrect(false);
+			for(int j =0;j<listCorrect.size();j++) {
+				if(listCorrect.get(j)==i) {
+					listPhuongAnHienTai.get(i).setIsCorrect(true);
+					break;
+				}
+			}
+		}
+		listPhuongAnHienTai.forEach(x->{
+			System.out.println(x.getIsCorrect());
+		});
+		//Thêm vào db
+		cauHoiService.save(cauHoiHienTai, listPhuongAnHienTai, null, cauHoiHienTai.getDeThi().getIdDe());
+		
+		return "OK";
+	}
+
+	/**
+	 * Tạo câu hỏi mới.
+	 *
+	 * @param idDe the id de
+	 * @param cauHoi the cau hoi
+	 * @param listNoiDungPhuongAn the list noi dung phuong an
+	 * @param listCorrect the list correct
+	 * @return the string
+	 */
 	
 	@RequestMapping(value="/manageExam/{idExam}/addQuestion",method = RequestMethod.POST)
 	public String addQuestion(@PathVariable(name = "idExam") Integer idDe,
 			@ModelAttribute("cauHoi") CauHoi cauHoi,
 			@RequestParam(name = "phuongAn") List<String> listNoiDungPhuongAn,
-			@RequestParam(name = "isCorrect") List<Integer> listCorrect
+			@RequestParam(name = "isCorrect",required = false) List<Integer> listCorrect
 			) {
-		System.out.println(idDe);
+
 		int size;
 		//Thêm phương án
 		List<PhuongAn> listPhuongAn = new ArrayList<PhuongAn>();
@@ -87,12 +201,14 @@ public class CauHoiController {
 			for(Integer i= 0 ; i<size ; i++) {
 				String noiDung = listNoiDungPhuongAn.get(i);
 				Boolean isCorrect = false;
-				for (Integer item : listCorrect) {
-					if(i==item) {
-						isCorrect = true;
-					}
-					else {
-						isCorrect=false;
+				if(listCorrect!=null) {
+					for (Integer item : listCorrect) {
+						if(i==item) {
+							isCorrect = true;
+						}
+						else {
+							isCorrect=false;
+						}
 					}
 				}
 				listPhuongAn.add(new PhuongAn(noiDung,isCorrect,cauHoi));
@@ -105,10 +221,20 @@ public class CauHoiController {
 		return "redirect:/manageExam/"+idDe+"/manageQuestion";
 	}
 	
+	/**
+	 * Delete question.
+	 *
+	 * @param idCauHoi the id cau hoi
+	 * @return the string
+	 */
 	@PostMapping("/deleteQuestion/{idQuestion}")
-	public String deleteQuestion(@PathVariable(name = "idQuestion") Integer idQuestion) {
-		
-		cauHoiService.deleteCauHoiByIdCauHoi(idQuestion);
-		return "redirect:/creator/question/manageQuestion";
+	public String deleteQuestion(@PathVariable(name = "idQuestion") Integer idCauHoi) {
+		Optional<CauHoi> oCauHoi = cauHoiService.findById(idCauHoi);
+		CauHoi cauHoi = null;
+		if(oCauHoi.isPresent()) {
+			cauHoi = oCauHoi.get();
+		}
+		cauHoiService.deleteCauHoiByIdCauHoi(idCauHoi);
+		return "redirect:/manageExam/"+cauHoi.getDeThi().getIdDe()+"/addQuestion";
 	}
 }

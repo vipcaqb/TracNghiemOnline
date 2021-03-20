@@ -24,20 +24,49 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import fpt.tracnghiem.service.CauHoiService;
 import fpt.tracnghiem.service.ExcelService;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class FileUploadController.
+ */
 @Controller
 public class FileUploadController {
+	
+	/** The cau hoi service. */
 	@Autowired
 	CauHoiService cauHoiService;
+	
+	/** The excel service. */
 	@Autowired
 	ExcelService excelService;
 	
+	/** The upload directory. */
 	public static String uploadDirectory = System.getProperty("user.dir") +"\\src\\main\\resources\\static\\excel\\";
+	
+	/**
+	 * Hiển thị giao diện upload file excel.
+	 *
+	 * @param model the model
+	 * @param idDe the id de
+	 * @return the string
+	 */
 	@RequestMapping("/addQuestionExcel/{idDe}")
 	public String UploadPage(Model model,@PathVariable int idDe) {
 		model.addAttribute("idDe",idDe);
 		return "/creator/question/uploadview";
 	}
 	
+	/**
+	 * Thực hiện upload file excel
+	 *
+	 * @param idDe the id de
+	 * @param model the model
+	 * @param files the files
+	 * @return the string
+	 * @throws EncryptedDocumentException the encrypted document exception
+	 * @throws InvalidFormatException the invalid format exception
+	 * @throws InvalidFormatException the invalid format exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@RequestMapping("/upload/{idDe}")
 	public String upload(@PathVariable(name = "idDe") Integer idDe,Model model, @RequestParam("files") MultipartFile[] files) throws EncryptedDocumentException, InvalidFormatException, IOException, org.apache.poi.openxml4j.exceptions.InvalidFormatException {
 		new File(uploadDirectory).mkdir();
@@ -71,6 +100,4 @@ public class FileUploadController {
 		
 	}
 
-	
-	
 }
