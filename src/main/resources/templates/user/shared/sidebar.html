@@ -11,12 +11,9 @@
 			style="display: none" id="mySidebar">
 			<button onclick="w3_close()" class="w3-bar-item w3-large">Close
 				&times;</button>
-			<a href="/user" class="w3-bar-item w3-button">Thông tin cá nhân</a> 
+			<a href="#" class="w3-bar-item w3-button">Thông tin cá nhân</a> 
 			<a href="/manageExam" class="w3-bar-item w3-button">Quản lý đề thi</a> 
 			<a href="#" class="w3-bar-item w3-button">Lịch sử bài làm</a>
-			<a class="w3-bar-item w3-button" th:if='${#strings.equals(session.user.role.roleName,"ROLE_ADMIN")}' href="#">
-			Quản lý tài khoản
-			</a>
 		</div>
 <button class="w3-button w3-teal w3-xlarge" onclick="w3_open()">☰</button>
 		<script>

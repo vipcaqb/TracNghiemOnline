@@ -8,6 +8,7 @@
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 <link rel="stylesheet" th:href="@{/css/mystyle.css}">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" type="text/css" th:href="@{/css/user-homepage-style.css}">
 <title>Điều chỉnh đề thi</title>
 </head>
 <body>
@@ -18,24 +19,26 @@
 	
 	<section class="container">
 		<h4>Đề 1 : Toán nâng cao</h4>
+		
 		<div class= "row border">
-			<div class="col-7">
+			<div class="col-7 border-right">
+				<a class="btn btn-danger float-right mt-2" id="deleteQuestion">Xóa</a>
 				<form class=" d-flex flex-column" th:object="${cauHoi}" th:action="@{'/editQuestion'}" method="post">
-					<p> Câu hỏi 1: </p>
-					<input type="file">
+					<p class="pt-2"> Câu hỏi [[${cauHoi.idCauHoi}]]: </p>
+					<input class="mb-2"  type="file">
 					<input class="hide" type="text" th:field="*{idCauHoi}">
-					<textarea th:field="*{noiDung}" ></textarea>
+					<textarea th:field="*{noiDung}" required="required" ></textarea>
 					Giải thích:
-					<textarea th:field="*{giaiThich}"></textarea>
+					<textarea th:field="*{giaiThich}" required="required" ></textarea>
 					Phương án:
 					<div th:each="pa : *{phuongAns}">
-						<input type="text" name="phuongAn" th:value="${pa.noiDung}" placeholder="Phương án 1" >
+						<input type="text" name="phuongAn" th:value="${pa.noiDung}" required="required" placeholder="Phương án 1" >
 						<label>
 							<input type="checkbox" 
 							th:if="${pa.isCorrect} ==true" 
 							checked="checked" 
 							th:value="${correctCounter.indexAndIncrease}" 
-							name="isCorrect">
+							name="isCorrect" >
 							<input type="checkbox" 
 							th:if="${pa.isCorrect} ==false"
 							th:value="${correctCounter.indexAndIncrease}" 
@@ -45,24 +48,29 @@
 					<div class="alert alert-danger hide" id="correctMsg">Phải có ít nhất 1 phương án đúng!</div>
 					<div>
 						<input id="accept" class="btn btn-success" type="submit" value="Lưu">
+						
 					</div>
 				</form>
 			</div>
-			<!-- <div class="col-5">
-				<a class= "btn btn-sm btn-outline-primary ml-3 mt-3" 
-				th:each="item: ${listCauHoi}" th:utext="${myCounter.getIndexAndIncrease}" 
-				th:href= "@{'/manageExam/'+${idDe}+'/editQuestion/'+${item.idCauHoi}}">1</a>
-				<a class="btn btn-sm btn-primary mt-3 ml-3" href="#">new</a>
-			</div> -->
 			<div th:insert="/creator/shared/listQuestion::listCauHoi">
-			
 			</div>
 		</div>
-		
 	</section>
-			
-	<script type="text/javascript" th:src="@{/js/kiemTraCorrect.js}">
-
-</script>
+	<script type="text/javascript" th:src="@{/js/kiemTraCorrect.js}">   </script>
+	<script th:inline="javascript" type="text/javascript">   
+	$(document).ready(function(){
+		$('#deleteQuestion').click(function(){
+			var confirmed = confirm('Are you sure?');
+			var actionStr = /*[[${cauHoi.idCauHoi}]]*/ "abc";
+			if(confirmed){
+				$.post( "/deleteQuestion/"+actionStr, function( data ) {
+				});
+			}
+			else {
+				event.preventDefault();
+			}
+		})
+	})
+	</script>
 </body>
 </html>

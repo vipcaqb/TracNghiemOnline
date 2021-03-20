@@ -24,20 +24,49 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import fpt.tracnghiem.service.CauHoiService;
 import fpt.tracnghiem.service.ExcelService;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class FileUploadController.
+ */
 @Controller
 public class FileUploadController {
+	
+	/** The cau hoi service. */
 	@Autowired
 	CauHoiService cauHoiService;
+	
+	/** The excel service. */
 	@Autowired
 	ExcelService excelService;
 	
+	/** The upload directory. */
 	public static String uploadDirectory = System.getProperty("user.dir") +"\\src\\main\\resources\\static\\excel\\";
+	
+	/**
+	 * Hiển thị giao diện upload file excel.
+	 *
+	 * @param model the model
+	 * @param idDe the id de
+	 * @return the string
+	 */
 	@RequestMapping("/addQuestionExcel/{idDe}")
 	public String UploadPage(Model model,@PathVariable int idDe) {
 		model.addAttribute("idDe",idDe);
 		return "/creator/question/uploadview";
 	}
 	
+	/**
+	 * Thực hiện upload file excel
+	 *
+	 * @param idDe the id de
+	 * @param model the model
+	 * @param files the files
+	 * @return the string
+	 * @throws EncryptedDocumentException the encrypted document exception
+	 * @throws InvalidFormatException the invalid format exception
+	 * @throws InvalidFormatException the invalid format exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@RequestMapping("/upload/{idDe}")
 	public String upload(@PathVariable(name = "idDe") Integer idDe,Model model, @RequestParam("files") MultipartFile[] files) throws EncryptedDocumentException, InvalidFormatException, IOException, org.apache.poi.openxml4j.exceptions.InvalidFormatException {
 		new File(uploadDirectory).mkdir();
@@ -64,43 +93,4 @@ public class FileUploadController {
 		return "/creator/question/uploadstatusview";
 		
 	}
-
-	
-	/* 
-	@RequestMapping("/upload")
-	public String upload(Model model, @RequestParam("files") MultipartFile[] files) throws EncryptedDocumentException, InvalidFormatException {
-		new File(uploadDirectory).mkdir();
-		
-
-	for(MultipartFile file: files) {
-			try {
-			
-			Workbook workbook = WorkbookFactory.create(new File(uploadDirectory+file.getOriginalFilename()));
-			
-				for(Sheet sheet: workbook) {
-				  for (Row row: sheet) {
-					  
-				  if(row.getRowNum()!=0) {
-						  String base = row.getCell(0).getStringCellValue();
-					
-						  System.out.println(base);
-					  }
-				  
-			  }
-			
-			
-				}
-				
-		} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		
-			
-		} 
-		model.addAttribute("msg", "Upload File successfully"); 
-		
-		return "/creator/question/uploadstatusview";
-		
-	}*/
 }

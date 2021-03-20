@@ -9,39 +9,82 @@
 <title>Insert title here</title>
 </head>
 <body>
-<nav th:fragment="menu" class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Navbar</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
-				<li class="nav-item dropdown"><a
-					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
-					role="button" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false"> Dropdown </a>
-					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="#">Action</a> <a
-							class="dropdown-item" href="#">Another action</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#">Something else here</a>
-					</div></li>
-				<li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
-      </li>
-    </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
-  </div>
-</nav>
+<div th:fragment="menu" class=" border border-gray rounded shadow-sm bg-white">
+		<section id="menu" class="">
+			<ul class=" cln justify-content-between navbar-nav my-2 mr-5 ml-5">
+				<li>
+					<h3 class="logo">
+						<span class="text-primary">
+						<i class="fas fa-book-open"></i> Trang</span> Chủ
+					</h3>
+				</li>
+				<li class="nav-item ">
+					<a class="nav-link" th:href="@{/}">Home</a>
+				</li>
+				<li class="nav-item ">
+					<div class="dropdown">
+					    <button class="dropbtn">Khối A
+					      	<i class="fa fa-caret-down"></i>
+					    </button>
+					    <div class="dropdown-content">
+						    <a href="#">Toán</a>
+						    <a href="#">Lý</a>
+						    <a href="#">Hóa</a>
+						</div>
+					</div>
+				</li>
+				<li class="nav-item ">
+					<div class="dropdown">
+					    <button class="dropbtn">Khối B
+					      	<i class="fa fa-caret-down"></i>
+					    </button>
+					    <div class="dropdown-content">
+						    <a href="#">Toán</a>
+						    <a href="#">Hóa</a>
+						    <a href="#">Sinh</a>
+						</div>
+					</div>
+				</li>
+				<li class="nav-item ">
+					<a class="nav-link">Liên hệ</a>
+				</li>
+				<li class="nav-item" id="loginSide">
+					<a th:if="${session.user}==null" class="nav-link" th:href="@{/login}">Đăng nhập</a>
+					<div th:if="${session.user}!=null" class="dropdown">
+					    <button class="dropbtn" th:text="@{'Hi: '+${session.user.hoVaTen}}">Họ và tên
+					      	<i class="fa fa-caret-down"></i>
+					    </button>
+					    <div class="dropdown-content">
+						    <a href="#">Đổi mật khẩu</a>
+						    <a href="/manageExam">Quản lý tài khoản</a>
+						    <a id='logoutBtn'>Đăng xuất</a>
+						</div>
+					</div>
+				</li>
+			</ul>
+			
+		</section>
+		<script type="text/javascript" th:inline="javascript">
+			$(document).ready(function(){
+				$('#logoutBtn').click(function(){
+					$.ajax({
+						type: "POST",
+						contentType: "application/json",
+						url: "/logout",
+						data:"",
+						dataType: "text",
+						cache: false,
+						timeout: 60000,
+						success: function() {
+							$('#loginSide').html("<a class='nav-link' href='/login'>Đăng nhập</a>");
+						},
+						error: function() {
+							alert('có lỗi xảy ra');
+						}
+					});
+				})
+			})
+		</script>
+	</div>
 </body>
 </html>

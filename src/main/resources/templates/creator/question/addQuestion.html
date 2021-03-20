@@ -7,7 +7,8 @@
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel = "stylesheet" th:href="/css/mystyle.css">
+<link rel = "stylesheet" th:href="@{/css/mystyle.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/user-homepage-style.css}">
 <title>Điều chỉnh đề thi</title>
 </head>
 <body>
@@ -24,24 +25,24 @@
 				<form class=" d-flex flex-column" th:object="${cauHoi}" th:action="@{'/manageExam/'+${idDe}+'/addQuestion'}" method="post">
 					<p> Thêm câu hỏi: </p>
 					<input type="file" >
-					<textarea th:field="*{noiDung}" ></textarea>
+					<textarea th:field="*{noiDung}" required="required"  ></textarea>
 					Giải thích:
-					<textarea th:field="*{giaiThich}"></textarea>
+					<textarea th:field="*{giaiThich}" required="required" ></textarea>
 					Phương án:
 					<div>
-						<input type="text" name="phuongAn" placeholder="Phương án 1" >
+						<input type="text" name="phuongAn" placeholder="Phương án 1"  required="required" >
 						<label><input type="checkbox" value="0" name="isCorrect">Đúng?</label>
 					</div>
 					<div class="mt-2">
-						<input type="text" name="phuongAn" placeholder="Phương án 2">
+						<input type="text" name="phuongAn" placeholder="Phương án 2" required="required" >
 						<label><input type="checkbox" value="1" name="isCorrect">Đúng?</label>
 					</div>
 					<div class="mt-2">
-						<input type="text" name="phuongAn" placeholder="Phương án 3">
+						<input type="text" name="phuongAn" placeholder="Phương án 3" required="required" >
 						<label><input type="checkbox" value="2" name="isCorrect">Đúng?</label>
 					</div>
 					<div class="mt-2">
-						<input type="text" name="phuongAn" placeholder="Phương án 4">
+						<input type="text" name="phuongAn" placeholder="Phương án 4" required="required" >
 						<label><input type="checkbox" value="3" name="isCorrect">Đúng?</label>
 					</div>
 					<div class="alert alert-danger hide" id="correctMsg">Phải có ít nhất 1 phương án đúng!</div>

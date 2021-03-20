@@ -1,0 +1,448 @@
+.cln{
+	list-style: none;
+}
+.high{
+	height: auto;
+}
+.h{
+	height: auto;
+}
+.navbar-nav{
+	flex-direction: row;
+}
+.cd{
+	margin: 0.5rem;
+}
+.w-90{
+	width: 90%;
+	margin-bottom: 0.5rem;
+	margin-top: 0.5rem;
+}
+.w-9{
+	width: 90%;
+}
+.w-10{
+	width: 100%;
+}
+.mg-all-1{
+	padding-left: 0.5rem!important;
+	padding-right: 0.8rem!important;
+	padding: 0.3rem;
+}
+.head-color{
+	background: #8fd2ff;
+}
+.head-format a{
+	
+	color: #222;
+	text-decoration: none;
+}
+#menu ul li a{
+	color: #444;
+	padding:  0.4rem;
+	
+}
+#content i{
+	color: #fff;
+	padding-left: 0.2rem;
+	padding-right: 0.2rem;
+	background: #555;
+	border-radius: 15px;
+	float: right;
+	font-size: 13px;
+}
+#content a{
+	text-decoration: none;
+	color: #444;
+}
+.card-shadow {
+    box-shadow: 3px 5px 10px #444;
+}
+.heading {
+    position: absolute;
+    top: 70%;
+    right: 0;
+    font-size: 14px;
+    letter-spacing: 1px;
+    background: #222;
+    width: 70%;
+    cursor: pointer;
+    opacity: .7;
+    transition: all .5s;
+}
+.login-color{
+	background: #9FFF81;
+}
+.mem-color{
+	background: #FFFF99;
+}
+.search-color{
+	background: #99FFFF;
+}
+.mg-main{
+	width : 95%;
+}
+.btnt{
+	text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+.bg-gray{
+background-color: #f1f1f1;
+}
+.bg-white{
+	background-color: #fff;
+}
+.mr-fit{
+	margin-right: 1%;
+}
+.ml-fit{
+	margin-left: 1%;
+}
+.px-fit{
+padding-left: 0px;
+padding-right: 0px;
+}
+.col-9{
+	flex: 0 0 74%!important;
+    max-width: 74%!important;
+    padding-right: 0px!important;
+    padding-left: 0px!important;
+}
+.sidebar .title {
+    min-width: auto;
+    margin-bottom: 20px;
+}
+.boxcont .title span, .sidebar .title {
+    display: block;
+    min-width: 435px;
+    border-bottom: 3px solid #f32424;
+    font-size: 18px;
+    font-weight: bold;
+    color: #626262;
+    padding-bottom: 5px;
+    text-transform: uppercase;
+}
+.sidebar .box {
+    width: 100%;
+}
+.boxcont .box .item, .sidebar .box, .ranking-exam, .statistic-map {
+    border-radius: 20px;
+    padding: 30px;
+    background: #fff;
+    
+    margin-right: 3%;
+    display: inline-block;
+    margin-bottom: 2%;
+    box-shadow: 0 1px 10px 1px #eaeaea;
+}
+.sidebar .box ul.list li:first-child {
+    margin-top: 0;
+}
+
+.sidebar .box ul.list li {
+    display: flex;
+    margin: 25px 0;
+}
+.relative {
+    position: relative;
+}
+
+.sidebar .box ul.list li img {
+    width: 55px;
+    height: 55px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.rank1 {
+    background: #ff3333!important;
+}
+.rank2 {
+    background: #3399ff!important;
+}
+.rank3 {
+    background: #ff6600!important;
+}
+.rank {
+    border-radius: 50%;
+    width: 25px;
+    height: 28px;
+    display: flex;
+    color: #fff;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: -12px;
+    top: 30%;
+    background: #333;
+}
+.sidebar .box ul.list li .clearfix {
+    margin-left: 15px;
+    width: 100%;
+    font-size: 14px;
+}
+.sidebar .box ul.list li .clearfix p .name {
+    color: #626262;
+    font-weight: bold;
+    font-size: 16px;
+    overflow: hidden;
+    display: -webkit-inline-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    max-width: 155px;
+}
+a:visited, a:hover, a:link {
+    text-decoration: none;
+    cursor: pointer;
+}
+.sidebar .box ul.list li .clearfix p {
+    margin-bottom: 0;
+}
+.cl99 {
+    color: #999 !important;
+}
+.clred {
+    color: #cc0000 !important;
+}
+.boxcont .title {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.boxcont .box .item, .sidebar .box, .ranking-exam, .statistic-map {
+    border-radius: 20px;
+    padding: 30px;
+    background: #fff;
+    width:48%;
+    margin-right: 1.5%!important;
+    display: inline-block;
+    margin-bottom: 1.5%!important;
+    box-shadow: 0 1px 10px 1px #eaeaea;
+}
+.boxcont .title .view-all {
+    color: #ffffff!important;
+    font-size: 15px;
+    margin-right: 20px;
+    background: #f67777;
+    padding: 3px 15px;
+    border-radius: 15px;
+}
+
+.boxcont .box .item .title-top {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-top: 15px;
+}
+.boxcont .box .item .title-top .content {
+    margin-left: 20px;
+    width: 100%;
+}
+
+.boxcont .box .item .title-top .content h3 a {
+    color: #5b6770;
+    font-size: 17px;
+    font-weight: bold;
+    line-height: 1.2;
+}
+.tools ul.list {
+    display: flex;
+    justify-content: space-between;
+}
+.tools ul.list li img {
+    max-width: 30px;
+    margin-right: 3px;
+}
+.tag a {
+    display: block;
+    color: #626262;
+    font-size: 16px;
+}
+.following {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.following .left {
+    display: flex;
+    align-items: center;
+}
+.following .left .list-folw {
+    display: flex;
+    margin-right: 20px;
+}
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.following .left .list-folw li:first-child {
+    background: #8834d0;
+    color: #fff;
+    z-index: 9;
+}
+a:visited, a:hover, a:link {
+    text-decoration: none;
+    cursor: pointer;
+}
+.btn-white {
+    background: #fff;
+    border: 1px solid #5b6770;
+    color: #626262;
+    font-size: 18px;
+    padding: 10px 20px;
+    border-radius: 30px;
+    display: flex;
+    justify-content: space-between;
+    min-width: 100px;
+}
+a {
+    color: #337ab7;
+    text-decoration: none;
+}
+a {
+    background-color: transparent;
+}
+a {
+    color: #337ab7;
+    text-decoration: none;
+}
+a {
+    background-color: transparent;
+}
+.following .left .list-folw li {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: #ccc;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    overflow: hidden;
+    margin-right: -10px;
+}
+.fm-box{
+	width: 100%!important;
+}
+.mg-Q{
+	margin-left: 1.5%!important;
+	margin-right: 1.5%!important;
+	padding-top: 15px!important;
+}
+.fm-test{
+	color: #444!important;
+    padding: 0px!important;
+    background: #fff!important;
+    
+    font-size: 50px!important;
+}
+.fm-ic{
+	color: #444!important;
+    padding: 0px!important;
+    background: #fff!important;
+    float: left!important;
+    font-size: 18px!important;
+}
+.title-top{
+	height: 120px;
+}
+
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+  font-family: Arial;
+}
+
+/* Links inside the navbar */
+.navbar a {
+  float: left;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* The dropdown container */
+.dropdown {
+  float: left;
+  
+}
+
+/* Dropdown button */
+.dropdown .dropbtn {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: #444;
+  padding: 0.4rem;
+  background-color: inherit;
+  font-family: inherit; /* Important for vertical align on mobile phones */
+  margin: 0; /* Important for vertical align on mobile phones */
+}
+
+/* Add a red background color to navbar links on hover */
+.navbar a:hover, .dropdown:hover .dropbtn {
+
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+/* Add a grey background color to dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block!important;
+}
+
+
+/* Search side */
+#search-side {
+    text-align: right;
+}
+
+#search-side form {
+    margin-right: 25px;
+    margin: 15px;
+}
+
+#search-side form input[type='text']{
+    border-radius: 15px;
+    width: 400px;
+    border: #337ab7 solid 1px;
+    outline: none;
+    height: 30px;
+    padding-left: 15px;
+}
+
+#search-side form input[type='submit']{
+    border-radius: 15px;
+    background: #e63946;
+    text-transform: uppercase;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+}
+/* End of search side */

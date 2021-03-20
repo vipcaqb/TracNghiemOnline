@@ -19,10 +19,36 @@ import fpt.tracnghiem.entity.CauHoi;
 import fpt.tracnghiem.entity.DeThi;
 import java.util.List;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Interface CauHoiRepository.
+ */
 @Repository
 public interface CauHoiRepository extends JpaRepository<CauHoi, Integer> {
+	
+	/**
+	 * Find all by de thi.
+	 *
+	 * @param deThi the de thi
+	 * @param pageable the pageable
+	 * @return the page
+	 */
 	Page<CauHoi> findAllByDeThi(DeThi deThi, Pageable pageable);
+	
+	/**
+	 * Find by de thi.
+	 *
+	 * @param dethi the dethi
+	 * @return the list
+	 */
 	List<CauHoi> findByDeThi(DeThi dethi);
+	
+	/**
+	 * Find all by de thi.
+	 *
+	 * @param deThi the de thi
+	 * @return the list
+	 */
 	List<CauHoi> findAllByDeThi(DeThi deThi);
 
 }

@@ -28,16 +28,29 @@ import fpt.tracnghiem.model.MyCounter;
 import fpt.tracnghiem.service.CauHoiService;
 import fpt.tracnghiem.service.DeThiService;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CauHoiController.
+ */
 @Controller
 public class CauHoiController {
+	
+	/** The cau hoi service. */
 	@Autowired
 	CauHoiService cauHoiService;
 
+	/** The de thi service. */
 	@Autowired
 	private DeThiService deThiService;
+	
 	/**
-	 * Tải giao diện quản lý
-	 * */
+	 * Tải giao diện quản lý.
+	 *
+	 * @param idDe the id de
+	 * @param pageNumber the page number
+	 * @param model the model
+	 * @return the string
+	 */
 	@RequestMapping(value = { "/manageExam/{idExam}/manageQuestion/{pageNumber}",
 			"/manageExam/{idExam}/manageQuestion" }, method = RequestMethod.GET)
   
@@ -62,9 +75,15 @@ public class CauHoiController {
 		model.addAttribute("hasNext",pageCauHoi.hasNext());
 		return "creator/question/manageQuestion";
 	}
+	
 	/**
-	 * tải giao diện thêm câu hỏi
-	 * */
+	 * tải giao diện thêm câu hỏi.
+	 *
+	 * @param idDe the id de
+	 * @param cauHoi the cau hoi
+	 * @param model the model
+	 * @return the string
+	 */
 	@RequestMapping(value="/manageExam/{idExam}/addQuestion",method = RequestMethod.GET)
 	public String addQuestionUI(@PathVariable(name = "idExam") Integer idDe,CauHoi cauHoi,Model model) {
 
@@ -78,9 +97,15 @@ public class CauHoiController {
 		model.addAttribute("listCauHoi",listCauHoi);
 		return "creator/question/addQuestion";
 	}
+	
 	/**
-	 * Tải giao diện sửa câu hỏi
-	 * */
+	 * Tải giao diện sửa câu hỏi.
+	 *
+	 * @param idDe the id de
+	 * @param idCauHoi the id cau hoi
+	 * @param model the model
+	 * @return the string
+	 */
 	@RequestMapping(value = "/manageExam/{idExam}/editQuestion/{idQuestion}",method= RequestMethod.GET)
 	public String editQuestionUI(@PathVariable(name = "idExam") Integer idDe,
 			@PathVariable(name = "idQuestion") Integer idCauHoi,
@@ -104,11 +129,16 @@ public class CauHoiController {
 		model.addAttribute("correctCounter",correctCounter);
 		return "creator/question/editQuestion";
 	}
-	/**
-	 * Thực hiện sửa câu hỏi
-	 * 
-	 * */
 	
+	/**
+	 * Thực hiện sửa câu hỏi.
+	 *
+	 * @param cauHoi the cau hoi
+	 * @param listNoiDungPhuongAn the list noi dung phuong an
+	 * @param listCorrect the list correct
+	 * @return the string
+	 */
+
 	@RequestMapping(value = "editQuestion",method= RequestMethod.POST)
 	@ResponseBody
 	public String editQuestion(@ModelAttribute(name = "cauHoi") CauHoi cauHoi,
@@ -145,11 +175,16 @@ public class CauHoiController {
 		
 		return "OK";
 	}
-	
-	
+
 	/**
-	 * Tạo câu hỏi mới
-	 * */
+	 * Tạo câu hỏi mới.
+	 *
+	 * @param idDe the id de
+	 * @param cauHoi the cau hoi
+	 * @param listNoiDungPhuongAn the list noi dung phuong an
+	 * @param listCorrect the list correct
+	 * @return the string
+	 */
 	
 	@RequestMapping(value="/manageExam/{idExam}/addQuestion",method = RequestMethod.POST)
 	public String addQuestion(@PathVariable(name = "idExam") Integer idDe,
@@ -186,6 +221,12 @@ public class CauHoiController {
 		return "redirect:/manageExam/"+idDe+"/manageQuestion";
 	}
 	
+	/**
+	 * Delete question.
+	 *
+	 * @param idCauHoi the id cau hoi
+	 * @return the string
+	 */
 	@PostMapping("/deleteQuestion/{idQuestion}")
 	public String deleteQuestion(@PathVariable(name = "idQuestion") Integer idCauHoi) {
 		Optional<CauHoi> oCauHoi = cauHoiService.findById(idCauHoi);
@@ -194,6 +235,6 @@ public class CauHoiController {
 			cauHoi = oCauHoi.get();
 		}
 		cauHoiService.deleteCauHoiByIdCauHoi(idCauHoi);
-		return "redirect:/manageExam/"+cauHoi.getDeThi().getIdDe()+"/manageQuestion";
+		return "redirect:/manageExam/"+cauHoi.getDeThi().getIdDe()+"/addQuestion";
 	}
 }

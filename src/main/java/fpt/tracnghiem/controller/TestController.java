@@ -50,9 +50,9 @@ public class TestController {
 		return "OK";
 	}
 
-	@GetMapping("/test")
+	@GetMapping(value="/test")
 	public ModelAndView test2() {
-		ModelAndView mav = new ModelAndView("creator/base");
+		ModelAndView mav = new ModelAndView("user/base");
 		return mav;
 	}
 }
