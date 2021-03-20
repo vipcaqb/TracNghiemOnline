@@ -53,9 +53,15 @@ public class FileUploadController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			Workbook workbook = WorkbookFactory.create(new File(uploadDirectory+file.getOriginalFilename()));
-			
-			excelService.upDuLieu(workbook,idDe);
+			try {
+				//xử lý lỗi nếu thêm không thành công
+				Workbook workbook = WorkbookFactory.create(new File(uploadDirectory+file.getOriginalFilename()));
+				excelService.upDuLieu(workbook,idDe);
+			}catch (Exception e) {
+				model.addAttribute("msg", "Thêm câu hỏi không thành công, lỗi:" +e.toString()); 
+				model.addAttribute("idDe", idDe);
+				return "/creator/question/uploadstatusview";
+			}
 			
 			
 		}
@@ -66,41 +72,5 @@ public class FileUploadController {
 	}
 
 	
-	/* 
-	@RequestMapping("/upload")
-	public String upload(Model model, @RequestParam("files") MultipartFile[] files) throws EncryptedDocumentException, InvalidFormatException {
-		new File(uploadDirectory).mkdir();
-		
-
-	for(MultipartFile file: files) {
-			try {
-			
-			Workbook workbook = WorkbookFactory.create(new File(uploadDirectory+file.getOriginalFilename()));
-			
-				for(Sheet sheet: workbook) {
-				  for (Row row: sheet) {
-					  
-				  if(row.getRowNum()!=0) {
-						  String base = row.getCell(0).getStringCellValue();
-					
-						  System.out.println(base);
-					  }
-				  
-			  }
-			
-			
-				}
-				
-		} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		
-			
-		} 
-		model.addAttribute("msg", "Upload File successfully"); 
-		
-		return "/creator/question/uploadstatusview";
-		
-	}*/
+	
 }

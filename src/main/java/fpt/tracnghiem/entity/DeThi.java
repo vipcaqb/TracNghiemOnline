@@ -33,7 +33,7 @@ public class DeThi implements Serializable {
 	private String moTa;
 	
 	@Column(name="ngay_tao")
-	@Temporal(TemporalType.TIME)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date ngayTao;
 	
 	@Column(length = 1000)
@@ -41,6 +41,38 @@ public class DeThi implements Serializable {
 	
 	@Column()
 	private int thoiGianThi;
+
+	public String getMoTa() {
+		return moTa;
+	}
+
+	public void setMoTa(String moTa) {
+		this.moTa = moTa;
+	}
+
+	public boolean isHienThiDapAnVaGiaiThich() {
+		return hienThiDapAnVaGiaiThich;
+	}
+
+	public void setHienThiDapAnVaGiaiThich(boolean hienThiDapAnVaGiaiThich) {
+		this.hienThiDapAnVaGiaiThich = hienThiDapAnVaGiaiThich;
+	}
+
+	public int getThoiGianThi() {
+		return thoiGianThi;
+	}
+
+	public void setThoiGianThi(int thoiGianThi) {
+		this.thoiGianThi = thoiGianThi;
+	}
+
+	public Date getNgayTao() {
+		return ngayTao;
+	}
+
+	public void setNgayTao(Date ngayTao) {
+		this.ngayTao = ngayTao;
+	}
 
 	//bi-directional many-to-one association to CauHoi
 	@OneToMany(mappedBy="deThi")

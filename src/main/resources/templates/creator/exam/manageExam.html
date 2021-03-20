@@ -23,11 +23,14 @@
 		<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
 			<form>
 				<div class="form-group" align="right" >
-					<a th:href="@{/addExam}" class="btn btn-success" > thêm đề thi</a>
+					<a th:href="@{'/addExam/page/'+${currentPage}}" class="btn btn-success" > thêm đề thi</a>
 					<table border="1" class="table table-striped" style="margin-top: 10px">
 						<tr>
 							<th>ID</th>
 							<th>Tên đề</th>
+							<th>Ngày tạo</th>
+							<th>Mô tả</th>
+							<th>Hiển thị đáp án</th>
 							<th>Tên môn học</th>
 							<th>Tên Lớp</th>
 							<th>Sửa</th>
@@ -35,17 +38,26 @@
 							<th>Thêm câu hỏi</th>
 			
 						</tr>
+						<tr th:if="${listExam.size()==0}">
+							<td colspan="10" style="background-color: #ffbe63">Không tìm thấy đề thi nào</td>
+						</tr>
 						<tr th:each="exam : ${listExam}">
 
 							<td th:utext="${exam.idDe}"></td>
 							<td th:utext="${exam.tenDe}"></td>
+							<td th:utext="${exam.ngayTao}"></td>
+							<td th:utext="${exam.moTa}"></td>
+							 <td th:if="${exam.hienThiDapAnVaGiaiThich==false}" >Không
+							</td>
+							<td th:unless="${exam.hienThiDapAnVaGiaiThich==false}" >Có
+							</td> 							
 							<td th:utext="${exam.monHoc.tenMonHoc}" th:if="${exam.monHoc!=null}"></td>
 							<td th:unless="${exam.monHoc}">NULL</td>
 							<td th:utext="${exam.lop.tenLop}" th:if="${exam.lop!=null}"></td>
 							<td th:unless="${exam.lop}">NULL</td>
-							 <td style="color: #ffca0a"> <i class="fas fa-edit"></i><a  th:href="@{'/editExam/'+${exam.idDe}}">Sửa</a>
+							 <td style="color: #ffca0a"> <i class="fas fa-edit"></i><a  th:href="@{'/editExam/'+${exam.idDe}+'/page/'+${currentPage}}">Sửa</a>
 							</td>
-							<td style="color: #ff6347"> <i class="fas fa-trash-alt"></i><a th:href="@{'/deleteExam/'+${exam.idDe}}">Xóa</a></td>
+							<td style="color: #ff6347"> <i class="fas fa-trash-alt"></i><a onclick="ShowMessage()" th:href="@{'/deleteExam/'+${exam.idDe}+'/page/'+${currentPage}}" >Xóa</a></td>
 						<td style="color: blue;"> <i class="far fa-plus-square"></i><a th:href="@{'/manageExam/'+${exam.idDe}}+'/manageQuestion'">Thêm câu hỏi</a></td>
 						</tr>
 					</table>
@@ -64,9 +76,18 @@
 			<div class="row ">
 			
 				<div class="col-sm-2"></div>
-				<div class="col-sm-4" style="margin-top: 5px;">Tổng số đề: [[${totalItems}]]</div>
+				<div class="col-sm-3" style="margin-top: 5px;">Tổng số đề: [[${totalItems}]]</div>
 				<div class="pagination col-sm-6">
-					
+					<!-- previous -->
+						<span class="page-item">
+					<a th:if="${currentPage > 1 }"  class="page-link" 
+						th:href="@{'/manageExam/page/' + ${currentPage - 1 }}">Previous</a>
+						</span>
+						<span class="page-item">
+						 <span class="page-link" 
+						th:unless="${currentPage > 1}" style="color: gray">Previous</span>
+					</span>
+					<!-- number -->
 					<span th:each="i: ${#numbers.sequence(1, totalPages)}" class="page-item" > <a class="page-link" 
 						th:if="${currentPage != i}" th:href="@{'/manageExam/page/' + ${i}}">[[${i}]]</a>
 						<span class="page-link" style="background-color:blue;color: white; " th:unless="${currentPage != i}">[[${i}]]</span> &nbsp;
@@ -94,7 +115,15 @@
 			</div>
 		</div>
 
-	
+<script >
+	function ShowMessage(){
+		if(confirm("Bạn có muốn xóa đề thi này không")){
+			
+		}else{
+			event.preventDefault();
+		}
+	}
+</script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
