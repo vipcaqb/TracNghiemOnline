@@ -71,8 +71,8 @@ public class DeThiController {
 	 * @return the model and view
 	 */
 
-	@GetMapping(value = "/addExam/page/{page}")
-	public ModelAndView showFormAdd(@PathVariable int page) {
+	@GetMapping(value = {"/addExam/page/{page}","/addExam"})
+	public ModelAndView showFormAdd(@PathVariable(required =  false) Integer page) {
 		ModelAndView mav = new ModelAndView();
 		List<Lop> lops = (ArrayList<Lop>) lopService.getAllLop();
 		DeThi deThi = new DeThi();
@@ -80,7 +80,12 @@ public class DeThiController {
 		mav.addObject("dsMonHoc", dsMonHoc);
 		mav.addObject("exam", deThi);
 		mav.addObject("Lop", lops);
-		mav.addObject("page", page);
+		if(page!=null) {
+			mav.addObject("page", page);
+		}
+		else {
+			mav.addObject("page", 1);
+		}
 		mav.setViewName("/creator/exam/addExam");
 		return mav;
 	}
@@ -92,8 +97,8 @@ public class DeThiController {
 	 * @return the model and view
 	 */
 
-	@GetMapping(value = "/editExam/{id}/page/{page}")
-	public ModelAndView editShowForm(@PathVariable int id,@PathVariable int page) {
+	@GetMapping(value = {"/editExam/{id}/page/{page}","/editExam/{id}"})
+	public ModelAndView editShowForm(@PathVariable int id,@PathVariable(required = false) Integer page) {
 		ModelAndView mav = new ModelAndView();
 		Optional<DeThi> deThi = deThiService.findById(id);
 		if (deThi.isPresent()) {
@@ -104,7 +109,13 @@ public class DeThiController {
 			mav.addObject("Lop", lops);
 
 		} else {
-			mav.setViewName("redirect:/manageExam");
+			if(page!=null) {
+				mav.setViewName("redirect:/manageExam/page/"+page);
+			}
+			else {
+				mav.setViewName("redirect:/manageExam");
+			}
+			
 		}
 		mav.setViewName("/creator/exam/editExam");
 		return mav;
@@ -119,8 +130,9 @@ public class DeThiController {
 	 * @param id the id
 	 * @return the model and view
 	 */
-	@PostMapping(value = "/editExam/{id}/page/{page}")
-	public ModelAndView editExamSubmit(HttpServletRequest request, HttpServletResponse response, @ModelAttribute DeThi deThi,@PathVariable int id,@PathVariable int page){
+	@PostMapping(value = {"/editExam/{id}/page/{page}","/editExam/{id}"})
+	public ModelAndView editExamSubmit(HttpServletRequest request, HttpServletResponse response
+			, @ModelAttribute DeThi deThi,@PathVariable int id,@PathVariable(required = false) Integer page){
 
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
@@ -133,7 +145,12 @@ public class DeThiController {
 			deThiService.editDeThi(deThi);
 		
 		}
-		mav.setViewName("redirect:/manageExam/page/"+page);
+		if(page!=null) {
+			mav.setViewName("redirect:/manageExam/page/"+page);
+		}
+		else {
+			mav.setViewName("redirect:/manageExam/page/"+1);
+		}
 		return mav;
 	}
 	/**
@@ -144,8 +161,9 @@ public class DeThiController {
 	 * @param deThi the de thi
 	 * @return the model and view
 	 */
-	@PostMapping(value = "/addExam/page/{page}")
-	public ModelAndView addExam(HttpServletRequest request, HttpServletResponse response, @ModelAttribute DeThi deThi,@PathVariable int page) {
+	@PostMapping(value = {"/addExam/page/{page}","/addExam"})
+	public ModelAndView addExam(HttpServletRequest request
+			, HttpServletResponse response, @ModelAttribute DeThi deThi,@PathVariable(required = false) Integer page) {
 		HttpSession session = request.getSession();
 		TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("user");
 		if (taiKhoan != null) {
@@ -155,7 +173,12 @@ public class DeThiController {
 		}
 
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:/manageExam/page/"+page);
+		if(page!=null) {
+			mav.setViewName("redirect:/manageExam/page/"+page);
+		}
+		else {
+			mav.setViewName("redirect:/manageExam");
+		}
 		return mav;
 	}
 
@@ -165,15 +188,19 @@ public class DeThiController {
 	 * @param id the id
 	 * @return the model and view
 	 */
-	@RequestMapping(value = "deleteExam/{id}/page/{page}")
-	public ModelAndView deleteById(@PathVariable int id,@PathVariable int page) {
+	@RequestMapping(value = {"deleteExam/{id}/page/{page}","deleteExam/{id}"})
+	public ModelAndView deleteById(@PathVariable int id,@PathVariable(required = false) Integer page) {
 
 		ModelAndView mav = new ModelAndView();
 		Optional<DeThi> deThi = deThiService.findById(id);
 		
 		deThiService.deleteByDeThi(deThi.get());
-		mav.setViewName("redirect:/manageExam/page/"+page);
-		
+		if(page!=null) {
+			mav.setViewName("redirect:/manageExam/page/"+page);
+		}
+		else {
+			mav.setViewName("redirect:/manageExam");
+		}
 		return mav;
 	}
 	
@@ -184,19 +211,27 @@ public class DeThiController {
 	 * @param model the model
 	 * @return the string
 	 */
-	@GetMapping("/manageExam/page/{pageNo}")
-	public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model) {
+	@GetMapping(value = {"/manageExam/page/{pageNo}","/manageExam"})
+	public String findPaginated(@PathVariable(value = "pageNo",required = false) Integer pageNo, Model model) {
 	    int pageSize = MyConstances.PAGE_SIZE;
-	    Page <DeThi> page = deThiService.findPaginated(pageNo, pageSize);
+	    Page <DeThi> page;
+	    if(pageNo!=null) {
+	    	page= deThiService.findPaginated(pageNo, pageSize);
+	    }
+	    else {
+	    	page= deThiService.findPaginated(1, pageSize);
+	    }
 	    List<DeThi> listDeThis = page.getContent();
 
-	    if(listDeThis.size()==0 && pageNo>1) {
-	    	page =deThiService.findPaginated(pageNo - 1, pageSize);
-	    	listDeThis = page.getContent();
-	    }
+    	
 
 	    model.addAttribute("listExam", listDeThis);
-	    model.addAttribute("currentPage", pageNo);
+	    if(pageNo!=null) {
+	    	model.addAttribute("currentPage", pageNo);
+	    }
+	    else {
+	    	model.addAttribute("currentPage", 1);
+	    }
 	    model.addAttribute("totalPages", page.getTotalPages());
 	    model.addAttribute("totalItems", page.getTotalElements());
 

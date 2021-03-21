@@ -3,10 +3,15 @@ package fpt.tracnghiem.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.annotations.Nationalized;
 import org.hibernate.annotations.NotFound;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.sun.istack.NotNull;
 
 import java.util.Date;
 import java.util.List;
@@ -23,16 +28,21 @@ public class TaiKhoan implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(length = 30)
+	@Length(min = 4,max=30,message = "Username phải có độ dài từ 4 đến 30 ký tự")
+	@Pattern(regexp="^[a-zA-Z0-9]*$",message = "Username chứa ký tự không hợp lệ")
 	private String username;
 
 	@Column(name="dia_chi",length = 100)
 	@Nationalized
+	@Length(max=100,message = "Địa chỉ quá dài")
 	private String diaChi;
 
 	@Column(name="diem_tich_luy")
 	private int diemTichLuy;
 
 	@Column
+	@NotBlank(message="Email không được để trống")
 	@Email(message = "Email không hợp lệ")
 	private String email;
 
@@ -41,6 +51,7 @@ public class TaiKhoan implements Serializable {
 
 	@Column(name="ho_va_ten")
 	@Nationalized
+	@NotBlank(message = "Họ tên không được trống")
 	private String hoVaTen;
 
 	@Column(name="ngay_sinh")
@@ -48,10 +59,13 @@ public class TaiKhoan implements Serializable {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date ngaySinh;
 
-	@Column(name="password")
+	@Column(name="password",length = 30)
+	@Pattern(regexp="^[a-zA-Z0-9]*$",message = "Pass chứa ký tự không hợp lệ")
+	@Length(min=6,max=30,message = "Mật khẩu phải có độ dài từ 6 đến 30 ký tự")
 	private String password;
 
 	@Column(name="sdt",length = 20)
+	@Pattern(regexp="^[0-9]*$",message = "Số điện thoại không hợp lệ")
 	private String sdt;
 
 	@Column(name="url_avatar")

@@ -4,14 +4,11 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet"
-	th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css}"
-	integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
-	crossorigin="anonymous">
-<link rel="stylesheet"
-	th:href="@{https://use.fontawesome.com/releases/v5.4.1/css/all.css}"
-	integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
-	crossorigin="anonymous">
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<link rel="stylesheet" th:href="@{/css/mystyle.css}">
 <link rel="stylesheet" th:href="@{/css/loginForm.css}">
 <title>Đăng nhập</title>
 </head>
@@ -23,32 +20,98 @@
 		<div class="row row_center">
 			<div class="jumbotron">
 				<div class="head">
-					<h2>Đăng Ký</h2>
+					<h3>Đăng Ký</h3>
 				</div>
 
 				<form th:action="@{/register}" th:object="${taiKhoan}" method="post">
-					<input class="form-control user_form" type="text"
-						placeholder="Nhập user" th:field="*{username}" required="required">
-					<input class="form-control user_form" type="password"
-						placeholder="Nhập password" th:field="*{password}"
-						required="required"> <input class="form-control user_form"
-						type="password" placeholder="Nhập lại password"
-						required="required"> <input class="form-control user_form"
-						type="text" placeholder="Nhập họ tên" th:field="*{hoVaTen}"
-						required="required"> <input class="form-control user_form"
-						type="email" placeholder="Nhập email" th:field="*{email}"
-						required="required"> <input class="form-control user_form"
-						type="text" placeholder="Nhập số điện thoại" th:field="*{sdt}"
-						required="required"> <input class="form-control user_form"
-						type="date" placeholder="Nhập ngày sinh" th:field="*{ngaySinh}"
-						required="required"> <input class="form-control user_form"
-						type="text" placeholder="Nhập địa chỉ" th:field="*{diaChi}"
-						required="required"> <input
-						class="form-control btn btn-primary user_form reg_DK"
-						type="submit" value="Đăng ký">
+					<input class="form-control user_form" type="text" placeholder="Nhập user" th:field="*{username}" required="required">
+					<input class="form-control user_form" type="password" placeholder="Nhập password" th:field="*{password}"
+						required="required"> 
+					<input class="form-control user_form" type="password" id="confirmPassword" placeholder="Nhập lại password"
+						required="required"> 
+					<div class="alert alert-danger hide" id="confirmPassMsg">
+						Mật khẩu xác nhận không trùng khớp với mật khẩu
+					</div>
+					<input class="form-control user_form" type="text" placeholder="Nhập họ tên" th:field="*{hoVaTen}"
+						required="required"> 
+					<input class="form-control user_form" type="email" placeholder="Nhập email" th:field="*{email}"
+					required="required"> 
+					<input class="form-control user_form" type="text" placeholder="Nhập số điện thoại" th:field="*{sdt}"
+					required="required"> 
+					<input class="form-control user_form" type="date" placeholder="Nhập ngày sinh" th:field="*{ngaySinh}"
+					required="required"> 
+					<input class="form-control user_form" type="text" placeholder="Nhập địa chỉ" th:field="*{diaChi}"
+					required="required"> 
+					<div id="errMsg" class="alert alert-danger">
+						Username khong hop le, password khong hop le
+					</div>
+					<input class="btn btn-lg btn-primary user_form reg_DK" id="regSubmit" type="submit" value="Đăng ký">
 				</form>
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#confirmPassword').change(function(){
+				var password = $("input[name='password']").val();
+				var confirmPassword = $("input[id='confirmPassword']").val();
+				if(password.localeCompare(confirmPassword)){
+					$('#confirmPassMsg').removeClass('hide');
+				}
+				else {
+					$('#confirmPassMsg').addClass('hide');
+				}
+			})
+			
+			$('#regSubmit').click(function(){
+				event.preventDefault();
+				
+				var password = $("input[name='password']").val();
+				var confirmPassword = $("input[id='confirmPassword']").val();
+				if(password.localeCompare(confirmPassword)){
+					$('#confirmPassMsg').removeClass('hide');
+				}
+				else {
+					$('#confirmPassMsg').addClass('hide');
+				}
+				
+				$("#regSubmit").prop("disabled", false);
+				var taiKhoan = {};
+				taiKhoan['username'] = $("[name='username']").val();
+				taiKhoan['password'] = $("[name='password']").val();
+				taiKhoan['hoVaTen'] = $("[name='hoVaTen']").val();
+				taiKhoan['email'] = $("[name='email']").val();
+				taiKhoan['sdt'] = $("[name='sdt']").val();
+				taiKhoan['ngaySinh'] = $("[name='ngaySinh']").val();
+				taiKhoan['diaChi'] = $("[name='diaChi']").val();
+				$.ajax({
+					type: "POST",
+					contentType: "application/json",
+					url: "/register",
+					data: JSON.stringify(taiKhoan),
+					dataType: 'json',
+					cache: false,
+					timeout: 600000,
+					success: function(data) {
+						console.log('dang ky thanh cong')
+						 window.location.href = '/login'; 
+					},
+					error: function(e) {
+						var empty = "";
+						if(empty.localeCompare(e.responseText)){
+							console.log('load trang')
+							window.location.href = '/login'; 
+						}
+						else {
+							var listMsg = JSON.parse(e.responseText);
+							console.log(listMsg)
+							$('#errMsg').text(listMsg.msg)
+							$("#regSubmit").prop("disabled", false);
+						}
+					}
+				});
+			})
+		})
+	</script>
 </body>
 </html>

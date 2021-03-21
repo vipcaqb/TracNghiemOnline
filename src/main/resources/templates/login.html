@@ -63,15 +63,17 @@
 				</div>
 				<form th:action="@{/login}" method="POST">
 					<input class="form-control user_form" type="text"
-						placeholder="Nhập user" id="loginName" name="username"> <input
-						class="form-control user_form" id="loginPass" type="password"
-						placeholder="Nhập password" name="password">
+
+						placeholder="Nhập user" id="loginName" name="username"> 
+        <input class="form-control user_form" id="loginPass" type="password" placeholder="Nhập password" name="password">
+        <p class="alert alert-danger" th:if="${hasError}!=null" th:utext="${hasError}" > 
+					ssssssss
+					</p>
 					<div class="row_center__remember">
-						<input type="checkbox" value="lsRememberMe" id="rememberMe" class="mr-2" /><label>Lưu
-							mật khẩu</label>
+						<input type="checkbox" value="lsRememberMe" id="rememberMe" class="mr-2" />
+            <label>Lưu mật khẩu</label>
 					</div>
-					<input class="form-control btn btn-primary user_form" type="submit"
-						value="Đăng nhập">
+					<input class="form-control btn btn-primary user_form" type="submit" value="Đăng nhập">
 				</form>
 				<div class="user_form mt-0 mb-0">Hoặc</div>
 				<div class="col-xs-12 btn btn-primary btn-lg btn-block user_form"

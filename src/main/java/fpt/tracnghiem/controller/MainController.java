@@ -1,24 +1,32 @@
 package fpt.tracnghiem.controller;
 
+import java.io.Console;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import fpt.tracnghiem.entity.Role;
 import fpt.tracnghiem.entity.TaiKhoan;
+import fpt.tracnghiem.model.AjaxResponseTaiKhoan;
 import fpt.tracnghiem.service.RoleService;
 import fpt.tracnghiem.service.TaiKhoanService;
 
@@ -68,17 +76,17 @@ public class MainController {
 	 * @return the string
 	 */
 	@PostMapping("/login")
-	public String login(@RequestParam(name="username") String username, 
-			@RequestParam("password") String password,
-			HttpServletRequest req,HttpServletResponse res) {
-		List<TaiKhoan> listTaiKhoan = taiKhoanService.findByUsernameAndPassword(username, password);
+	public String login(@ModelAttribute("taiKhoan") TaiKhoan taiKhoan,
+			HttpServletRequest req,
+			HttpServletResponse res,
+			Model model) {
+		List<TaiKhoan> listTaiKhoan = taiKhoanService
+				.findByUsernameAndPassword(taiKhoan.getUsername(), taiKhoan.getPassword());
 		if(listTaiKhoan.size() > 0) {
-			System.out.println(listTaiKhoan.get(0));
 			//luu vao session
 			HttpSession session = req.getSession();
 			session.setAttribute("user", listTaiKhoan.get(0));
 			String nameAccount=listTaiKhoan.get(0).getRole().getRoleName();
-		
 			if(nameAccount.equals("ROLE_USER")) {
 				return "redirect:/user";
 			}
@@ -90,7 +98,8 @@ public class MainController {
 				return "redirect:/manageExam";
 			}
 		}
-		return "redirect:/login";
+		model.addAttribute("hasError", "Sai thông tin đăng nhập.");
+		return "login";
 	}
 	
 	/**
@@ -111,24 +120,34 @@ public class MainController {
 	 * @return the string
 	 */
 	@PostMapping("/register")
-	public String  register(@ModelAttribute("taiKhoan") TaiKhoan taiKhoan) {
-		System.out.println("POST /register");
+	@ResponseBody
+	public ResponseEntity<?>  register(@Valid @RequestBody TaiKhoan taiKhoan, BindingResult bindingResult) {
+		//validation data
+		AjaxResponseTaiKhoan result = new AjaxResponseTaiKhoan();
+		if(bindingResult.hasErrors()) {
+			System.out.println("Lỗi validation");
+			result.setMsg(bindingResult.getAllErrors().stream().map(x->x.getDefaultMessage())
+					.collect(Collectors.joining(",")));
+			System.out.println(result.getMsg());
+			return ResponseEntity.badRequest().body(result);
+		}
+		
+		
+		//when success data
 		taiKhoan.setEnable(true);
 		Optional<Role> o = roleService.findByRoleName("ROLE_USER");
-		if(o.isEmpty()) {
-			return "redirect:/register";
-		}
 		Role role = o.get();
 		taiKhoan.setRole(role);
-		System.out.println(taiKhoan.getUsername());
 		taiKhoan.setUrlAvatar("/img/defaultAvatar.jpg");
 		try {
 			taiKhoanService.save(taiKhoan);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "redirect:/register";
+			System.out.println("Username đã tồn tại");
+			result.setMsg("Username đã tồn tại");
+			return ResponseEntity.badRequest().body(result);
 		}
-		return "redirect:/login";
+		return ResponseEntity.ok("");
 	}
 	
 	/**
