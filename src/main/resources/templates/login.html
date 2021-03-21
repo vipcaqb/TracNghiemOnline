@@ -31,13 +31,14 @@
 
 				<form th:action="@{/login}" method="POST">
 					<input class="form-control user_form" type="text"
-						placeholder="Nhập user" name="username"> <input
-						class="form-control user_form" type="password"
-						placeholder="Nhập password" name="password"> <input
-						class="form-control btn btn-primary user_form" type="submit"
-						value="Đăng nhập">
+						placeholder="Nhập user" name="username"> 
+					<input class="form-control user_form" type="password" placeholder="Nhập password" name="password"> 
+					<p class="alert alert-danger" th:if="${hasError}!=null" th:utext="${hasError}" > 
+					ssssssss
+					</p>
+					<input class="form-control btn btn-primary user_form" type="submit" value="Đăng nhập">
 				</form>
-				<div class="user_form ">
+				<div>
 					<p>Hoặc</p>
 				</div>
 				<div class="col-xs-12 btn btn-primary btn-lg btn-block user_form"

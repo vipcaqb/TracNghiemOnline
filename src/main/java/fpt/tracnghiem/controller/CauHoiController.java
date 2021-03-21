@@ -235,6 +235,6 @@ public class CauHoiController {
 			cauHoi = oCauHoi.get();
 		}
 		cauHoiService.deleteCauHoiByIdCauHoi(idCauHoi);
-		return "redirect:/manageExam/"+cauHoi.getDeThi().getIdDe()+"/addQuestion";
+		return "redirect:/manageExam";
 	}
 }
