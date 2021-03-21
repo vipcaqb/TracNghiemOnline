@@ -31,6 +31,13 @@ body{
   text-align: center !important;
 }
 
+.row_center .row_center__remember {
+  margin: 0 auto;
+  justify-content:flex-start;
+  text-align: left !important;
+}
+
+
 .head {
   padding-bottom: 20px;
 }

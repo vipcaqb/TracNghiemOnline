@@ -13,8 +13,42 @@
 	th:href="@{https://use.fontawesome.com/releases/v5.4.1/css/all.css}"
 	integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
 	crossorigin="anonymous">
+
+<script type="text/javascript"
+	th:src="@{http://code.jquery.com/jquery-1.11.3.js}"></script>
+
 <link rel="stylesheet" th:href="@{/css/loginForm.css}">
-<title>Đăng nhập</title>
+<title>ĐĂNG NHẬP</title>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(function() {
+			if (localStorage.chkbox && localStorage.chkbox != '') {
+				$('#rememberMe').attr('checked', 'checked');
+				$('#loginName').val(localStorage.username);
+				$('#loginPass').val(localStorage.pass);
+			} else {
+				$('#rememberMe').removeAttr('checked');
+				$('#loginName').val('');
+				$('#loginPass').val('');
+			}
+
+			$('#rememberMe').click(function() {
+
+				if ($('#rememberMe').is(':checked')) {
+					// save username and password
+					localStorage.username = $('#loginName').val();
+					localStorage.pass = $('#loginPass').val();
+					localStorage.chkbox = $('#rememberMe').val();
+				} else {
+					localStorage.username = '';
+					localStorage.pass = '';
+					localStorage.chkbox = '';
+				}
+			});
+		});
+	});
+</script>
 </head>
 
 <body>
@@ -25,21 +59,21 @@
 		<div class="row row_center">
 			<div class="jumbotron">
 				<div class="head">
-					<h2>Đăng Nhập</h2>
-
+					<h2>ĐĂNG NHẬP</h2>
 				</div>
-
 				<form th:action="@{/login}" method="POST">
 					<input class="form-control user_form" type="text"
-						placeholder="Nhập user" name="username"> <input
-						class="form-control user_form" type="password"
-						placeholder="Nhập password" name="password"> <input
-						class="form-control btn btn-primary user_form" type="submit"
+						placeholder="Nhập user" id="loginName" name="username"> <input
+						class="form-control user_form" id="loginPass" type="password"
+						placeholder="Nhập password" name="password">
+					<div class="row_center__remember">
+						<input type="checkbox" value="lsRememberMe" id="rememberMe" class="mr-2" /><label>Lưu
+							mật khẩu</label>
+					</div>
+					<input class="form-control btn btn-primary user_form" type="submit"
 						value="Đăng nhập">
 				</form>
-				<div class="user_form ">
-					<p>Hoặc</p>
-				</div>
+				<div class="user_form mt-0 mb-0">Hoặc</div>
 				<div class="col-xs-12 btn btn-primary btn-lg btn-block user_form"
 					style="padding: 0 100px;">
 					<a class="btn facebook" href=""> <i
@@ -47,12 +81,10 @@
 					</a>
 				</div>
 				<div class="user_form">
-					<p>Bạn chưa có tài khoản?</p>
-					<a th:href="@{/register}">Đăng ký</a>
+					Bạn chưa có tài khoản? <a th:href="@{/register}">Đăng ký</a>
 				</div>
 			</div>
 		</div>
 	</div>
 </body>
-
 </html>
