@@ -63,6 +63,8 @@ public class DeThiService {
 	public void editDeThi(DeThi deThi) {
 		deThiRepository.save(deThi);
 	}
-	
+	public List<DeThi> findByTenDeContaining(String tenDe) {
+	return	deThiRepository.findByTenDeContaining(tenDe);
+	}
 	
 }

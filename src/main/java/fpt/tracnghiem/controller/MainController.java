@@ -80,7 +80,7 @@ public class MainController {
 			String nameAccount=listTaiKhoan.get(0).getRole().getRoleName();
 		
 			if(nameAccount.equals("ROLE_USER")) {
-				return "redirect:/user";
+				return "redirect:/user/thi/page/1";
 			}
 			else if(nameAccount.equals("ROLE_ADMIN")){
 				return "redirect:/admin";
