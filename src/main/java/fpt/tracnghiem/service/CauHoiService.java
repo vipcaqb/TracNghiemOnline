@@ -143,6 +143,10 @@ public class CauHoiService {
 		});
 	}
 	
+	public int CountByIdDe(int id) {
+		return cauHoiRepository.countByIdDeThi(id);
+	}
+	
 	
 	
 }

@@ -2,6 +2,7 @@ package fpt.tracnghiem.repository;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,5 +17,6 @@ public interface DeThiRepository  extends JpaRepository<DeThi, Integer>{
 
 	List<ExamInformation> getExamInformation();
 	
+	List<DeThi> findByTenDeContaining(String tenDe);
 	
 }
