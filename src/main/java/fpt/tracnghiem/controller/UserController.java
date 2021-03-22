@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class UserController.
+ *	Để trống class này
  */
 @Controller
 public class UserController {

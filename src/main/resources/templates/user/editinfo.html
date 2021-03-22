@@ -12,7 +12,6 @@
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 <link rel="stylesheet" type="text/css" th:href="@{/css/user-homepage-style.css}">
 <link rel="stylesheet" type="text/css" th:href="@{/css/userinfo.css}">
-<link rel="stylesheet" type="text/css" th:href="@{/css/mystyle.css}">
 <title>Thông tin tài khoản</title>
 </head>
 <body>
@@ -22,14 +21,14 @@
 	</nav>
 	
 	<section class="container emp-profile">
-		<div class="shadow">
+		<form class="shadow" action="/user/edit" method="post">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="profile-img">
                             <img th:src="@{'/image/defaultAvatar.png'}" alt=""/>
                             <div class="file btn btn-lg btn-primary">
                                 Change Photo
-                                <input type="file" name="file"/>
+                                <input type="file" />
                             </div>
                         </div>
                     </div>
@@ -41,12 +40,7 @@
                                     <p class="proile-rating">Điểm tích lũy : <span  th:utext="${session.user.diemTichLuy}">8/10</span></p>
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="home-tab" 
-                                    data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="profile-tab" 
-                                    data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Đổi mật khẩu</a>
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
                                 </li>
                             </ul>
                         </div>
@@ -54,11 +48,13 @@
                     <div class="col-md-2">
                     	<a class="profile-edit-btn" th:href="@{/user/edit}">Edit Profile</a>
                     </div>
+                    
                 </div>
                 <div class="row">
                     <div class="col-md-4">
                         <div class="profile-work">
-                            <a class="center" href=""></a>
+                            <p></p>
+                            <a href=""></a>
                         </div>
                     </div>
                     <div class="col-md-8">
@@ -77,7 +73,7 @@
                                         <label>Name</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <p th:text="${session.user.hoVaTen}">Kshiti Ghelani</p>
+                                        <input class='input-info' type="text" name="hoVaTen" th:value="${session.user.hoVaTen}">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -85,7 +81,7 @@
                                         <label>Email</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <p th:text="${session.user.email}">kshitighelani@gmail.com</p>
+                                        <input class='input-info' type="text" name="email" th:value="${session.user.email}">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -93,17 +89,18 @@
                                         <label>Phone</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <p th:text="${session.user.sdt}">123 456 7890</p>
+                                        <input class='input-info' type="text" name="sdt" th:value="${session.user.sdt}">
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Ngày sinh</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input class='input-info' type="date" th:value = "${session.user.ngaySinh}" readonly="readonly">
-                                    </div>
-                                </div>
+                                            <div class="col-md-6">
+                                                <label>Ngày sinh</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                               <input class='input-info' type="date" th:if="${session.user.ngaySinh}!=null" name="ngaySinh" th:value="${session.user.ngaySinh}">
+                                               <input class='input-info' type="date" th:if="${session.user.ngaySinh}==null" name="ngaySinh">
+                                            </div>
+                                        </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Vai trò</label>
@@ -113,39 +110,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-								<form id="changePassForm" th:action="@{/user/changepassword}" method = "post">
-								    <div class="form-group">
-								      <input type="password" class="form-control" suggested="current-password" placeholder="Mật khẩu cũ" name="password" required>
-								    </div>
-								    <div class="form-group">
-								      <input type="password" class="form-control" suggested="new-password" placeholder="Mật khẩu mới" name="newPassword" required>
-								    </div>
-								    <div class="form-group">
-								      <input type="password" class="form-control" id="confirmNewPassword" placeholder="Xác nhận mật khẩu mới" required>
-								      
-								    </div>
-								    <p id="confirmMsg" class="alert alert-danger hide"> Mật khẩu xác nhận không trùng khớp </p>
-								    <input type="submit" id="submitChangePassword" class="btn btn-primary" value = "Xác nhận"/>
-								</form>
-                            </div>
                         </div>
                     </div>
                 </div>
-            </div> 
+                <input class="btn btn-success float-right mb-3" type="submit" value = "Lưu">
+            </form> 
 	</section>
-			
-	<script type="text/javascript">
-		$(document).ready(function(){
-			$('#submitChangePassword').click(function(){
-				var newPassword = $("input[name='newPassword']").val();
-				var confirmNewPassword = $("#confirmNewPassword").val();
-				if(newPassword.localeCompare(confirmNewPassword)==1){
-					event.preventDefault();
-					$('#confirmMsg').removeClass('hide');
-				}
-			})
-		})
-	</script>
 </body>
 </html>

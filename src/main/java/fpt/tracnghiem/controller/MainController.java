@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -138,7 +139,7 @@ public class MainController {
 		Optional<Role> o = roleService.findByRoleName("ROLE_USER");
 		Role role = o.get();
 		taiKhoan.setRole(role);
-		taiKhoan.setUrlAvatar("/img/defaultAvatar.jpg");
+		taiKhoan.setUrlAvatar("/image/defaultAvatar.png");
 		try {
 			taiKhoanService.save(taiKhoan);
 		} catch (Exception e) {
@@ -173,4 +174,5 @@ public class MainController {
 		session.removeAttribute("user");
 		return ResponseEntity.ok(null);
 	}
+	
 }

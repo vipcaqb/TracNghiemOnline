@@ -98,6 +98,21 @@ public class TaiKhoan implements Serializable {
 		this.hoVaTen = hoVaTen;
 		this.password = password;
 	}
+	
+	
+
+	public TaiKhoan(
+			@Length(min = 4, max = 30, message = "Username phải có độ dài từ 4 đến 30 ký tự") @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "Username chứa ký tự không hợp lệ") String username,
+			@Pattern(regexp = "^[a-zA-Z0-9]*$", message = "Pass chứa ký tự không hợp lệ") @Length(min = 6, max = 30, message = "Mật khẩu phải có độ dài từ 6 đến 30 ký tự") String password,
+			@NotBlank(message = "Họ tên không được trống") String hoVaTen,
+			@NotBlank(message = "Email không được để trống") @Email(message = "Email không hợp lệ") String email
+			) {
+		super();
+		this.username = username;
+		this.email = email;
+		this.hoVaTen = hoVaTen;
+		this.password = password;
+	}
 
 	public String getUsername() {
 		return this.username;

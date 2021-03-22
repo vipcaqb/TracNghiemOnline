@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 <link rel="stylesheet" href="/css/ExamForm.css">
+<link rel="stylesheet" type="text/css" th:href="@{/css/user-homepage-style.css}">
 </head>
 <body>
 <nav th:insert="creator/shared/menu::menu">
@@ -46,14 +47,16 @@
 			</th:block>
 		</select> 
 	<br/>
-	<label >Mô tả</label> <textarea id="text-area" th:field="*{MoTa}" class="form-control mota"></textarea>
-		<br/>
-		<div class="row">
-			<div class="col-sm-5"></div>
-			
-			<div class="col-sm-7"><button type="submit" class="btn btn-warning" >Sửa</button>
-			 <a class="btn btn-danger btn-cancel" th:href="@{/manageExam}">Quay lại</a></div>
-		</div>
+	<label >Mô tả</label> 
+	<textarea id="text-area" th:field="*{MoTa}" class="form-control mota"></textarea>
+	<br/>
+	<div class="row">
+		<div class="col-sm-5"></div>
+		<div class="col-sm-7">
+			<button type="submit" class="btn btn-warning" >Sửa</button>
+			 <a class="btn btn-danger btn-cancel" th:href="@{/manageExam}">Quay lại</a>
+		 </div>
+	</div>
 		
 
 
