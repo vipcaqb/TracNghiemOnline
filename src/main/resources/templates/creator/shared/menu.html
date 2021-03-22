@@ -56,13 +56,12 @@
 					th:if="${session.user}==null" class="nav-link" th:href="@{/login}">Đăng
 						nhập</a>
 					<div th:if="${session.user}!=null" class="dropdown">
-						<button class="dropbtn"
-							th:text="@{'Hi: '+${session.user.hoVaTen}}">
-							Họ và tên <i class="fa fa-caret-down"></i>
-						</button>
-						<div class="dropdown-content">
-							<a href="#">Đổi mật khẩu</a> <a href="/manageExam">Quản lý
-								tài khoản</a> <a id='logoutBtn'>Đăng xuất</a>
+					    <button class="dropbtn" th:text="@{'Hi: '+${session.user.hoVaTen}}">Họ và tên
+					      	<i class="fa fa-caret-down"></i>
+					    </button>
+					    <div class="dropdown-content">
+						    <a href="/manageExam">Quản lý tài khoản</a>
+						    <a id='logoutBtn'>Đăng xuất</a>
 						</div>
 					</div></li>
 			</ul>

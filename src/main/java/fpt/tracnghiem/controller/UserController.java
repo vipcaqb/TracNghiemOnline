@@ -22,7 +22,7 @@ import jdk.internal.jshell.tool.resources.l10n;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class UserController.
+ *	Để trống class này
  */
 @Controller
 public class UserController {
