@@ -34,5 +34,8 @@ public class TaiKhoanService {
 		return taiKhoanRepository.findByUsernameAndPassword(username, password);
 	}
 	
+	public TaiKhoan update(TaiKhoan taiKhoan) {
+		return taiKhoanRepository.save(taiKhoan);
+	}
 	
 }

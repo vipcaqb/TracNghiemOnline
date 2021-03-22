@@ -88,8 +88,8 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 		}
 
 		// tao 1 tai khoan la ROLE_USER
-		if (taiKhoanRepository.findById("test").isEmpty()) {
-			TaiKhoan tk = new TaiKhoan("test", "123","User Acc");
+		if (taiKhoanRepository.findById("useracc").isEmpty()) {
+			TaiKhoan tk = new TaiKhoan("useracc", "123qwe","User Acc","useracc@gmail.com");
 			Optional<Role> x = roleRepository.findByRoleName("ROLE_USER");
 			if (x.isPresent()) {
 				tk.setRole(x.get());
@@ -98,8 +98,8 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 		}
 
 		// tao 1 tai khoan la ROLE_ADMIN
-		if (taiKhoanRepository.findById("admin").isEmpty()) {
-			TaiKhoan tk = new TaiKhoan("admin", "123", "Admin Acc");
+		if (taiKhoanRepository.findById("adminacc").isEmpty()) {
+			TaiKhoan tk = new TaiKhoan("adminacc", "123qwe", "Admin Acc","useracc@gmail.com");
 			
 			Optional<Role> x = roleRepository.findByRoleName("ROLE_ADMIN");
 			if (x.isPresent()) {
@@ -110,7 +110,7 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 
 		// tao 1 tai khoan la ROLE_CREATER
 		if (taiKhoanRepository.findById("creater").isEmpty()) {
-			TaiKhoan tk = new TaiKhoan("creater", "123","Creator Acc");
+			TaiKhoan tk = new TaiKhoan("creater", "123qwe","Creator Acc","useracc@gmail.com");
 			Optional<Role> x = roleRepository.findByRoleName("ROLE_CREATER");
 			if (x.isPresent()) {
 				tk.setRole(x.get());

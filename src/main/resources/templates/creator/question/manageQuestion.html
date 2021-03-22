@@ -35,15 +35,15 @@
 			<td>
 				<ul class="list-group">
 					<th:block th:each="phuongAn : ${cauHoi.phuongAns}">
-						<li class="list-group-item active" th:utext="${phuongAn.noiDung}" th:if="${phuongAn.isCorrect}"></li>
-						<li class="list-group-item" th:utext="${phuongAn.noiDung}" th:unless="${phuongAn.isCorrect}"></li>
+						<li class="list-group-item active" th:utext="${phuongAn.noiDung}" th:if="${phuongAn.isCorrect}==true"></li>
+						<li class="list-group-item" th:utext="${phuongAn.noiDung}" th:if="${phuongAn.isCorrect}==false"></li>
 					</th:block>
 				</ul>
 			</td>
 			<td>
 				<a class="btn btn-info" th:href="@{'/manageExam/'+${idDe}+'/editQuestion/'+${cauHoi.idCauHoi}}">Sửa</a>
 				<form th:action="@{'/deleteQuestion/'+${cauHoi.idCauHoi}}" method="post">
-					<input class="btn btn-danger" id = 'submitDelete' type="submit" value="Xóa">
+					<input class="btn btn-danger" id = 'submitDelete' type="submit" th:data-idCauHoi="${cauHoi.idCauHoi}" value="Xóa">
 				</form>
 			</td>
 		</tr>
@@ -58,11 +58,11 @@
 		    <a class="page-link" th:href="@{'/manageExam/'+${idDe}+'/manageQuestion/'+${pageNumber-1}}">Previous</a></li>
 	    	<th:block th:each="i : ${#numbers.sequence(1, pageCauHoi.totalPages)}">
 		    	<li class="page-item" th:if="${i!=pageCauHoi.number+1}">
-		    	<a class="page-link" th:href="@{'/manageExam/'+${idDe}+'/manageQuestion/'+${i}}" th:utext="${i}">1</a>
+		    		<a class="page-link" th:href="@{'/manageExam/'+${idDe}+'/manageQuestion/'+${i}}" th:utext="${i}">1</a>
 		    	</li>
 		    	
 		    	<li class="page-item active" th:if="${i==pageCauHoi.number+1}">
-		    	<a class="page-link" th:href="@{'/manageExam/'+${idDe}+'/manageQuestion/'+${i}}" th:utext="${i}">1</a>
+		    		<a class="page-link" th:href="@{'/manageExam/'+${idDe}+'/manageQuestion/'+${i}}" th:utext="${i}">1</a>
 		    	</li>
 	    	</th:block>
 	    	<li class="page-item" th:if="${hasNext}"><a class="page-link" th:href="@{'/manageExam/'+${idDe}+'/manageQuestion/'+${pageNumber+1}}">Next</a></li>

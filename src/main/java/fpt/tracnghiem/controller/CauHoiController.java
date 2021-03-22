@@ -218,7 +218,7 @@ public class CauHoiController {
 		
 		//Thêm câu hỏi
 		cauHoiService.save(cauHoi, listPhuongAn, null, idDe);
-		return "redirect:/manageExam/"+idDe+"/manageQuestion";
+		return "redirect:/manageExam/"+idDe+"/addQuestion";
 	}
 	
 	/**
