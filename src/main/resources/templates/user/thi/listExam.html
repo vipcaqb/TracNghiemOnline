@@ -35,7 +35,7 @@
 					<div class="boxcont magb20">
 			            <div class="title">
 				            <span>Tiểu học - THCS - THPT</span>
-				            <a class="view-all" href="/user/thi/page/1">Xem tất cả</a>
+				            <a class="view-all" href="/site/category/tieu-hoc---thcs---thpt-7">Xem tất cả</a>
 			            </div>
 	            		<div class="box " >	           
 	            		<th:block th:each="dethi : ${dsDeThi}">
@@ -47,8 +47,8 @@
 									    <h3><a th:href="@{'/user/thi/'+${dethi.idDe}}" th:text=${dethi.tenDe}></a></h3>
 									    <div class="tools">
 										    <ul class="list">
-										        <li th:text="@{${dethi.thoiGianThi}+' Phút'}"><i  class="fas fa-history fm-ic mr-1"></i></li>
-										        <li th:text="@{${dethi.cauHois.size()}+' Câu'}"><i class="far fa-comments  fm-ic mr-1" ></i></li>
+										        <li th:text="@{${dethi.thoiGianThi}+' Phút'}"><i  class="fas fa-history fm-ic mr-1"></i>45 phút</li>
+										        <li th:text="@{${dethi.cauHois.size()}+' Câu'}"><i class="far fa-comments  fm-ic mr-1" ></i> 40 câu </li>
 										        <li>
 										        <button style="background-color: transparent;border: none" data-toggle="tooltip" title="Lưu đề" onclick="likedExam(this,2534)"><i class="far fa-heart fm-ic mr-1"></i><span>0</span>
 										        </button>

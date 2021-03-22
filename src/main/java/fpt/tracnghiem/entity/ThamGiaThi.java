@@ -3,7 +3,6 @@ package fpt.tracnghiem.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Calendar;
 
 
 /**
