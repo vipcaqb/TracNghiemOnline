@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Trang Chủ</title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="https://kit.fontawesome.com/0e6c29c291.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/user-homepage-style.css}">
+	<link rel="icon" type="image/png" sizes="192x192"  href="img/iconn.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/iconn.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="img/iconn.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/iconn.png">
+</head>
+<body class="bg-gray">
+	<div th:insert="creator/shared/menu::menu">
+	
+	</div>
+	<section id="search-side">
+		<form  method="POST">
+			<input type="text" th:value="${keyword}" name="keyword" id="keyword"/>    
+			<input type="submit" value='Search'>
+		</form>
+	</section>
+	<div class="mg-main mx-auto ">
+		<div class="row " id="content">
+			
+			<div class="col-9 high ">
+				<div class="">
+					<div class="boxcont magb20">
+			            <div class="title">
+				            <span>Tiểu học - THCS - THPT</span>
+				            <a class="view-all" href="/site/category/tieu-hoc---thcs---thpt-7">Xem tất cả</a>
+			            </div>
+	            		<div class="box " >	           
+	            		<th:block th:each="dethi : ${dsDeThi}">
+	            			<div class="item">
+								<div class="title-top " >
+									
+									<i class="fas fa-pencil-ruler fm-test"></i>
+									<div class="content">
+									    <h3><a th:href="@{'/user/thi/'+${dethi.idDe}}" th:text=${dethi.tenDe}></a></h3>
+									    <div class="tools">
+										    <ul class="list">
+										        <li th:text="@{${dethi.thoiGianThi}+' Phút'}"><i  class="fas fa-history fm-ic mr-1"></i>45 phút</li>
+										        <li th:text="@{${dethi.cauHois.size()}+' Câu'}"><i class="far fa-comments  fm-ic mr-1" ></i> 40 câu </li>
+										        <li>
+										        <button style="background-color: transparent;border: none" data-toggle="tooltip" title="Lưu đề" onclick="likedExam(this,2534)"><i class="far fa-heart fm-ic mr-1"></i><span>0</span>
+										        </button>
+										            
+										        </li>
+										    </ul>
+								    	</div>
+									</div>
+								</div>
+								<span class="endow">Miễn phí</span>
+
+								<div class="tag magb20">
+									<a href="/site/class/tong-hop-khoi-k-12">#Đề thi Tổng Hợp</a>
+									<a href="/site/subject/tong-hop-khoi-k-12">#Tổng Hợp</a>
+								</div>
+								<div class="following">
+									<div class="left">
+									    <ul class="list-folw">
+									    <li><span>+0</span></li>
+									    </ul>
+									    <!-- <span class="time">5 phút trước</span> -->
+									</div>
+									<a href="/exam/detail/on-tap-giua-ki-ii--lop-khtn-2534" class="btn-white">Chi tiết <i class="fas fa-chevron-right fm-ic ml-2 mt-1"></i></a>
+								</div>
+							</div>                            
+							
+	            		</th:block>                 
+						
+						</div>                          
+					</div>
+				</div>	
+			</div>
+
+			<div class="col-3  ml-fit px-fit">
+				<div class="sidebar ranking magb20">
+				    <div class="title ml-3">
+				      <span class="">Xếp hạng người dùng điểm cao nhất</span>
+				    </div>
+				    <div class="box fm-box mx-auto">
+				      <ul class="list">
+				        <li>
+				          	<div class="relative"> 
+					          	<img src="https://lh3.googleusercontent.com/a-/AOh14GjydwnrlI5-BQ7lCYlKZlGi4N3P-ZykNZyIz5Qd">
+					            <span class="rank rank1">1</span>
+				        	</div>
+				          	<div class="clearfix">
+					            <p>
+					            	<a href="/profile/personal?user_id=10473" class="name">le vui</a>
+					            </p>
+					            <p class="cl99">
+					            	<span class="clred">6888</span> điểm / 238 lần thi
+					            </p>
+				          	</div>
+				        </li>
+		                <li>
+				          	<div class="relative"> 
+				          		<img src="https://graph.facebook.com/1557634991080691/picture?type=large">
+				            	<span class="rank rank2">2</span></div>
+				          	<div class="clearfix">
+				            	<p> 
+				            		<a href="/profile/personal?user_id=3526" class="name">Thanh Loan</a>
+				            	</p>
+				            	<p class="cl99">
+				            		<span class="clred">1939</span> điểm / 106 lần thi
+				            	</p>
+				          	</div>
+				        </li>
+		                <li>
+				          	<div class="relative"> 
+				          		<img src="https://ui-avatars.com/api/?color=fff&amp;background=3f902f&amp;uppercase=true&amp;name=Tuyetnhungfont-size=0.6&amp;size=180">
+				            	<span class="rank rank3">3</span></div>
+				          	<div class="clearfix">
+				            	<p> 
+				            		<a href="/profile/personal?user_id=10074" class="name">Tuyetnhung</a>
+				            	</p>
+				            	<p class="cl99"><span class="clred">1424</span> điểm / 56 lần thi</p>
+				          </div>
+				        </li>
+				                <li>
+				          <div class="relative"> <img src="https://graph.facebook.com/152994149759059/picture?type=large">
+				            <span class="rank rank4">4</span></div>
+				          <div class="clearfix">
+				            <p> <a href="/profile/personal?user_id=10077" class="name">Nguyễn Thị Thanh Phương</a></p>
+				            <p class="cl99"><span class="clred">1373</span> điểm / 52 lần thi</p>
+				          </div>
+				        </li>
+				                <li>
+				          <div class="relative"> <img src="https://graph.facebook.com/977480999314615/picture?type=large">
+				            <span class="rank rank5">5</span></div>
+				          <div class="clearfix">
+				            <p> <a href="/profile/personal?user_id=8468" class="name">Dũng Lê</a></p>
+				            <p class="cl99"><span class="clred">1327</span> điểm / 78 lần thi</p>
+				          </div>
+				        </li>
+				                <li>
+				          <div class="relative"> <img src="https://graph.facebook.com/588228791784264/picture?type=large">
+				            <span class="rank rank6">6</span></div>
+				          <div class="clearfix">
+				            <p> <a href="/profile/personal?user_id=7701" class="name">Kim Anh Mai</a></p>
+				            <p class="cl99"><span class="clred">1307</span> điểm / 68 lần thi</p>
+				          </div>
+				        </li>
+		              </ul>
+				    </div>
+				  </div>
+			</div>
+		</div>
+	</div>
+	<div th:if="${totalPages > 1}">
+			<div class="row ">
+			
+				<div class="col-sm-2"></div>
+				<div class="col-sm-3" style="margin-top: 5px;">Tổng số đề: [[${totalItems}]]</div>
+				<div class="pagination col-sm-6">
+					<!-- previous -->
+						<span class="page-item">
+					<a th:if="${currentPage > 1 }"  class="page-link" 
+						th:href="@{'/user/thi/page/' + ${currentPage - 1 }}">Previous</a>
+						</span>
+						<span class="page-item">
+						 <span class="page-link" 
+						th:unless="${currentPage > 1}" style="color: gray">Previous</span>
+					</span>
+					<!-- number -->
+					<span th:each="i: ${#numbers.sequence(1, totalPages)}" class="page-item" > <a class="page-link" 
+						th:if="${currentPage != i}" th:href="@{'/user/thi/page/' + ${i}}">[[${i}]]</a>
+						<span class="page-link" style="background-color:blue;color: white; " th:unless="${currentPage != i}">[[${i}]]</span> &nbsp;
+						&nbsp;
+					</span>
+					
+					<!-- next -->
+					<span class="page-item">
+					<a th:if="${currentPage < totalPages}"  class="page-link" 
+						th:href="@{'/user/thi/page/' + ${currentPage + 1}}">Next</a>
+						</span>
+						<span class="page-item">
+						 <span class="page-link" 
+						th:unless="${currentPage < totalPages}" style="color: gray">Next</span>
+					</span>
+					<!-- last -->	
+					<span class="page-item">
+						<a th:if="${currentPage < totalPages}" class="page-link"
+						th:href="@{'/user/thi/page/' + ${totalPages}}">Last</a>
+						 <span style="color: gray;"
+						th:unless="${currentPage < totalPages}" class="page-link">Last</span>
+					</span>
+				</div>
+				
+			</div>
+		</div>
+</body>
+</html>

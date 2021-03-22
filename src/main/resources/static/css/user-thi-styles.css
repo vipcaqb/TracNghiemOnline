@@ -1,0 +1,328 @@
+body {
+  background-color: #E0E0E0;
+}
+.round2 {
+  border: 2px solid white;
+  border-radius: 8px;
+}
+.pd-all{
+  
+  width:95%;
+}
+.del-pd{
+  padding-left: 0px!important;
+}
+.fm{
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  margin-right: 2rem;
+}
+.fm1{
+  list-style: none;
+  justify-content: space-between;
+  margin-right: 2rem;
+}
+.rfm{
+  list-style: none;
+}
+.pd-top{
+  padding: 2rem 1rem;
+  background-color: #fff;
+}
+.text-top-cl{
+  color: #fd7e14;
+}
+
+
+.fl{
+  display: flex;
+}
+.fm-back-top{
+  text-decoration: none;
+
+ 
+}
+.name-tech {
+    color: #b3b3b3;
+    font-size: 26px;
+    text-decoration: none;
+}
+.p1 {
+  font-family: "Times New Roman", Times, red serifs;
+}
+.p2{
+    background: #404040;
+    border-radius: 50%; 
+    border: 2px solid #a1a1a1; 
+  	margin: 18px; 
+    padding: 18px;
+}
+.p3{
+
+border-radius:50%;
+-moz-border-radius:50%;
+-webkit-border-radius:50%;
+}
+.badge {
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    background-color: #777;
+    border-radius: 10px;
+}
+.p5{
+  color: #fff;
+}
+.answer-sticky {
+    position: sticky!important;
+    position: -webkit-sticky!important;
+    top: 10px;
+}
+.btn-exam {
+    background: #f32424;
+    padding: 15px 35px;
+    display: inline-block;
+    border-radius: 30px;
+    color: #fff;
+    text-transform: uppercase;
+    border: none;
+    min-width: 80%;
+    margin-top: 20px;
+    text-align: center;
+}
+.p4{
+  margin-left: 30px;
+}
+.timeline-list {
+    animation: reveal 2s 0 ease both 1;
+    margin-left: 20px;
+}
+
+.timeline-list {
+    position: relative;
+    max-width: 700px;
+    margin: 0 auto;
+    margin-left: 40px;
+}
+.timeline-list:before {
+    content: "";
+    border-left: 1px solid #CCC;
+    left: -0.5em;
+    top: 2em;
+    height: 100%;
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    transform-origin: 0 0;
+    animation: scaleVertical 3s 1s ease both 1;
+}
+.timeline-list li:nth-child(1):before {
+    animation-delay: 0.85s;
+    background: #ffbb55;
+}
+.timeline-list li:before {
+    
+    position: absolute;
+    top: 0px;
+    left: -1.2em;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: none repeat scroll 0% 0% #02aa9d;
+    border: 5px solid #fff;
+    animation: revealScaleUp 0.75s 0s ease both 1;
+}
+.fm1 li:before{
+  background: #fff!important;
+  left: 0px!important;
+  width: 0px!important;
+  height: 0px!important;
+  border-radius: 0%!important;
+  animation: none!important;
+}
+.timeline-list li {
+    margin: 0 0 2em 0;
+    padding: 0 0em 0em 3em;
+    position: relative;
+}
+.timeline-list li:nth-child(1) .content {
+    animation-delay: 1.05s;
+}
+.timeline-list li .content {
+    animation: revealFromLeft 0.5s 0s ease both 1;
+}
+.timeline-list .content h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+.result-exam h3 {
+    margin: 0 0 20px;
+    line-height: 1.4;
+}
+.test-kit ul.list li h3 a, .result-exam h3 {
+    color: #5b6770;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1.2;
+}
+.timeline-list .content p {
+    font-size: 16px;
+    color: #626262;
+}
+ul.listda {
+    margin-top: 30px;
+    overflow: auto;
+    height: 450px;
+}
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+ul.listda li {
+    padding: 0;
+    margin: 0 10px 10px 0;
+    display: inline-block;
+}
+.timeline-list li {
+    margin: 0 0 2em 0;
+    padding: 0 0em 0em 3em;
+    position: relative;
+}
+ul.listda li span.no-answered {
+    background: #273044;
+}
+ul.listda li span {
+    cursor: pointer;
+}
+ul.listda li span {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    background: #b4b7be;
+    color: #fff;
+    justify-content: center;
+    font-size: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.timeline-list li:nth-child(2):before {
+    animation-delay: 1.2s;
+    background: #55a9ff;
+}
+.timeline-list li:before {
+    content: "";
+    position: absolute;
+    top: 0px;
+    left: -1.2em;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: none repeat scroll 0% 0% #02aa9d;
+    border: 5px solid #fff;
+    animation: revealScaleUp 0.75s 0s ease both 1;
+}
+.timeline-list li:nth-child(2) .content {
+    animation-delay: 1.5s;
+}
+.timeline-list li .content {
+    animation: revealFromLeft 0.5s 0s ease both 1;
+}
+.timeline-list .content h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+.result-exam h3 {
+    margin: 0 0 20px;
+    line-height: 1.4;
+}
+.test-kit ul.list li h3 a, .result-exam h3 {
+    color: #5b6770;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1.2;
+}
+.btn-exam {
+    background: #f32424;
+    padding: 20px 50px;
+    display: inline-block;
+    border-radius: 30px;
+    color: #fff;
+    text-transform: uppercase;
+    border: none;
+    min-width: 80%;
+    margin-top: 20px;
+    text-align: center;
+}
+
+
+/*css title user_item*/
+.title__position-relative{
+  position: relative;
+}
+
+.scroll__hover{
+  display: none;
+  position: absolute;
+  right: -8%;
+  top: 70px;
+  transition: 0.5s;
+  min-width: 214px;
+  min-height: 230px;
+  background-color: #f9f9f9;
+  border: 2px solid rgba(0,0,0,.15);
+  border-radius: 4px;
+}
+
+.scroll__hover > ul {
+  list-style: none;
+}
+
+.title__position-relative:hover div.scroll__hover{
+  display: block;
+  transition: 2s;
+}
+
+.list__user-infomation {
+    padding: 10px 0px;
+    text-align: start;
+    font-size: 12px;
+    font-weight: 500;
+    color:  #777;
+    text-align: center;
+
+}
+
+.list__user-infomations {
+    text-align: start;
+    padding: 12px;
+    font-size: 14px;
+    padding-left: 31px;
+}
+
+.list__user-infomations > a {
+  color: #333;
+  font-size:15px!important;
+  font-weight: 450;
+  text-decoration: none;
+
+}
+.list__user-infomations a:hover{
+  background-color:   #E0E0E0;
+}
+
+/**/

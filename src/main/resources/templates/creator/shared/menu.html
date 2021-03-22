@@ -2,54 +2,59 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 <title>Insert title here</title>
 </head>
 <body>
-<div th:fragment="menu" class=" border border-gray rounded shadow-sm bg-white">
+	<div th:fragment="menu"
+		class=" border border-gray rounded shadow-sm bg-white">
 		<section id="menu" class="">
 			<ul class=" cln justify-content-between navbar-nav my-2 mr-5 ml-5">
 				<li>
 					<h3 class="logo">
-						<span class="text-primary">
-						<i class="fas fa-book-open"></i> Trang</span> Chủ
+						<span class="text-primary"> <i class="fas fa-book-open"></i>
+							Trang
+						</span> Chủ
 					</h3>
 				</li>
-				<li class="nav-item ">
-					<a class="nav-link" th:href="@{/}">Home</a>
+				<li class="nav-item "><a class="nav-link" th:href="@{/}">Home</a>
 				</li>
 				<li class="nav-item ">
 					<div class="dropdown">
-					    <button class="dropbtn">Khối A
-					      	<i class="fa fa-caret-down"></i>
-					    </button>
-					    <div class="dropdown-content">
-						    <a href="#">Toán</a>
-						    <a href="#">Lý</a>
-						    <a href="#">Hóa</a>
+						<button class="dropbtn">
+							Môn Học <i class="fa fa-caret-down"></i>
+						</button>
+
+						<div class="dropdown-content">
+							<th:block th:each="monHoc : ${listMonHoc}">
+								<a href="#" th:text="${monHoc.tenMonHoc}"></a>
+							</th:block>
 						</div>
+
+
 					</div>
 				</li>
 				<li class="nav-item ">
 					<div class="dropdown">
-					    <button class="dropbtn">Khối B
-					      	<i class="fa fa-caret-down"></i>
-					    </button>
-					    <div class="dropdown-content">
-						    <a href="#">Toán</a>
-						    <a href="#">Hóa</a>
-						    <a href="#">Sinh</a>
+						<button class="dropbtn">
+							Lớp Học <i class="fa fa-caret-down"></i>
+						</button>
+
+						<div class="dropdown-content">
+							<th:block th:each="lopHoc : ${listLop}">
+								<a th:href="@{'/findByLop/'+${lopHoc.idLop}}" th:text="${lopHoc.tenLop}"></a>
+							</th:block>
 						</div>
 					</div>
 				</li>
-				<li class="nav-item ">
-					<a class="nav-link">Liên hệ</a>
-				</li>
-				<li class="nav-item" id="loginSide">
-					<a th:if="${session.user}==null" class="nav-link" th:href="@{/login}">Đăng nhập</a>
+				<li class="nav-item "><a class="nav-link">Liên hệ</a></li>
+				<li class="nav-item" id="loginSide"><a
+					th:if="${session.user}==null" class="nav-link" th:href="@{/login}">Đăng
+						nhập</a>
 					<div th:if="${session.user}!=null" class="dropdown">
 					    <button class="dropbtn" th:text="@{'Hi: '+${session.user.hoVaTen}}">Họ và tên
 					      	<i class="fa fa-caret-down"></i>
@@ -58,31 +63,38 @@
 						    <a href="/manageExam">Quản lý tài khoản</a>
 						    <a id='logoutBtn'>Đăng xuất</a>
 						</div>
-					</div>
-				</li>
+					</div></li>
 			</ul>
-			
+
 		</section>
 		<script type="text/javascript" th:inline="javascript">
-			$(document).ready(function(){
-				$('#logoutBtn').click(function(){
-					$.ajax({
-						type: "POST",
-						contentType: "application/json",
-						url: "/logout",
-						data:"",
-						dataType: "text",
-						cache: false,
-						timeout: 60000,
-						success: function() {
-							$('#loginSide').html("<a class='nav-link' href='/login'>Đăng nhập</a>");
-						},
-						error: function() {
-							alert('có lỗi xảy ra');
-						}
-					});
-				})
-			})
+			$(document)
+					.ready(
+							function() {
+								$('#logoutBtn')
+										.click(
+												function() {
+													$
+															.ajax({
+																type : "POST",
+																contentType : "application/json",
+																url : "/logout",
+																data : "",
+																dataType : "text",
+																cache : false,
+																timeout : 60000,
+																success : function() {
+																	$(
+																			'#loginSide')
+																			.html(
+																					"<a class='nav-link' href='/login'>Đăng nhập</a>");
+																},
+																error : function() {
+																	alert('có lỗi xảy ra');
+																}
+															});
+												})
+							})
 		</script>
 	</div>
 </body>

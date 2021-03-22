@@ -50,5 +50,7 @@ public interface CauHoiRepository extends JpaRepository<CauHoi, Integer> {
 	 * @return the list
 	 */
 	List<CauHoi> findAllByDeThi(DeThi deThi);
-
+	
+	@Query("select count(*) from CauHoi e where e.deThi.idDe = ?1")
+	public int countByIdDeThi(Integer id);
 }
