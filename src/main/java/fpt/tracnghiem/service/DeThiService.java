@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import fpt.tracnghiem.entity.CauHoi;
 import fpt.tracnghiem.entity.DeThi;
+import fpt.tracnghiem.entity.Lop;
+import fpt.tracnghiem.entity.MonHoc;
 import fpt.tracnghiem.model.ExamInformation;
 import fpt.tracnghiem.repository.CauHoiRepository;
 import fpt.tracnghiem.repository.DeThiRepository;
@@ -66,5 +68,14 @@ public class DeThiService {
 	public List<DeThi> findByTenDeContaining(String tenDe) {
 	return	deThiRepository.findByTenDeContaining(tenDe);
 	}
+	
+	public List<DeThi> findByLop(Lop lop){
+		return deThiRepository.findByLop(lop);
+	}
+	
+	public List<DeThi> findByMonHoc(MonHoc monhoc){
+		return deThiRepository.findByMonHoc(monhoc);
+	}
+	
 	
 }

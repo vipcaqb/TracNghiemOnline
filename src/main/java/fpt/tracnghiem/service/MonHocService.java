@@ -1,5 +1,7 @@
 package fpt.tracnghiem.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,5 +16,8 @@ public class MonHocService {
 	
 	public Iterable<MonHoc> getAllMonHoc() {
 		return monHocRepository.findAll();
+	}
+	public Optional<MonHoc> findById(int id) {
+		return monHocRepository.findById(id);
 	}
 }

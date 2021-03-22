@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import fpt.tracnghiem.entity.DeThi;
+import fpt.tracnghiem.entity.Lop;
+import fpt.tracnghiem.entity.MonHoc;
 import fpt.tracnghiem.model.ExamInformation;
 
 @Repository
@@ -18,5 +20,7 @@ public interface DeThiRepository  extends JpaRepository<DeThi, Integer>{
 	List<ExamInformation> getExamInformation();
 	
 	List<DeThi> findByTenDeContaining(String tenDe);
+	List<DeThi> findByLop(Lop lop);
+	List<DeThi> findByMonHoc(MonHoc monhoc);
 	
 }
