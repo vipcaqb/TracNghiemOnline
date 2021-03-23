@@ -204,9 +204,9 @@
 		<script th:inline="javascript">
 			/*<![CDATA[*/
 			var tempDate = new Date();
-			tempDate.setMinutes(tempDate.getMinutes() + /*[[${thoiGian}]]*/ '0');
-			var countDownDate = tempDate.getTime();
 			
+			var countDownDate =new Date(/*[[${TimeEnd}]]*/ '0');
+			console.log( /*[[${TimeEnd}]]*/ '0');
 			// Update the count down every 1 second
 			var x = setInterval(function() {
 				  var now = new Date().getTime();
