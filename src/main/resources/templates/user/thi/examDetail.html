@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Trang Chủ</title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="https://kit.fontawesome.com/0e6c29c291.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/user-homepage-style.css}">
+	<link rel="icon" type="image/png" sizes="192x192"  href="img/iconn.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/iconn.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="img/iconn.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/iconn.png">
+</head>
+<body class="bg-gray">
+	<div class=" border border-gray rounded shadow-sm bg-white">
+		<section id="menu" class="">
+			
+			<ul class=" cln justify-content-between navbar-nav my-2 mr-5 ml-5">
+			
+				<li>
+					
+					<h3 class="logo">
+					<a href="/user/thi/page/1">
+						<span class="text-primary">
+						<i class="fas fa-backward"></i> Quay Về</span> 
+					</a>
+					</h3>
+				
+				</li>
+				
+			</ul>
+		</section>
+	</div>
+	
+	<div class="mg-main mx-auto ">
+		<div class="row " id="content">
+			
+			<div class="col-9 high ">
+				<div class="">
+					<div class="boxcont magb20">
+			            <div class="title row">
+				            <span>Tiểu học - THCS - THPT</span>
+				           
+			            </div>
+	            		<div class ="detail-body row" >	                            
+						<div class = "col-sm-1"></div>           
+						<div th:if="${deThi}" class="col-sm-10" style=" border: 2px ;background-color:white; border-radius: 8px; ">
+							
+							<h3 th:text="@{'Tên đề: '+${deThi.TenDe}}">Tên đề:</h3>
+							<h5 th:text="@{'Chi tiết đề thi: '+${deThi.MoTa}}">Chi tiết đề thi:</h5>
+							<h5 th:text="@{'Dành cho học sinh: '+${deThi.Lop.TenLop}}">Lớp Học:</h5>
+							<h5 th:text="@{'Môn học: '+${deThi.MonHoc.TenMonHoc}}">Môn Học:</h5>
+							<h5  th:text="@{'Ngày tạo: '+${deThi.NgayTao}}">Ngày Tạo:</h5>
+							<h5 th:text="@{'Người tạo: '+${deThi.TaiKhoan.HoVaTen}}">Người Tạo:</h5>
+							<ul class="list" style="display: flex;">
+              <li><img src="/image/time.png"></li><li th:text="@{${deThi.ThoiGianThi}+' Phút'}"></li>
+              <li style="margin-left: 20px"><img src="/image/question.png"> </li><li  th:text="@{${deThi.CauHois.size()}+' Câu'}"></li>
+            </ul>
+						</div>
+						</div>                          
+					</div>
+				</div>	
+			</div>
+
+			<!-- col3 -->
+			
+			<div class="col-3  ml-fit px-fit">
+				<div class="sidebar ranking magb20">
+					<div class="title ml-3">
+						<span class="">Xếp hạng người dùng điểm cao nhất</span>
+					</div>
+					<div class="box fm-box mx-auto">
+						<ul class="list" th:each="User,pos : ${TopUser}">
+							<li>
+								<div class="relative">
+									<img th:if="${User.UrlAvatar}" width="30px" height="30px" th:src="${User.UrlAvatar}"> 
+									<img th:unless="${User.UrlAvatar}" width="30px"  height="30px" th:src="@{'https://ui-avatars.com/api/?name='+${User.hoVaTen}}"> 
+									
+									<span
+										th:class="@{'rank rank'+${pos.index+1}}" th:text="${pos.index+1}"></span>
+								</div>
+								<div class="clearfix">
+									<p>
+										<a href="/profile/personal?user_id=10473"
+											th:text="${User.HoVaTen}" class="name"></a>
+									</p>
+									<span class="clred" th:text="${User.DiemTichLuy}"></span>
+									điểm
+									<p class="cl99"
+										th:text="@{${User.ThamGiaThis.size()} + ' Lần thi'}"></p>
+								</div>
+							</li>
+
+
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</body>
+</html>

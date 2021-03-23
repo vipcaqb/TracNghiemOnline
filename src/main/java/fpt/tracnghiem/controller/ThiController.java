@@ -30,6 +30,7 @@ import fpt.tracnghiem.entity.Lop;
 import fpt.tracnghiem.entity.MonHoc;
 import fpt.tracnghiem.entity.Role;
 import fpt.tracnghiem.entity.TaiKhoan;
+import fpt.tracnghiem.entity.ThamGiaThi;
 import fpt.tracnghiem.service.CauHoiService;
 import fpt.tracnghiem.service.DeThiService;
 import fpt.tracnghiem.service.LopService;
@@ -62,9 +63,6 @@ public class ThiController {
 		}
 		Page<DeThi> pageDethi = dethiService.findPaginated(page, MyConstances.HOMEPAGE_SIZE);
 		List<DeThi> dsDethi = pageDethi.getContent();
-		List<MonHoc> listMonhoc = (List<MonHoc>) monHocService.getAllMonHoc();
-		List<Lop> listLop = (List<Lop>) lopService.getAllLop();
-		
 		if(dsDethi.size()==0 && page >1) {
 			pageDethi = dethiService.findPaginated(page-1, MyConstances.HOMEPAGE_SIZE);
 			dsDethi = pageDethi.getContent();
@@ -127,6 +125,7 @@ public class ThiController {
 			mav.addObject("deThi", deThi.get());
 			mav.addObject("thoiGian", deThi.get().getThoiGianThi());
 		}
+		
 		HttpSession session = req.getSession();
 		Timestamp TimeEnd =(Timestamp) session.getAttribute("NgayGioKetThuc");
 		mav.addObject("TimeEnd", TimeEnd);
@@ -162,6 +161,18 @@ public class ThiController {
 			dsDethi =dethiService.filterByKeyword(keyword, dsDethi);
 		mav.addObject("dsDeThi",dsDethi);
 		ShowFormFormListExam(mav);
+		return mav;
+		
+	}
+	@RequestMapping(value = "/examDetail/{idDe}")
+	ModelAndView ShowExamDetail(HttpServletRequest req,@PathVariable int idDe) {
+		ModelAndView mav = new ModelAndView();
+		Optional<Role> role = roleService.findByRoleName(MyConstances.ROLE_USER);
+		Optional<DeThi> deThi = dethiService.findById(idDe);
+		List<TaiKhoan> Top6TaiKhoan = taiKhoanService.findTop6UserMaxPoint(role.get());
+		mav.addObject("TopUser",Top6TaiKhoan);
+		mav.addObject("deThi", deThi.get());
+		mav.setViewName("/user/thi/examDetail");
 		return mav;
 		
 	}
