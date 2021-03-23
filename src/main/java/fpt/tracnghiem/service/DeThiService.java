@@ -1,5 +1,6 @@
 package fpt.tracnghiem.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import fpt.tracnghiem.entity.CauHoi;
 import fpt.tracnghiem.entity.DeThi;
+import fpt.tracnghiem.entity.Lop;
+import fpt.tracnghiem.entity.MonHoc;
 import fpt.tracnghiem.model.ExamInformation;
 import fpt.tracnghiem.repository.CauHoiRepository;
 import fpt.tracnghiem.repository.DeThiRepository;
@@ -65,6 +68,21 @@ public class DeThiService {
 	}
 	public List<DeThi> findByTenDeContaining(String tenDe) {
 	return	deThiRepository.findByTenDeContaining(tenDe);
+	}
+	
+	public List<DeThi> findByMonHoc(MonHoc monHoc) {
+		return	deThiRepository.findByMonHoc(monHoc);
+	}
+	public List<DeThi> findByLop(Lop lop) {
+		return	deThiRepository.findByLop(lop);
+	}
+	public List<DeThi> filterByKeyword(String keyWord, List<DeThi> ListDeThi){
+		List<DeThi> temp = new ArrayList<DeThi>();
+		ListDeThi.forEach(x->{
+			if(x.getTenDe().contains(keyWord))
+				temp.add(x);
+		});
+		return temp;
 	}
 	
 }
