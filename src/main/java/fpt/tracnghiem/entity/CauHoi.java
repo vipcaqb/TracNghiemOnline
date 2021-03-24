@@ -13,6 +13,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Nationalized;
 
@@ -31,11 +34,16 @@ public class CauHoi implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_cau_hoi")
 	private int idCauHoi;
-
+	
 	@Column(name="giai_thich",length = 3000)
 	@Nationalized
+	@NotBlank(message = "Không được để trống trường này")
+	@Size(min = 4,max=30,message = "Giải thích phải có độ dài từ 4 đến 30 ký tự")
+	@Pattern(regexp="^[a-zA-Z0-9]*$",message = "Giải thích chứa ký tự không hợp lệ")
 	private String giaiThich;
-	
+	@NotBlank(message = "Không được để trống trường này")
+	@Size(min = 4,max=30,message = "Nội dung phải có độ dài từ 4 đến 30 ký tự")
+	@Pattern(regexp="^[a-zA-Z0-9]*$",message = "Nội dung chứa ký tự không hợp lệ")
 	@Column(name="noi_dung",length = 3000)
 	@Nationalized
 	private String noiDung;
