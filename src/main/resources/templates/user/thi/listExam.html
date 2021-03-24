@@ -89,23 +89,21 @@
 				    </div>
 				    <div class="box fm-box mx-auto">
 				      <ul class="list" th:each="User,pos : ${TopUser}">
-				        <li>
-				          	<div class="relative"> 
-					          	<img src="https://lh3.googleusercontent.com/a-/AOh14GjydwnrlI5-BQ7lCYlKZlGi4N3P-ZykNZyIz5Qd">
-					            <span th:class="@{'rank rank'+${pos.index+1}}">1</span>
-				        	</div>
-				          	<div class="clearfix">
-					            <p>
-					            	<a href="/profile/personal?user_id=10473" th:text="${User.HoVaTen}" class="name">le vui</a>
-					            </p>
-					         	<span class="clred" th:text = "${User.DiemTichLuy}">6888</span> điểm
-					           <p class="cl99" th:text="@{${User.ThamGiaThis.size()} + ' Lần thi'}">
-					          
-					            </p> 
-				          	</div>
-				        </li>
-		              
-		                
+                    <li>
+                        <div class="relative"> 
+                          <img src="https://lh3.googleusercontent.com/a-/AOh14GjydwnrlI5-BQ7lCYlKZlGi4N3P-ZykNZyIz5Qd">
+                          <span th:class="@{'rank rank'+${pos.index+1}}">1</span>
+                      </div>
+                        <div class="clearfix">
+                          <p>
+                            <a href="/profile/personal?user_id=10473" th:text="${User.HoVaTen}" class="name">le vui</a>
+                          </p>
+                        <span class="clred" th:text = "${User.DiemTichLuy}">6888</span> điểm
+                         <p class="cl99" th:text="@{${User.ThamGiaThis.size()} + ' Lần thi'}">
+
+                          </p> 
+                        </div>
+                    </li>
 		              </ul>
 				    </div>
 				  </div>
