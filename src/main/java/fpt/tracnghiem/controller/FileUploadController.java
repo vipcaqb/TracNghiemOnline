@@ -96,7 +96,7 @@ public class FileUploadController {
 		}
 		model.addAttribute("msg", "Thêm câu hỏi thành công"); 
 		model.addAttribute("idDe", idDe);
-		return "/creator/manageQuestion";
+		return "/creator/question/uploadstatusview";
 		
 	}
 

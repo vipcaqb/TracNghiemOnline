@@ -13,7 +13,7 @@
 				&times;</button>
 			<a href="/user" class="w3-bar-item w3-button">Thông tin cá nhân</a> 
 			<a href="/manageExam" class="w3-bar-item w3-button">Quản lý đề thi</a> 
-			<a href="#" class="w3-bar-item w3-button">Lịch sử bài làm</a>
+			<a href="/HistoryExam" class="w3-bar-item w3-button">Lịch sử bài làm</a>
 			<th:block th:if="${session.user!=null}">
 			<a class="w3-bar-item w3-button" th:if='${#strings.equals(session.user.role.roleName,"ROLE_ADMIN")}' href="#">
 			Quản lý tài khoản
