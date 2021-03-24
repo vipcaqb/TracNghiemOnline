@@ -3,7 +3,7 @@ body {
 }
 .round2 {
   border: 2px solid white;
-  border-radius: 8px;
+	box-shadow: black 3px 3px 10px;
 }
 .pd-all{
   
@@ -45,7 +45,7 @@ body {
 }
 .name-tech {
     color: #b3b3b3;
-    font-size: 26px;
+    font-size: 15px;
     text-decoration: none;
 }
 .p1 {
@@ -110,44 +110,10 @@ border-radius:50%;
     position: relative;
     max-width: 700px;
     margin: 0 auto;
-    margin-left: 40px;
+    margin-left: 0px;
 }
-.timeline-list:before {
-    content: "";
-    border-left: 1px solid #CCC;
-    left: -0.5em;
-    top: 2em;
-    height: 100%;
-    position: absolute;
-    bottom: 0;
-    top: 0;
-    transform-origin: 0 0;
-    animation: scaleVertical 3s 1s ease both 1;
-}
-.timeline-list li:nth-child(1):before {
-    animation-delay: 0.85s;
-    background: #ffbb55;
-}
-.timeline-list li:before {
-    
-    position: absolute;
-    top: 0px;
-    left: -1.2em;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background: none repeat scroll 0% 0% #02aa9d;
-    border: 5px solid #fff;
-    animation: revealScaleUp 0.75s 0s ease both 1;
-}
-.fm1 li:before{
-  background: #fff!important;
-  left: 0px!important;
-  width: 0px!important;
-  height: 0px!important;
-  border-radius: 0%!important;
-  animation: none!important;
-}
+
+
 .timeline-list li {
     margin: 0 0 2em 0;
     padding: 0 0em 0em 3em;
@@ -164,10 +130,7 @@ border-radius:50%;
     font-size: 18px;
     font-weight: bold;
 }
-.result-exam h3 {
-    margin: 0 0 20px;
-    line-height: 1.4;
-}
+
 .test-kit ul.list li h3 a, .result-exam h3 {
     color: #5b6770;
     font-size: 18px;
@@ -179,7 +142,7 @@ border-radius:50%;
     color: #626262;
 }
 ul.listda {
-    margin-top: 30px;
+    margin-top: 10px;
     overflow: auto;
     height: 450px;
 }
@@ -190,7 +153,7 @@ ul {
 }
 ul.listda li {
     padding: 0;
-    margin: 0 10px 10px 0;
+    margin: 0 5px 5px 0;
     display: inline-block;
 }
 .timeline-list li {
@@ -199,18 +162,19 @@ ul.listda li {
     position: relative;
 }
 ul.listda li span.no-answered {
-    background: #273044;
+    background: #fff;
+    font-weight: bold;
+    border: #000 solid 2px;
 }
 ul.listda li span {
     cursor: pointer;
 }
 ul.listda li span {
-    width: 60px;
-    height: 60px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     display: flex;
     align-items: center;
-    background: #b4b7be;
     color: #fff;
     justify-content: center;
     font-size: 20px;
@@ -219,22 +183,7 @@ ul.listda li span {
     margin-top: auto;
     margin-bottom: auto;
 }
-.timeline-list li:nth-child(2):before {
-    animation-delay: 1.2s;
-    background: #55a9ff;
-}
-.timeline-list li:before {
-    content: "";
-    position: absolute;
-    top: 0px;
-    left: -1.2em;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background: none repeat scroll 0% 0% #02aa9d;
-    border: 5px solid #fff;
-    animation: revealScaleUp 0.75s 0s ease both 1;
-}
+
 .timeline-list li:nth-child(2) .content {
     animation-delay: 1.5s;
 }
@@ -245,10 +194,6 @@ ul.listda li span {
     margin: 0;
     font-size: 18px;
     font-weight: bold;
-}
-.result-exam h3 {
-    margin: 0 0 20px;
-    line-height: 1.4;
 }
 .test-kit ul.list li h3 a, .result-exam h3 {
     color: #5b6770;
@@ -323,6 +268,18 @@ ul.listda li span {
 }
 .list__user-infomations a:hover{
   background-color:   #E0E0E0;
+}
+
+.text-dark{
+	color: black;
+}
+
+.active{
+	background: #3ddc97;
+}
+
+#finishBtn{
+	outline: none;
 }
 
 /**/

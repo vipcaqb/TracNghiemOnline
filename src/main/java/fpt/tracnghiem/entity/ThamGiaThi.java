@@ -28,6 +28,9 @@ public class ThamGiaThi implements Serializable {
 
 	@Column(name="tong_diem")
 	private double tongDiem;
+	
+	@Column()
+	private Boolean finished;
 
 	//bi-directional many-to-one association to DeThi
 	@ManyToOne
@@ -66,6 +69,16 @@ public class ThamGiaThi implements Serializable {
 		this.ngayGioKetThuc = ngayGioKetThuc;
 	}
 
+	
+	
+	public Boolean getFinished() {
+		return finished;
+	}
+
+	public void setFinished(Boolean finished) {
+		this.finished = finished;
+	}
+
 	public double getTongDiem() {
 		return this.tongDiem;
 	}
@@ -88,6 +101,12 @@ public class ThamGiaThi implements Serializable {
 
 	public void setTaiKhoan(TaiKhoan taiKhoan) {
 		this.taiKhoan = taiKhoan;
+	}
+	public boolean isEqual(String username, Integer idDe, Timestamp tgBatDau) {
+		if(username.equals(this.taiKhoan.getUsername())&&idDe == this.deThi.getIdDe()) {
+			return true;
+		}
+		return false;
 	}
 
 }

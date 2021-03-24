@@ -52,8 +52,15 @@ public class MainController {
 	 * @return the string
 	 */
 	@GetMapping("/")
-	public String home() {
-		return "index.html";
+	public String home(HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		if(session.getAttribute("user")==null) {
+			return "index";
+		}
+		else {
+			return "redirect:/user/thi/page/1";
+		}
+		
 	}
 	
 	/**
@@ -92,11 +99,11 @@ public class MainController {
 				return "redirect:/user/thi/page/1";
 			}
 			else if(nameAccount.equals("ROLE_ADMIN")){
-				return "redirect:/admin";
+				return "redirect:/user/thi/page/1";
 			}
 			else if(nameAccount.equals("ROLE_CREATER"))
 			{
-				return "redirect:/manageExam";
+				return "redirect:/user/thi/page/1";
 			}
 		}
 		model.addAttribute("hasError", "Sai thông tin đăng nhập.");
@@ -139,7 +146,7 @@ public class MainController {
 		Optional<Role> o = roleService.findByRoleName("ROLE_USER");
 		Role role = o.get();
 		taiKhoan.setRole(role);
-		taiKhoan.setUrlAvatar("/image/defaultAvatar.png");
+		
 		try {
 			taiKhoanService.save(taiKhoan);
 		} catch (Exception e) {

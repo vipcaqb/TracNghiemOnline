@@ -22,6 +22,7 @@ public class TaiKhoanService {
 			throw new DuplicateKeyException("Usename đã tồn tại");
 		}
 		else {
+			taiKhoan.setUrlAvatar("/image/defaultAvatar.png");
 			return taiKhoanRepository.save(taiKhoan);
 		}
 	}
@@ -40,6 +41,15 @@ public class TaiKhoanService {
 	}
 	public List<TaiKhoan> findTop6UserMaxPoint(Role role){
 		return taiKhoanRepository.findTop6ByRoleOrderByDiemTichLuyDesc(role);
+	}
+	
+	public TaiKhoan tangDiemTichLuy(TaiKhoan taiKhoan, int diemTichLuy) {
+		taiKhoan.setDiemTichLuy(taiKhoan.getDiemTichLuy()+diemTichLuy);
+		return taiKhoanRepository.save(taiKhoan);
+	}
+	
+	public List<TaiKhoan> top10TaiKhoan(){
+		return taiKhoanRepository.findTop10ByOrderByDiemTichLuyDesc();
 	}
 	
 }
