@@ -1,20 +1,26 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+<link rel="stylesheet"
+	href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+	integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+	crossorigin="anonymous" />
 <link rel="stylesheet" href="/css/ExamForm.css">
-<link rel="stylesheet" type="text/css" th:href="@{/css/user-homepage-style.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/user-homepage-style.css}">
 </head>
 <body>
-<nav th:insert="creator/shared/menu::menu">
+	<nav th:insert="creator/shared/menu::menu">
 	</nav>
 	<nav th:insert="creator/shared/sidebar::sidebar">
 	</nav>
@@ -24,10 +30,13 @@
 			
 		</div>
 		<div class="col-sm-6">
-	<form th:action="@{'/addExam/page/'+${page}}"  th:object="${exam}" method="POST" class="form-group" >
+	<form th:action="@{'/addExam/page/'+${page}}"  th:object="${deThi}" method="POST" class="form-group" >
 
-		<label>Tên Đề</label> <input required="required" class="form-control tende" type="text" th:field="*{TenDe}" style="width: 80%" />
+		<label>Tên Đề</label> <input class="form-control tende" type="text" th:field="*{TenDe}" style="width: 80%" />
 		<br/>
+		<span th:if="${#fields.hasErrors('tenDe')}"
+					th:errors="*{tenDe}" class="text-danger help-block"></span>
+					<br />
 
 		 
 		<label>Thời gian</label> <input min="1" type="number" th:field="*{ThoiGianThi}" style="width: 20%;" class="form-control thoigian"/> 
@@ -49,6 +58,8 @@
 	<br/>
 	<label >Mô tả</label> <textarea id="text-area" th:field="*{MoTa}" class="form-control mota"></textarea>
 		<br/>
+		<span th:if="${#fields.hasErrors('moTa')}" th:errors="*{moTa}"
+					class="text-danger help-block"></span> <br />
 		<div class="row">
 			<div class="col-sm-5"></div>
 			

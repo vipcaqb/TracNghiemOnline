@@ -8,6 +8,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,7 +27,6 @@ import fpt.tracnghiem.entity.DeThi;
 import fpt.tracnghiem.entity.Lop;
 import fpt.tracnghiem.entity.MonHoc;
 import fpt.tracnghiem.entity.TaiKhoan;
-import fpt.tracnghiem.model.ExamInformation;
 import fpt.tracnghiem.service.CauHoiService;
 import fpt.tracnghiem.service.DeThiService;
 import fpt.tracnghiem.service.LopService;
@@ -78,7 +78,7 @@ public class DeThiController {
 		DeThi deThi = new DeThi();
 		List<MonHoc> dsMonHoc = (ArrayList<MonHoc>) monHocService.getAllMonHoc();
 		mav.addObject("dsMonHoc", dsMonHoc);
-		mav.addObject("exam", deThi);
+		mav.addObject("deThi", deThi);
 		mav.addObject("Lop", lops);
 		if(page!=null) {
 			mav.addObject("page", page);
@@ -161,26 +161,49 @@ public class DeThiController {
 	 * @param deThi the de thi
 	 * @return the model and view
 	 */
-	@PostMapping(value = {"/addExam/page/{page}","/addExam"})
-	public ModelAndView addExam(HttpServletRequest request
-			, HttpServletResponse response, @ModelAttribute DeThi deThi,@PathVariable(required = false) Integer page) {
-		HttpSession session = request.getSession();
-		TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("user");
-		if (taiKhoan != null) {
-			deThi.setTaiKhoan(taiKhoan);
-			deThi.setNgayTao(new Date());
-			deThiService.ThemDeThi(deThi);
+	// bindingResulf phải nằm ngay sau Valid
+		@PostMapping(value = { "/addExam/page/{page}", "/addExam" })
+		public ModelAndView addExam(@ModelAttribute("deThi") @Valid DeThi deThi,
+				BindingResult bindingResult,
+				HttpServletRequest request,
+				HttpServletResponse response, 
+				@PathVariable(required = false) Integer page) {
+			//DeThi deThi = new DeThi();
+			System.out.println(deThi);
+			HttpSession session = request.getSession();
+			ModelAndView mav = new ModelAndView();
+			TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("user");
+			if (taiKhoan != null) {
+				//deThi.getTenDe()
+				deThi.setTaiKhoan(taiKhoan);
+				deThi.setNgayTao(new Date());
+				
+			}
+			if (bindingResult.hasErrors()) {
+				System.out.println("truong hop mac loi");
+				// ModelAndView mav = new ModelAndView();
+				List<Lop> lops = (ArrayList<Lop>) lopService.getAllLop();		 
+				List<MonHoc> dsMonHoc = (ArrayList<MonHoc>) monHocService.getAllMonHoc();
+				mav.addObject("dsMonHoc", dsMonHoc);
+				//mav.addObject("deThi", deThi);
+				mav.addObject("Lop", lops);
+				if (page != null) {
+					mav.addObject("page", page);
+				} else {
+					mav.addObject("page", 1);
+				}
+				mav.setViewName("/creator/exam/addExam");
+				return mav;
+			} else {
+				if (page != null) {
+					mav.setViewName("redirect:/manageExam/page/" + page);
+				} else {
+					mav.setViewName("redirect:/manageExam");
+				}
+				deThiService.ThemDeThi(deThi);
+				return mav;
+			}
 		}
-
-		ModelAndView mav = new ModelAndView();
-		if(page!=null) {
-			mav.setViewName("redirect:/manageExam/page/"+page);
-		}
-		else {
-			mav.setViewName("redirect:/manageExam");
-		}
-		return mav;
-	}
 
   /**
 	 * Delete by id.

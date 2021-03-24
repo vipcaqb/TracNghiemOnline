@@ -1,12 +1,26 @@
 package fpt.tracnghiem.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
-
-import org.hibernate.annotations.Nationalized;
-
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import org.hibernate.annotations.Nationalized;
 
 
 /**
@@ -26,8 +40,12 @@ public class DeThi implements Serializable {
 
 	@Column(name="ten_de")
 	@Nationalized
+	@NotBlank(message = "Không được để trống trường này")
+	@Size(min = 4,max=30 ,message = "Ký tự phải nằm trong khoảng 4-30")
+	@Pattern(regexp="^[a-zA-Z0-9]*$",message = "Tên đề chứa ký tự không hợp lệ")
 	private String tenDe;
-	
+	@NotBlank(message = "Không được để trống trường này")
+	@Pattern(regexp="^[a-zA-Z0-9]*$",message = "Mô tả chứa ký tự không hợp lệ")
 	@Column(name="mo_ta",length = 1000)
 	@Nationalized
 	private String moTa;
