@@ -14,4 +14,6 @@ public class PhuongAnService {
 	public void save(PhuongAn phuongAn) {
 		phuongAnRepository.save(phuongAn);
 	}
+	
+	
 }

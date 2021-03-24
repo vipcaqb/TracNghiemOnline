@@ -49,7 +49,8 @@
                 <h1>Chào mừng đến với hệ thống thi trắc nghiệm Online</h1>
                 <p>Cùng xây dựng các cuộc thi của riêng bạn.</p>
 
-                <a class="btn btn-lg btn-outline-light" th:href="@{/login}">Bắt đầu ngay</a>
+                <a class="btn btn-lg btn-outline-light" th:if="${session.user}!=null" th:href="@{/user/thi/page/1}">Bắt đầu ngay</a>
+                <a class="btn btn-lg btn-outline-light" th:if="${session.user}==null" th:href="@{/login}">Bắt đầu ngay</a>
                 <a class="btn btn-lg text-white" th:href="@{register}">Tạo tài khoản</a>
             </div>
             <div id="slideshow">

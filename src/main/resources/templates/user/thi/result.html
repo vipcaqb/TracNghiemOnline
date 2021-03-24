@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" type="text/css" th:href="@{/css/user-homepage-style.css}">
+<link rel="icon" type="image/png" sizes="192x192"  th:href="@{img/iconn.png}">
+<link rel="icon" type="image/png" sizes="32x32" th:href="@{img/iconn.png}" href="img/iconn.png">
+<link rel="icon" type="image/png" sizes="96x96" th:href="@{img/iconn.png}" href="img/iconn.png">
+<link rel="icon" type="image/png" sizes="16x16" th:href="@{img/iconn.png}" href="img/iconn.png">
+<title>Insert title here</title>
+</head>
+<body>
+	<nav th:insert="creator/shared/menu::menu">
+	</nav>
+	<section class="container">
+		<h2 class="text-center">Kết quả bài thi</h2>
+		<div>
+			Tên đề thi: Thi thử Toán THPT quốc gia
+		</div>
+		
+		<div>
+			Môn : Toán
+		</div>
+		<div>
+			Lớp 12
+		</div>
+		<div>
+			Tổng số câu hỏi: 10
+		</div>
+		<div>
+			Số câu đúng: 7/10
+		</div>
+		<div>
+			Thời gian làm bài: 30 phút
+		</div>
+		<div>
+			Điểm số: 70
+		</div>
+	</section>
+			
+	
+</body>
+</html>

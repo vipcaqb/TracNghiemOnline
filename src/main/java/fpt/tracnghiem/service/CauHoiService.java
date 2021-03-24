@@ -1,6 +1,7 @@
 package fpt.tracnghiem.service;
 
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,20 +23,37 @@ import fpt.tracnghiem.repository.CauHoiRepository;
 import fpt.tracnghiem.repository.DeThiRepository;
 import fpt.tracnghiem.repository.PhuongAnRepository;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CauHoiService.
+ */
 @Service
 public class CauHoiService {
+	
+	/** The anh repository. */
 	@Autowired
 	private AnhRepository anhRepository;
+	
+	/** The phuong an repository. */
 	@Autowired
 	private PhuongAnRepository phuongAnRepository;
+	
+	/** The cau hoi repository. */
 	@Autowired
 	private CauHoiRepository cauHoiRepository;
+	
+	/** The de thi repository. */
 	@Autowired
 	private DeThiRepository deThiRepository;
 	
 	/**
-	 * Lưu cauHoi, listPhuongAn, listAnh
-	 * */
+	 * Lưu cauHoi, listPhuongAn, listAnh.
+	 *
+	 * @param cauHoi the cau hoi
+	 * @param listPhuongAn the list phuong an
+	 * @param listAnh the list anh
+	 * @param idDe the id de
+	 */
 	@Transactional
 	public void save(CauHoi cauHoi,List<PhuongAn> listPhuongAn, List<Anh> listAnh,Integer idDe){
 		Optional<DeThi> oDeThi = deThiRepository.findById(idDe);
@@ -68,9 +86,13 @@ public class CauHoiService {
 		}
 		System.out.println("upload thanh cong");
 	}
+	
 	/**
-	 * tìm tất cả câu hỏi có idDe và nằm ở trang thứ pageNumber
-	 * */
+	 * tìm tất cả câu hỏi có idDe và nằm ở trang thứ pageNumber.
+	 *
+	 * @param idDe the id de
+	 * @return the list
+	 */
 	
 	public List<CauHoi> findAllByIdDeThi(Integer idDe){
 		Optional<DeThi> oDeThi = deThiRepository.findById(idDe);
@@ -82,6 +104,13 @@ public class CauHoiService {
 		return cauHoiRepository.findAllByDeThi(deThi);
 	}
 	
+	/**
+	 * Find all by id de thi.
+	 *
+	 * @param idDe the id de
+	 * @param pageNumber the page number
+	 * @return the page
+	 */
 	public Page<CauHoi> findAllByIdDeThi(Integer idDe,int pageNumber ){
 		Optional<DeThi> oDeThi = deThiRepository.findById(idDe);
 		if(oDeThi.isEmpty()) {
@@ -125,6 +154,13 @@ public class CauHoiService {
 		cauHoiRepository.delete(cauHoi);
 		System.out.println("Xóa câu hỏi và các thông tin liên quan thành công!");
 	}
+	
+	/**
+	 * Find by id.
+	 *
+	 * @param id the id
+	 * @return the optional
+	 */
 	public Optional<CauHoi> findById(Integer id) {
 		return cauHoiRepository.findById(id);
 	}
@@ -143,10 +179,53 @@ public class CauHoiService {
 		});
 	}
 	
+	/**
+	 * Count by id de.
+	 *
+	 * @param id the id
+	 * @return the int
+	 */
 	public int CountByIdDe(int id) {
 		return cauHoiRepository.countByIdDeThi(id);
 	}
 	
+	/**
+	 * Checks if is only one correct answer.
+	 *
+	 * @param cauHoi the cau hoi
+	 * @return the boolean
+	 */
+	public static Boolean isOnlyOneCorrect(CauHoi cauHoi) {
+		List<PhuongAn> listPhuongAn = cauHoi.getPhuongAns();
+		int count = 0;
+		for (PhuongAn phuongAn : listPhuongAn) {
+			if(phuongAn.getIsCorrect()) {
+				count++;
+			}
+		}
+		if(count==1) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 	
+	public List<CauHoi> findAll(){
+		return cauHoiRepository.findAll();
+	}
 	
+	public boolean isCorrectAnswer(CauHoi cauHoiYeuCau) {
+		boolean correct= true;
+		List<PhuongAn> listPhuongAn = cauHoiYeuCau.getPhuongAns();
+		for (PhuongAn phuongAn : listPhuongAn) {
+			PhuongAn phuongAnTuongUng = phuongAnRepository.findById(phuongAn.getIdPhuongAn()).get();
+			if(phuongAn.getIsCorrect()!= phuongAnTuongUng.getIsCorrect()) {
+				correct = false;
+			}
+		}
+		
+		return correct;
+		
+	}
 }

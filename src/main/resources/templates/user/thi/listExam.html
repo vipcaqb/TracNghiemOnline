@@ -89,6 +89,20 @@
 				    </div>
 				    <div class="box fm-box mx-auto">
 				      <ul class="list">
+				      	<li th:each="taiKhoan,pos : ${listTaiKhoan}">
+				      		<div class="relative"> 
+					          	<img th:src="${taiKhoan.urlAvatar}">
+					            <span class="rank rank1" th:text="${pos.index+1}">1</span>
+				        	</div>
+				          	<div class="clearfix">
+					            <p>
+					            	<a th:text="taiKhoan.hoVaTen" class="name">le vui</a>
+					            </p>
+					            <p class="cl99">
+					            	<span class="clred" th:text="${taiKhoan.diemTichLuy}">6888</span> điểm
+					            </p>
+				          	</div>	
+				      	</li>
 				        <li>
 				          	<div class="relative"> 
 					          	<img src="https://lh3.googleusercontent.com/a-/AOh14GjydwnrlI5-BQ7lCYlKZlGi4N3P-ZykNZyIz5Qd">
@@ -137,7 +151,7 @@
 				        </li>
 				                <li>
 				          <div class="relative"> <img src="https://graph.facebook.com/977480999314615/picture?type=large">
-				            <span class="rank rank5">5</span></div>
+				            <span class="rank rank4">5</span></div>
 				          <div class="clearfix">
 				            <p> <a href="/profile/personal?user_id=8468" class="name">Dũng Lê</a></p>
 				            <p class="cl99"><span class="clred">1327</span> điểm / 78 lần thi</p>
@@ -145,7 +159,7 @@
 				        </li>
 				                <li>
 				          <div class="relative"> <img src="https://graph.facebook.com/588228791784264/picture?type=large">
-				            <span class="rank rank6">6</span></div>
+				            <span class="rank rank4">6</span></div>
 				          <div class="clearfix">
 				            <p> <a href="/profile/personal?user_id=7701" class="name">Kim Anh Mai</a></p>
 				            <p class="cl99"><span class="clred">1307</span> điểm / 68 lần thi</p>
