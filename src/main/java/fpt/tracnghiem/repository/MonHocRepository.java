@@ -1,5 +1,6 @@
 package fpt.tracnghiem.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
@@ -10,4 +11,5 @@ import fpt.tracnghiem.entity.MonHoc;
 @Repository
 public interface MonHocRepository extends CrudRepository<MonHoc, Integer>{
 	Optional<MonHoc> findByTenMonHoc(String tenMonHoc);
+	
 }

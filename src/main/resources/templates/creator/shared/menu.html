@@ -31,7 +31,7 @@
 
 						<div class="dropdown-content">
 							<th:block th:each="monHoc : ${listMonHoc}">
-								<a href="#" th:text="${monHoc.tenMonHoc}"></a>
+								<a th:href="@{'/user/findByMonHoc/' + ${monHoc.idMonHoc}}" th:text="${monHoc.tenMonHoc}"></a>
 							</th:block>
 						</div>
 
@@ -46,7 +46,7 @@
 
 						<div class="dropdown-content">
 							<th:block th:each="lopHoc : ${listLop}">
-								<a th:href="@{'/findByLop/'+${lopHoc.idLop}}" th:text="${lopHoc.tenLop}"></a>
+								<a th:href="@{'/user/findByLop/'+${lopHoc.idLop}}" th:text="${lopHoc.tenLop}"></a>
 							</th:block>
 						</div>
 					</div>

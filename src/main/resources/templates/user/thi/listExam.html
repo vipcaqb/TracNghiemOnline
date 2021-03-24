@@ -35,7 +35,7 @@
 					<div class="boxcont magb20">
 			            <div class="title">
 				            <span>Tiểu học - THCS - THPT</span>
-				            <a class="view-all" href="/site/category/tieu-hoc---thcs---thpt-7">Xem tất cả</a>
+				            <a class="view-all" href="/user/thi/page/1">Xem tất cả</a>
 			            </div>
 	            		<div class="box " >	           
 	            		<th:block th:each="dethi : ${dsDeThi}">
@@ -88,83 +88,22 @@
 				      <span class="">Xếp hạng người dùng điểm cao nhất</span>
 				    </div>
 				    <div class="box fm-box mx-auto">
-				      <ul class="list">
-				      	<li th:each="taiKhoan,pos : ${listTaiKhoan}">
-				      		<div class="relative"> 
-					          	<img th:src="${taiKhoan.urlAvatar}">
-					            <span class="rank rank1" th:text="${pos.index+1}">1</span>
-				        	</div>
-				          	<div class="clearfix">
-					            <p>
-					            	<a th:text="taiKhoan.hoVaTen" class="name">le vui</a>
-					            </p>
-					            <p class="cl99">
-					            	<span class="clred" th:text="${taiKhoan.diemTichLuy}">6888</span> điểm
-					            </p>
-				          	</div>	
-				      	</li>
-				        <li>
-				          	<div class="relative"> 
-					          	<img src="https://lh3.googleusercontent.com/a-/AOh14GjydwnrlI5-BQ7lCYlKZlGi4N3P-ZykNZyIz5Qd">
-					            <span class="rank rank1">1</span>
-				        	</div>
-				          	<div class="clearfix">
-					            <p>
-					            	<a href="/profile/personal?user_id=10473" class="name">le vui</a>
-					            </p>
-					            <p class="cl99">
-					            	<span class="clred">6888</span> điểm / 238 lần thi
-					            </p>
-				          	</div>
-				        </li>
-		                <li>
-				          	<div class="relative"> 
-				          		<img src="https://graph.facebook.com/1557634991080691/picture?type=large">
-				            	<span class="rank rank2">2</span></div>
-				          	<div class="clearfix">
-				            	<p> 
-				            		<a href="/profile/personal?user_id=3526" class="name">Thanh Loan</a>
-				            	</p>
-				            	<p class="cl99">
-				            		<span class="clred">1939</span> điểm / 106 lần thi
-				            	</p>
-				          	</div>
-				        </li>
-		                <li>
-				          	<div class="relative"> 
-				          		<img src="https://ui-avatars.com/api/?color=fff&amp;background=3f902f&amp;uppercase=true&amp;name=Tuyetnhungfont-size=0.6&amp;size=180">
-				            	<span class="rank rank3">3</span></div>
-				          	<div class="clearfix">
-				            	<p> 
-				            		<a href="/profile/personal?user_id=10074" class="name">Tuyetnhung</a>
-				            	</p>
-				            	<p class="cl99"><span class="clred">1424</span> điểm / 56 lần thi</p>
-				          </div>
-				        </li>
-				                <li>
-				          <div class="relative"> <img src="https://graph.facebook.com/152994149759059/picture?type=large">
-				            <span class="rank rank4">4</span></div>
-				          <div class="clearfix">
-				            <p> <a href="/profile/personal?user_id=10077" class="name">Nguyễn Thị Thanh Phương</a></p>
-				            <p class="cl99"><span class="clred">1373</span> điểm / 52 lần thi</p>
-				          </div>
-				        </li>
-				                <li>
-				          <div class="relative"> <img src="https://graph.facebook.com/977480999314615/picture?type=large">
-				            <span class="rank rank4">5</span></div>
-				          <div class="clearfix">
-				            <p> <a href="/profile/personal?user_id=8468" class="name">Dũng Lê</a></p>
-				            <p class="cl99"><span class="clred">1327</span> điểm / 78 lần thi</p>
-				          </div>
-				        </li>
-				                <li>
-				          <div class="relative"> <img src="https://graph.facebook.com/588228791784264/picture?type=large">
-				            <span class="rank rank4">6</span></div>
-				          <div class="clearfix">
-				            <p> <a href="/profile/personal?user_id=7701" class="name">Kim Anh Mai</a></p>
-				            <p class="cl99"><span class="clred">1307</span> điểm / 68 lần thi</p>
-				          </div>
-				        </li>
+				      <ul class="list" th:each="User,pos : ${TopUser}">
+                    <li>
+                        <div class="relative"> 
+                          <img src="https://lh3.googleusercontent.com/a-/AOh14GjydwnrlI5-BQ7lCYlKZlGi4N3P-ZykNZyIz5Qd">
+                          <span th:class="@{'rank rank'+${pos.index+1}}">1</span>
+                      </div>
+                        <div class="clearfix">
+                          <p>
+                            <a href="/profile/personal?user_id=10473" th:text="${User.HoVaTen}" class="name">le vui</a>
+                          </p>
+                        <span class="clred" th:text = "${User.DiemTichLuy}">6888</span> điểm
+                         <p class="cl99" th:text="@{${User.ThamGiaThis.size()} + ' Lần thi'}">
+
+                          </p> 
+                        </div>
+                    </li>
 		              </ul>
 				    </div>
 				  </div>

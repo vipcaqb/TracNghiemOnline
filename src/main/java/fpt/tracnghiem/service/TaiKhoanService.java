@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
+import fpt.tracnghiem.entity.Role;
 import fpt.tracnghiem.entity.TaiKhoan;
 import fpt.tracnghiem.repository.TaiKhoanRepository;
 
@@ -37,6 +38,9 @@ public class TaiKhoanService {
 	
 	public TaiKhoan update(TaiKhoan taiKhoan) {
 		return taiKhoanRepository.save(taiKhoan);
+	}
+	public List<TaiKhoan> findTop6UserMaxPoint(Role role){
+		return taiKhoanRepository.findTop6ByRoleOrderByDiemTichLuyDesc(role);
 	}
 	
 	public TaiKhoan tangDiemTichLuy(TaiKhoan taiKhoan, int diemTichLuy) {

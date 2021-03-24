@@ -1,6 +1,7 @@
 package fpt.tracnghiem.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,5 +17,9 @@ public class LopService {
 	public Iterable<Lop> getAllLop() {
 		return lopRepository.findAll();
 	}
-
+	public Optional<Lop> findByID(int id) {
+		return lopRepository.findById(id);
+	}
+	
+	
 }
