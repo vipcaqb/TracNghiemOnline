@@ -127,7 +127,7 @@ public class MainController {
 	 * @param taiKhoan the tai khoan
 	 * @return the string
 	 */
-	@PostMapping("/register")
+	@PostMapping(value = "/register")
 	@ResponseBody
 	public ResponseEntity<?>  register(@Valid @RequestBody TaiKhoan taiKhoan, BindingResult bindingResult) {
 		//validation data
@@ -151,11 +151,10 @@ public class MainController {
 			taiKhoanService.save(taiKhoan);
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Username đã tồn tại");
 			result.setMsg("Username đã tồn tại");
 			return ResponseEntity.badRequest().body(result);
 		}
-		return ResponseEntity.ok("");
+		return ResponseEntity.ok(result);
 	}
 	
 	/**

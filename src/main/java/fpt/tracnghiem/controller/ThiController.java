@@ -77,10 +77,6 @@ public class ThiController {
 	
 	@Autowired
 	private ThiService thiService;
-
-	@Autowired
-	private TaiKhoanService taiKhoanService;
-	
 	/**
 	 * Load danh sách các đề thi
 	 *
@@ -104,6 +100,7 @@ public class ThiController {
 			pageDethi = dethiService.findPaginated(page-1, MyConstances.HOMEPAGE_SIZE);
 			dsDethi = pageDethi.getContent();
 		}
+		List<TaiKhoan> Top6TaiKhoan = taiKhoanService.findTop6UserMaxPoint(null);
 		model.addAttribute("currentPage", page);
 		model.addAttribute("totalPages", pageDethi.getTotalPages());
 		model.addAttribute("totalItems", pageDethi.getTotalElements());
@@ -111,6 +108,7 @@ public class ThiController {
 		model.addAttribute("listLop", listLop);
 		model.addAttribute("listMonHoc", listMonhoc);
 		model.addAttribute("listTaiKhoan",listTaiKhoan);
+		model.addAttribute("TopUser",Top6TaiKhoan);
 		return "user/thi/listExam";
 	}
 	
@@ -159,12 +157,41 @@ public class ThiController {
 		HttpSession session = req.getSession();
 		TaiKhoan taiKhoan = null;
 		DeThi deThi = dethiService.findById(idDe).get();
+		
 		if(session.getAttribute("user")!=null) {
-			if(session.getAttribute("baiDangThi")==null) {
-				taiKhoan = (TaiKhoan) session.getAttribute("user");
-				ThamGiaThi baiDangThi = thiService.batDauThi(taiKhoan, deThi);
+//			if(session.getAttribute("baiDangThi")==null) {
+//				taiKhoan = (TaiKhoan) session.getAttribute("user");
+//				ThamGiaThi baiDangThi = thiService.batDauThi(taiKhoan, deThi);
+//				session.setAttribute("baiDangThi", baiDangThi);
+//			}else {
+//				ThamGiaThi baiDangThi1 = (ThamGiaThi) session.getAttribute("baiDangThi");
+//				if(baiDangThi1.getDeThi().getIdDe()!= deThi.getIdDe()) {
+//					taiKhoan = (TaiKhoan) session.getAttribute("user");
+//					ThamGiaThi baiDangThi = thiService.batDauThi(taiKhoan, deThi);
+//					session.setAttribute("baiDangThi", baiDangThi);
+//				}
+//			}
+			taiKhoan= (TaiKhoan) session.getAttribute("user");
+			if(session.getAttribute("baiDangThi")==null||session.getAttribute("baiDangThi").equals("")) {
+				
+				ThamGiaThi baiDangThi = new ThamGiaThi();
+				baiDangThi.setDeThi(deThi);
+				baiDangThi.setFinished(false);
+				baiDangThi.setNgayGioBatDau(new Timestamp(System.currentTimeMillis()));
+				baiDangThi.setTaiKhoan(taiKhoan);
+				baiDangThi.setTongDiem(0);
 				session.setAttribute("baiDangThi", baiDangThi);
 			}
+			else {
+				ThamGiaThi baiDangThi = (ThamGiaThi) session.getAttribute("baiDangThi");
+				baiDangThi.setDeThi(deThi);
+				baiDangThi.setFinished(false);
+				baiDangThi.setNgayGioBatDau(new Timestamp(System.currentTimeMillis()));
+				baiDangThi.setTaiKhoan(taiKhoan);
+				baiDangThi.setTongDiem(0);
+				session.setAttribute("baiDangThi", baiDangThi);
+			}
+			
 			
 			ModelAndView mav = new ModelAndView();
 			List<CauHoi> listCauHoi = cauHoiService.findAllByIdDeThi(idDe);
@@ -178,8 +205,6 @@ public class ThiController {
 		else {
 			return new ModelAndView("404");
 		}
-		
-		
 	}
 	
 	@PostMapping(value="/thi/hoanThanh/{idDe}")
@@ -209,16 +234,21 @@ public class ThiController {
 		
 		//Lưu vào db
 		HttpSession session = req.getSession();
-		TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("user");
-		
-		if(session.getAttribute("baiDangThi")==null||session.getAttribute("baiDangThi")=="") {
-			thiService.batDauThi(taiKhoan, deThi);
-		}
+		//TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("user");
 		if(session.getAttribute("baiDangThi")!=null) {
+			
 			ThamGiaThi baiDangThi = (ThamGiaThi) session.getAttribute("baiDangThi");
-			thiService.hoanThanhBaiThi(baiDangThi, kq.getDiemSo(),taiKhoan.getUsername());
+			thiService.hoanThanh(baiDangThi, kq.getDiemSo());
 			session.removeAttribute("baiDangThi");
 		}
+//		if(session.getAttribute("baiDangThi")==null||session.getAttribute("baiDangThi")=="") {
+//			thiService.batDauThi(taiKhoan, deThi);
+//		}
+//		else  {
+//			ThamGiaThi baiDangThi = (ThamGiaThi) session.getAttribute("baiDangThi");
+//			thiService.hoanThanhBaiThi(baiDangThi, kq.getDiemSo(),taiKhoan.getUsername());
+//			session.removeAttribute("baiDangThi");
+//		}
 		
 		return	ResponseEntity.ok(kq);
 	}

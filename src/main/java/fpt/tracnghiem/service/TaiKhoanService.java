@@ -40,7 +40,7 @@ public class TaiKhoanService {
 		return taiKhoanRepository.save(taiKhoan);
 	}
 	public List<TaiKhoan> findTop6UserMaxPoint(Role role){
-		return taiKhoanRepository.findTop6ByRoleOrderByDiemTichLuyDesc(role);
+		return taiKhoanRepository.findTop10ByOrderByDiemTichLuyDesc();
 	}
 	
 	public TaiKhoan tangDiemTichLuy(TaiKhoan taiKhoan, int diemTichLuy) {
