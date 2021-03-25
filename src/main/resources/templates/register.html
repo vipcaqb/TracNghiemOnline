@@ -42,8 +42,8 @@
 					required="required"> 
 					<input class="form-control user_form" type="text" placeholder="Nhập địa chỉ" th:field="*{diaChi}"
 					required="required"> 
-					<div id="errMsg" class="alert alert-danger">
-						Username khong hop le, password khong hop le
+					<div id="errMsg" class="alert alert-danger hide">
+						abc
 					</div>
 					<input class="btn btn-lg btn-primary user_form reg_DK" id="regSubmit" type="submit" value="Đăng ký">
 				</form>
@@ -93,21 +93,15 @@
 					cache: false,
 					timeout: 600000,
 					success: function(data) {
-						console.log('dang ky thanh cong')
-						 window.location.href = '/login'; 
+						window.location.replace("/login");
+						alert('dang ky thanh cong')
 					},
 					error: function(e) {
-						var empty = "";
-						if(empty.localeCompare(e.responseText)){
-							console.log('load trang')
-							window.location.href = '/login'; 
-						}
-						else {
-							var listMsg = JSON.parse(e.responseText);
-							console.log(listMsg)
-							$('#errMsg').text(listMsg.msg)
-							$("#regSubmit").prop("disabled", false);
-						}
+						var listMsg = JSON.parse(e.responseText);
+						console.log(listMsg["msg"]);
+						$('#errMsg').text(listMsg.msg);
+						$('#errMsg').removeClass('hide');
+						$("#regSubmit").prop("disabled", false);
 					}
 				});
 			})

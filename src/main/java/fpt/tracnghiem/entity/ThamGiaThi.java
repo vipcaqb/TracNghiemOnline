@@ -45,6 +45,20 @@ public class ThamGiaThi implements Serializable {
 	public ThamGiaThi() {
 	}
 
+	public ThamGiaThi(int idThamGiaThi, Timestamp ngayGioBatDau, Timestamp ngayGioKetThuc, double tongDiem,
+			Boolean finished, DeThi deThi, TaiKhoan taiKhoan) {
+		super();
+		this.idThamGiaThi = idThamGiaThi;
+		this.ngayGioBatDau = ngayGioBatDau;
+		this.ngayGioKetThuc = ngayGioKetThuc;
+		this.tongDiem = tongDiem;
+		this.finished = finished;
+		this.deThi = deThi;
+		this.taiKhoan = taiKhoan;
+	}
+
+
+
 	public int getIdThamGiaThi() {
 		return this.idThamGiaThi;
 	}
