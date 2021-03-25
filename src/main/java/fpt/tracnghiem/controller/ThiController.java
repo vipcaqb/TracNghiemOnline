@@ -78,9 +78,7 @@ public class ThiController {
 	@Autowired
 	private ThiService thiService;
 
-	@Autowired
-	private TaiKhoanService taiKhoanService;
-	
+
 	/**
 	 * Load danh sách các đề thi
 	 *
