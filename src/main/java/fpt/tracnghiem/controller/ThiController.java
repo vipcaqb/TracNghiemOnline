@@ -64,10 +64,15 @@ public class ThiController {
 	@Autowired
 	private DeThiService dethiService;
 
+	/** The tai khoan service. */
 	@Autowired
 	private TaiKhoanService taiKhoanService;
+	
+	/** The role service. */
 	@Autowired
 	private RoleService roleService;
+	
+	/** The lop service. */
 	@Autowired
 	private LopService lopService;
 	
@@ -75,11 +80,12 @@ public class ThiController {
 	@Autowired
 	private MonHocService monHocService;
 	
+	/** The thi service. */
 	@Autowired
 	private ThiService thiService;
 
 	/**
-	 * Load danh sách các đề thi
+	 * Load danh sách các đề thi.
 	 *
 	 * @param req the req
 	 * @param model the model
@@ -114,7 +120,7 @@ public class ThiController {
 	}
 	
 	/**
-	 * Tìm kiếm đề thi
+	 * Tìm kiếm đề thi.
 	 *
 	 * @param keyword the keyword
 	 * @param req the req
@@ -136,6 +142,11 @@ public class ThiController {
 		return mav;
 	}
 	
+	/**
+	 * Show form form list exam.
+	 *
+	 * @param mav the mav
+	 */
 	private void ShowFormFormListExam(ModelAndView mav) {
 		Optional<Role> role = roleService.findByRoleName(MyConstances.ROLE_USER);
 		List<TaiKhoan> Top6TaiKhoan = taiKhoanService.findTop6UserMaxPoint(role.get());
@@ -148,9 +159,10 @@ public class ThiController {
 	}
 
 	/**
-	 * Bắt đầu cuộc thi
+	 * Bắt đầu cuộc thi.
 	 *
 	 * @param idDe the id de
+	 * @param req the req
 	 * @return the model and view
 	 */
 	@RequestMapping(value = "/thi/{idDe}", method = RequestMethod.GET )
@@ -167,6 +179,13 @@ public class ThiController {
 		return mav;
 	}
 	
+	/**
+	 * Start exam.
+	 *
+	 * @param idDe the id de
+	 * @param req the req
+	 * @return the model and view
+	 */
 	@RequestMapping(value="/batdauthi/{idDe}",method = RequestMethod.GET)
 	ModelAndView StartExam(@PathVariable int idDe,HttpServletRequest req) {
 		HttpSession session = req.getSession();
@@ -226,6 +245,14 @@ public class ThiController {
 		}
 	}
 	
+	/**
+	 * Hoan thanh bai thi.
+	 *
+	 * @param idDe the id de
+	 * @param listCauHoi the list cau hoi
+	 * @param req the req
+	 * @return the response entity
+	 */
 	@PostMapping(value="/thi/hoanThanh/{idDe}")
 	@ResponseBody
 	public ResponseEntity<?> hoanThanhBaiThi(@PathVariable(name = "idDe") Integer idDe,
@@ -253,26 +280,25 @@ public class ThiController {
 		
 		//Lưu vào db
 		HttpSession session = req.getSession();
-		//TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("user");
 		if(session.getAttribute("baiDangThi")!=null) {
 			
 			ThamGiaThi baiDangThi = (ThamGiaThi) session.getAttribute("baiDangThi");
 			thiService.hoanThanh(baiDangThi, kq.getDiemSo());
 			session.removeAttribute("baiDangThi");
 		}
-//		if(session.getAttribute("baiDangThi")==null||session.getAttribute("baiDangThi")=="") {
-//			thiService.batDauThi(taiKhoan, deThi);
-//		}
-//		else  {
-//			ThamGiaThi baiDangThi = (ThamGiaThi) session.getAttribute("baiDangThi");
-//			thiService.hoanThanhBaiThi(baiDangThi, kq.getDiemSo(),taiKhoan.getUsername());
-//			session.removeAttribute("baiDangThi");
-//		}
 		
 		return	ResponseEntity.ok(kq);
 	}
 
 	
+	/**
+	 * Find by mon hoc.
+	 *
+	 * @param req the req
+	 * @param idMonHoc the id mon hoc
+	 * @param keyword the keyword
+	 * @return the model and view
+	 */
 	@RequestMapping(value = "/findByMonHoc/{idMonHoc}")
 	ModelAndView findByMonHoc(HttpServletRequest req,@PathVariable int idMonHoc,@Param("keyword") String keyword) {
 		ModelAndView mav = new ModelAndView();
@@ -288,6 +314,15 @@ public class ThiController {
 		return mav;
 		
 	}
+	
+	/**
+	 * Find by lop hoc.
+	 *
+	 * @param req the req
+	 * @param idLopHoc the id lop hoc
+	 * @param keyword the keyword
+	 * @return the model and view
+	 */
 	@RequestMapping(value = "/findByLop/{idLopHoc}")
 	ModelAndView findByLopHoc(HttpServletRequest req,@PathVariable int idLopHoc,@Param("keyword") String keyword) {
 		ModelAndView mav = new ModelAndView();
@@ -303,6 +338,14 @@ public class ThiController {
 		return mav;
 		
 	}
+	
+	/**
+	 * Show exam detail.
+	 *
+	 * @param req the req
+	 * @param idDe the id de
+	 * @return the model and view
+	 */
 	@RequestMapping(value = "/examDetail/{idDe}")
 	ModelAndView ShowExamDetail(HttpServletRequest req,@PathVariable int idDe) {
 		ModelAndView mav = new ModelAndView();
@@ -316,5 +359,4 @@ public class ThiController {
 		
 	}
 	
-
 }
