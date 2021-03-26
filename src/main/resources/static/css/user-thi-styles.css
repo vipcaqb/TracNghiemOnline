@@ -162,7 +162,6 @@ ul.listda li {
     position: relative;
 }
 ul.listda li span.no-answered {
-    background: #fff;
     font-weight: bold;
     border: #000 solid 2px;
 }
@@ -275,6 +274,7 @@ ul.listda li span {
 }
 
 .active{
+	background-color: #3ddc97;
 	background: #3ddc97;
 }
 

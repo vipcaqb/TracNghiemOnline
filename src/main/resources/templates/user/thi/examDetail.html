@@ -18,54 +18,34 @@
     <link rel="icon" type="image/png" sizes="16x16" href="img/iconn.png">
 </head>
 <body class="bg-gray">
-	<div class=" border border-gray rounded shadow-sm bg-white">
-		<section id="menu" class="">
-			
-			<ul class=" cln justify-content-between navbar-nav my-2 mr-5 ml-5">
-			
-				<li>
-					
-					<h3 class="logo">
-					<a href="/user/thi/page/1">
-						<span class="text-primary">
-						<i class="fas fa-backward"></i> Quay Về</span> 
-					</a>
-					</h3>
-				
-				</li>
-				
-			</ul>
-		</section>
-	</div>
-	
-	<div class="mg-main mx-auto ">
+	<nav th:insert="creator/shared/menu::menu">
+	</nav>
+	<div class="mg-main mx-auto text-center">
 		<div class="row " id="content">
 			
 			<div class="col-9 high ">
 				<div class="">
 					<div class="boxcont magb20">
-			            <div class="title row">
+			            <div class="title row mt-2">
 				            <span>Tiểu học - THCS - THPT</span>
 				           
 			            </div>
 	            		<div class ="detail-body row" >	                            
-						<div class = "col-sm-1"></div>           
-						<div th:if="${deThi}" class="col-sm-10" style=" border: 2px ;background-color:white; border-radius: 8px; ">
-							
-							<h3 th:text="@{'Tên đề: '+${deThi.TenDe}}">Tên đề:</h3>
-							<h5 th:text="@{'Chi tiết đề thi: '+${deThi.MoTa}}">Chi tiết đề thi:</h5>
-							<h5 th:text="@{'Dành cho học sinh: '+${deThi.Lop.TenLop}}">Lớp Học:</h5>
-							<h5 th:text="@{'Môn học: '+${deThi.MonHoc.TenMonHoc}}">Môn Học:</h5>
-							<h5  th:text="@{'Ngày tạo: '+${deThi.NgayTao}}">Ngày Tạo:</h5>
-							<h5 th:text="@{'Người tạo: '+${deThi.TaiKhoan.HoVaTen}}">Người Tạo:</h5>
-							<ul class="list" style="display: flex;">
-              <li><img src="/image/time.png"></li><li th:text="@{${deThi.ThoiGianThi}+' Phút'}"></li>
-              <li style="margin-left: 50px"><img src="/image/question.png"> </li>
-              <li  th:text="@{${deThi.CauHois.size()}+' Câu'}"></li>
-              <li  > <a class="btn-white" style="margin-left: 50px;background-color: #ff2942;color: white" th:href="@{'/user/thi/' +${deThi.idDe}}" th:text="@{'Thi Ngay'}"></a></li>
-              
-            </ul>
-						</div>
+							<div class = "col-sm-1"></div>           
+							<div th:if="${deThi}!=null" class="col-sm-10 pt-5 pb-5" style="background-color:white; ">
+								
+								<h3 th:text="@{'Tên đề: '+${deThi.TenDe}}">Tên đề:</h3>
+								<p class="pt-3" th:text="@{'Mô tả: '+${deThi.MoTa}}">Chi tiết đề thi:</p>
+								<p class="pt-3" th:text="@{'Dành cho học sinh: '+${deThi.Lop.TenLop}}">Lớp Học:</p>
+								<p class="pt-3" th:text="@{'Môn học: '+${deThi.MonHoc.TenMonHoc}}">Môn Học:</p>
+								<p class="pt-3" th:text="@{'Ngày tạo: '+${deThi.NgayTao}}">Ngày Tạo:</p>
+								<p class="pt-3" th:text="@{'Người tạo: '+${deThi.TaiKhoan.HoVaTen}}">Người Tạo:</p>
+								<ul class="list pt-3">
+					              <li><img src="/image/time.png"></li><li th:text="@{${deThi.ThoiGianThi}+' Phút'}"></li>
+					              <li style="margin-left: 20px"><img src="/image/question.png"> </li><li  th:text="@{${deThi.CauHois.size()}+' Câu'}"></li>
+					            </ul>
+					            <a th:href="@{'/user/thi/'+${deThi.idDe}}" class="btn btn-outline-primary mt-3">Bắt đầu thi</a>
+							</div>
 						</div>                          
 					</div>
 				</div>	
@@ -75,7 +55,7 @@
 			
 			<div class="col-3  ml-fit px-fit">
 				<div class="sidebar ranking magb20">
-					<div class="title ml-3">
+					<div class="title mt-2">
 						<span class="">Xếp hạng người dùng điểm cao nhất</span>
 					</div>
 					<div class="box fm-box mx-auto">
@@ -88,7 +68,7 @@
 									<span
 										th:class="@{'rank rank'+${pos.index+1}}" th:text="${pos.index+1}"></span>
 								</div>
-								<div class="clearfix">
+								<div class="clearfix text-left">
 									<p>
 										<a href="/profile/personal?user_id=10473"
 											th:text="${User.HoVaTen}" class="name"></a>
