@@ -75,31 +75,32 @@
 											<ul class="list-folw">
 												<th:block th:if="${dethi.ThamGiaThis.size()>0}">
 													<li><span th:text="@{'+'+${dethi.ThamGiaThis.size()}}">+11</span></li>
-													<th:block th:each="thamgiathi : ${dethi.ThamGiaThis}">
-														<li th:if="${thamgiathi.TaiKhoan.urlAvatar!=null}"><span> 
+													<th:block th:each="thamgiathi,pos : ${dethi.ThamGiaThis}">
+													<th:block th:if="${thamgiathi.taiKhoan!=null and pos.index < 6}">
+														<li th:if="${thamgiathi.taiKhoan.urlAvatar}!=null"><span> 
 														<img
 																
-																width="30px" th:src="${thamgiathi.TaiKhoan.urlAvatar}">
+																width="30px" th:src="${thamgiathi.taiKhoan.urlAvatar}">
 														</span></li>
-														<li th:unless="${thamgiathi.TaiKhoan.urlAvatar!=null}"><span> 
+														<li th:unless="${thamgiathi.taiKhoan.urlAvatar!=null }" ><span> 
 														<img
 																
-																width="60px" th:src="@{'https://ui-avatars.com/api/?name='+${thamgiathi.TaiKhoan.hoVaTen}}">
+																width="60px" th:src="@{'https://ui-avatars.com/api/?name='+${thamgiathi.taiKhoan.hoVaTen}}">
 														</span></li>
+														</th:block>
 													</th:block>
 												</th:block>
-												<th:block th:unless="${dethi.ThamGiaThis.size()>0}">
-													<li><span th:text="@{'+'+${dethi.ThamGiaThis.size()}}">+0</span></li>
+												<th:block th:unless="${dethi.thamGiaThis.size()>0}">
+													<li><span th:text="@{'+'+${dethi.thamGiaThis.size()}}">+0</span></li>
 												</th:block>
 
 
 
 											</ul>
-											<!-- <span class="time">5 phút trước</span> -->
 										</div>
 										<a th:href="@{'/user/examDetail/'+${dethi.idDe}}" class="btn-white">Chi tiết <i
 											class="fas fa-chevron-right fm-ic ml-2 mt-1"></i></a>
-									</div>
+									</div> 
 								</div>
 
 							</th:block>
@@ -118,8 +119,8 @@
 						<ul class="list" th:each="User,pos : ${TopUser}">
 							<li>
 								<div class="relative">
-									<img th:if="${User.UrlAvatar}" width="30px" height="30px" th:src="${User.UrlAvatar}"> 
-									<img th:unless="${User.UrlAvatar}" width="30px"  height="30px" th:src="@{'https://ui-avatars.com/api/?name='+${User.hoVaTen}}"> 
+									<img th:if="${User.UrlAvatar}!=null" width="30px" height="30px" th:src="${User.UrlAvatar}"> 
+									<img th:unless="${User.UrlAvatar}!=null" width="30px"  height="30px" th:src="@{'https://ui-avatars.com/api/?name='+${User.hoVaTen}}"> 
 									
 									<span
 										th:class="@{'rank rank'+${pos.index+1}}" th:text="${pos.index+1}"></span>

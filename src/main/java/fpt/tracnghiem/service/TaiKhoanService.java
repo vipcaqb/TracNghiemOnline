@@ -1,5 +1,7 @@
 package fpt.tracnghiem.service;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,9 +24,31 @@ public class TaiKhoanService {
 			throw new DuplicateKeyException("Usename đã tồn tại");
 		}
 		else {
-			taiKhoan.setUrlAvatar("/image/defaultAvatar.png");
+			String password = taiKhoan.getPassword();
+			String encryptedPassword = md5("freshersalt", password);
+			taiKhoan.setPassword(encryptedPassword);
+//			taiKhoan.setUrlAvatar("/image/defaultAvatar.png");
 			return taiKhoanRepository.save(taiKhoan);
 		}
+	}
+	
+	public  String md5(String salt, String plainText)
+	        throws NoSuchAlgorithmException {
+	    MessageDigest md = MessageDigest.getInstance("MD5");
+
+	    if (salt != null) {
+	        md.update(salt.getBytes());
+	    }
+	    md.update(plainText.getBytes());
+
+	    byte byteData[] = md.digest();
+
+	    StringBuffer sb = new StringBuffer();
+	    for (int i = 0; i < byteData.length; i++) {
+	        sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16)
+	                .substring(1));
+	    }
+	    return sb.toString();
 	}
 	
 
@@ -40,7 +64,7 @@ public class TaiKhoanService {
 		return taiKhoanRepository.save(taiKhoan);
 	}
 	public List<TaiKhoan> findTop6UserMaxPoint(Role role){
-		return taiKhoanRepository.findTop6ByRoleOrderByDiemTichLuyDesc(role);
+		return taiKhoanRepository.findTop10ByOrderByDiemTichLuyDesc();
 	}
 	
 	public TaiKhoan tangDiemTichLuy(TaiKhoan taiKhoan, int diemTichLuy) {

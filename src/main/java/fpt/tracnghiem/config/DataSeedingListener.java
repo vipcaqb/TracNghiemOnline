@@ -105,6 +105,7 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 			if (x.isPresent()) {
 				tk.setRole(x.get());
 			}
+			
 			taiKhoanRepository.save(tk);
 		}
 

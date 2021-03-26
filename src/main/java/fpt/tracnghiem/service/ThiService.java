@@ -39,6 +39,7 @@ public class ThiService {
 		thamGiaThi.setFinished(false);
 		thamGiaThi.setDeThi(deThi);
 		thamGiaThi.setNgayGioBatDau(new Timestamp(System.currentTimeMillis()));
+		thamGiaThi.setTaiKhoan(taiKhoan);
 		
 		return thiRepository.save(thamGiaThi);
 	}
@@ -57,6 +58,18 @@ public class ThiService {
 		thiRepository.save(baiDangThi);
 		
 		TaiKhoan taiKhoan = taiKhoanService.findById(usernameDangThi).get();
+		baiDangThi.setTaiKhoan(taiKhoan);
 		taiKhoanService.tangDiemTichLuy(taiKhoan, tongDiem);
 	}
+	
+	@Transactional
+	public void hoanThanh(ThamGiaThi baiDangThi,Integer tongDiem) {
+		baiDangThi.setFinished(true);
+		baiDangThi.setNgayGioKetThuc(new Timestamp(System.currentTimeMillis()));
+		baiDangThi.setTongDiem(tongDiem);
+		thiRepository.save(baiDangThi);
+		System.out.println(tongDiem);
+		taiKhoanService.tangDiemTichLuy(baiDangThi.getTaiKhoan(), tongDiem);
+	}
+	
 }

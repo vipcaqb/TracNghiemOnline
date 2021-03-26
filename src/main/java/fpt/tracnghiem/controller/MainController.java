@@ -1,6 +1,7 @@
 package fpt.tracnghiem.controller;
 
 import java.io.Console;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -82,14 +83,20 @@ public class MainController {
 	 * @param req the req
 	 * @param res the res
 	 * @return the string
+	 * @throws NoSuchAlgorithmException 
 	 */
 	@PostMapping("/login")
 	public String login(@ModelAttribute("taiKhoan") TaiKhoan taiKhoan,
 			HttpServletRequest req,
 			HttpServletResponse res,
-			Model model) {
+			Model model) throws NoSuchAlgorithmException {
+		
+		String password = taiKhoan.getPassword();
+		String encryptedPassword =taiKhoanService.md5("freshersalt", password);
+		
+		
 		List<TaiKhoan> listTaiKhoan = taiKhoanService
-				.findByUsernameAndPassword(taiKhoan.getUsername(), taiKhoan.getPassword());
+				.findByUsernameAndPassword(taiKhoan.getUsername(), encryptedPassword);
 		if(listTaiKhoan.size() > 0) {
 			//luu vao session
 			HttpSession session = req.getSession();
@@ -127,7 +134,7 @@ public class MainController {
 	 * @param taiKhoan the tai khoan
 	 * @return the string
 	 */
-	@PostMapping("/register")
+	@PostMapping(value = "/register")
 	@ResponseBody
 	public ResponseEntity<?>  register(@Valid @RequestBody TaiKhoan taiKhoan, BindingResult bindingResult) {
 		//validation data
@@ -140,6 +147,7 @@ public class MainController {
 			return ResponseEntity.badRequest().body(result);
 		}
 		
+		System.out.println(taiKhoan);
 		
 		//when success data
 		taiKhoan.setEnable(true);
@@ -151,11 +159,10 @@ public class MainController {
 			taiKhoanService.save(taiKhoan);
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Username đã tồn tại");
 			result.setMsg("Username đã tồn tại");
 			return ResponseEntity.badRequest().body(result);
 		}
-		return ResponseEntity.ok("");
+		return ResponseEntity.ok(result);
 	}
 	
 	/**
