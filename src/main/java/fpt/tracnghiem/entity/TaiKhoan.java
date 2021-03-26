@@ -61,7 +61,7 @@ public class TaiKhoan implements Serializable {
 
 	@Column(name="password",length = 30)
 	@Pattern(regexp="^[a-zA-Z0-9]*$",message = "Pass chứa ký tự không hợp lệ")
-	@Length(min=6,max=30,message = "Mật khẩu phải có độ dài từ 6 đến 30 ký tự")
+	@Length(min=6,max=40,message = "Mật khẩu phải có độ dài từ 6 đến 30 ký tự")
 	private String password;
 
 	@Column(name="sdt",length = 20)

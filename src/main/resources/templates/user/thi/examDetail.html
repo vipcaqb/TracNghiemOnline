@@ -60,7 +60,10 @@
 							<h5 th:text="@{'Người tạo: '+${deThi.TaiKhoan.HoVaTen}}">Người Tạo:</h5>
 							<ul class="list" style="display: flex;">
               <li><img src="/image/time.png"></li><li th:text="@{${deThi.ThoiGianThi}+' Phút'}"></li>
-              <li style="margin-left: 20px"><img src="/image/question.png"> </li><li  th:text="@{${deThi.CauHois.size()}+' Câu'}"></li>
+              <li style="margin-left: 50px"><img src="/image/question.png"> </li>
+              <li  th:text="@{${deThi.CauHois.size()}+' Câu'}"></li>
+              <li  > <a class="btn-white" style="margin-left: 50px;background-color: #ff2942;color: white" th:href="@{'/user/thi/' +${deThi.idDe}}" th:text="@{'Thi Ngay'}"></a></li>
+              
             </ul>
 						</div>
 						</div>                          
