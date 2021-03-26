@@ -81,7 +81,7 @@
 									<p th:text="${cauhoi.noiDung}"></p>
 									<div class="form-group form-check p4" th:each="phuongan,pos : ${cauhoi.phuongAns}">
 										<input class="form-check-input" th:data-idPhuongAn="${phuongan.idPhuongAn}" th:id="@{'ch'+${position.index}+'pa'+${pos.index}}" type="checkbox" name="remember"> 
-										<label class="form-check-label" th:for="@{'ch'+${position.index}+'pa'+${pos.index}}" th:text="${phuongan.noiDung}"> 
+										<label class="form-check-label" th:for="@{'ch'+${position.index}+'pa'+${pos.index}}" th:text="@{${pos.index+1}+'. '+${phuongan.noiDung}}"> 
 										</label>
 									</div>
 								</div>
@@ -185,7 +185,7 @@
 			
 			$("input[type='checkbox']").change(function(){
 				soCauDaTraLoi = tinhSoCauDaTraLoi();
-				console.log(soCauDaTraLoi);
+				$("#daTraLoi").text(soCauDaTraLoi);
 			})
 			
 			//tinh so cau da tra loi

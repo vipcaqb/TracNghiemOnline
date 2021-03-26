@@ -26,10 +26,11 @@
 		<h4 class="text-uppercase font-weight-bold text-center">Thêm câu hỏi bằng file excel</h4>
 		Tải file mẫu <a href="/excel/abc.xlsx">tại đây</a>
 		<div class="card d-flex flex-row mt-3">
-			<form class="form-group" th:action="@{'/upload/'+${idDe}}" method="post" enctype="multipart/form-data">
-			<input class="form-control-file" type="file" name="files" multiple>
-			<input class="btn btn-success mt-3" type="submit" value="Upload Files" accept=".xlsx">
-		</form>
+			<form class="form-group mt-3" th:action="@{'/upload/'+${idDe}}" method="post" enctype="multipart/form-data">
+				<label class="ml-3 font-weight-bold">Chọn file .xlsx</label>
+				<input class="form-control-file ml-3" type="file" name="files" multiple accept=".xlsx">
+				<input class="btn btn-sm btn-success mt-3 ml-3" type="submit" value="Upload Files">
+			</form>
 		</div>
 	</section>
 			

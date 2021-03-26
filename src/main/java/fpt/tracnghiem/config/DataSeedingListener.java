@@ -15,6 +15,7 @@ import fpt.tracnghiem.repository.LopRepository;
 import fpt.tracnghiem.repository.MonHocRepository;
 import fpt.tracnghiem.repository.RoleRepository;
 import fpt.tracnghiem.repository.TaiKhoanRepository;
+import fpt.tracnghiem.service.TaiKhoanService;
 
 @Component
 public class DataSeedingListener implements ApplicationListener<ContextRefreshedEvent> {
@@ -27,6 +28,9 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 
 	@Autowired
 	TaiKhoanRepository taiKhoanRepository;
+	
+	@Autowired
+	TaiKhoanService taiKhoanService;
 	
 	@Autowired
 	MonHocRepository monHocRepository;
@@ -106,7 +110,12 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 				tk.setRole(x.get());
 			}
 			
-			taiKhoanRepository.save(tk);
+			try {
+				taiKhoanService.save(tk);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		// tao 1 tai khoan la ROLE_CREATER
