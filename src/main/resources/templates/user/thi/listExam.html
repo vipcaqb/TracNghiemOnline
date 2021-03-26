@@ -75,21 +75,23 @@
 											<ul class="list-folw">
 												<th:block th:if="${dethi.ThamGiaThis.size()>0}">
 													<li><span th:text="@{'+'+${dethi.ThamGiaThis.size()}}">+11</span></li>
-													<th:block th:each="thamgiathi : ${dethi.ThamGiaThis}">
+													<th:block th:each="thamgiathi,pos : ${dethi.ThamGiaThis}">
+													<th:block th:if="${thamgiathi.taiKhoan!=null and pos.index < 6}">
 														<li th:if="${thamgiathi.taiKhoan.urlAvatar}!=null"><span> 
 														<img
 																
 																width="30px" th:src="${thamgiathi.taiKhoan.urlAvatar}">
 														</span></li>
-														<li th:unless="${thamgiathi.TaiKhoan.urlAvatar}!=null"><span> 
+														<li th:unless="${thamgiathi.taiKhoan.urlAvatar!=null }" ><span> 
 														<img
 																
-																width="60px" th:src="@{'https://ui-avatars.com/api/?name='+${thamgiathi.TaiKhoan.hoVaTen}}">
+																width="60px" th:src="@{'https://ui-avatars.com/api/?name='+${thamgiathi.taiKhoan.hoVaTen}}">
 														</span></li>
+														</th:block>
 													</th:block>
 												</th:block>
-												<th:block th:unless="${dethi.ThamGiaThis.size()>0}">
-													<li><span th:text="@{'+'+${dethi.ThamGiaThis.size()}}">+0</span></li>
+												<th:block th:unless="${dethi.thamGiaThis.size()>0}">
+													<li><span th:text="@{'+'+${dethi.thamGiaThis.size()}}">+0</span></li>
 												</th:block>
 
 

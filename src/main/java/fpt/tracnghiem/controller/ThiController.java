@@ -77,6 +77,7 @@ public class ThiController {
 	
 	@Autowired
 	private ThiService thiService;
+
 	/**
 	 * Load danh sách các đề thi
 	 *
@@ -152,7 +153,21 @@ public class ThiController {
 	 * @param idDe the id de
 	 * @return the model and view
 	 */
-	@RequestMapping(value="/thi/{idDe}",method = RequestMethod.GET)
+	@RequestMapping(value = "/thi/{idDe}", method = RequestMethod.GET )
+	ModelAndView setTimer(@PathVariable int idDe,HttpServletRequest req) {
+		ModelAndView mav = new ModelAndView();
+		//gan du lieu cho dong ho
+		HttpSession session = req.getSession();
+		DeThi deThi = dethiService.findById(idDe).get();
+		int ThoiGianThi = deThi.getThoiGianThi();
+		Date date = new Date();
+		Timestamp NgayGioKetThuc = new  Timestamp(date.getTime()+ ThoiGianThi *60000);
+		session.setAttribute("NgayGioKetThuc", NgayGioKetThuc);
+		mav.setViewName("redirect:/user/batdauthi/"+idDe);
+		return mav;
+	}
+	
+	@RequestMapping(value="/batdauthi/{idDe}",method = RequestMethod.GET)
 	ModelAndView StartExam(@PathVariable int idDe,HttpServletRequest req) {
 		HttpSession session = req.getSession();
 		TaiKhoan taiKhoan = null;
@@ -195,7 +210,11 @@ public class ThiController {
 			
 			ModelAndView mav = new ModelAndView();
 			List<CauHoi> listCauHoi = cauHoiService.findAllByIdDeThi(idDe);
-			
+			if(session.getAttribute("NgayGioKetThuc")!=null) {
+				Timestamp NgayGioKetThuc =(Timestamp) session.getAttribute("NgayGioKetThuc");
+				mav.addObject("TimeEnd", NgayGioKetThuc);
+			}
+		
 			mav.addObject("deThi", deThi);
 			mav.addObject("thoiGian", deThi.getThoiGianThi());
 			mav.addObject("listCauHoi", listCauHoi);
