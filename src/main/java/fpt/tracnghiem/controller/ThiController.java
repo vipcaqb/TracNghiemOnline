@@ -240,7 +240,8 @@ public class ThiController {
 			}
 		}
 		
-
+		System.out.println("total"+totalCorrectedQuestions);
+		
 		KetQuaBaiThi kq = new KetQuaBaiThi();
 		kq.setSoCauDung(totalCorrectedQuestions);
 		kq.setTongSoCau(totalQuestions);
@@ -250,7 +251,7 @@ public class ThiController {
 		kq.setTenLop(deThi.getLop().getTenLop());
 		kq.setThoiGianThi(deThi.getThoiGianThi());
 		kq.getTongDiem();
-		
+		System.out.println("kq= "+kq);
 		//Lưu vào db
 		HttpSession session = req.getSession();
 		//TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("user");
@@ -315,6 +316,8 @@ public class ThiController {
 		return mav;
 		
 	}
+	
+
 	
 
 }

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="Description" content="Enter your description here" />
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/user-homepage-style.css}">
+<title>Title</title>
+</head>
+<body>
+	<nav th:insert="creator/shared/menu::menu"></nav>
+	<nav th:insert="creator/shared/sidebar::sidebar">
+	</nav>
+	<div class="container">
+
+		<h2 class="text-center">---oOo--- LỊCH SỬ THI ---oOo---</h2>
+		<table class="table table-light">
+			<thead class="thead-light">
+				<tr>
+					<th>ID</th>
+					<th>Ngày Giờ bắt đầu</th>
+					<th>Ngày Giờ kết thúc</th>
+					<th>Tên Đề</th>
+					<th>Tên lớp</th>
+					<th>Tên Môn học</th>
+					<th>Tổng điểm</th>
+					<th>Đã hoàn thành</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:if="${listThamGiaThi.empty}">
+					<td colspan="8">No Books Available</td>
+				</tr>
+				<tr th:each="thamgiathi,pos : ${listThamGiaThi}">
+					<td th:text="${pos.index + 1}"></td>
+					<td th:text="${thamgiathi.ngayGioBatDau}">a</td>
+					<td th:text="${thamgiathi.ngayGioKetThuc}">a</td>
+					<td th:text="${thamgiathi.deThi.tenDe}">a</td>
+					<td th:text="${thamgiathi.deThi.lop.tenLop}">a</td>
+					<td th:text="${thamgiathi.deThi.monHoc.tenMonHoc}">a</td>
+					<td th:text="${thamgiathi.tongDiem}">a</td>
+
+					<th:block th:if="${thamgiathi.finished}==true">
+						<td>OK</td>
+					</th:block>
+
+					<th:block th:unless="${thamgiathi.finished}==true">
+						<td>Chưa Hoàn Thành</td>
+					</th:block>
+
+				</tr>
+			</tbody>
+
+		</table>
+	</div>
+
+
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -139,6 +139,7 @@
 			$("#daTraLoi").text(soCauDaTraLoi);
 			
 			$('#finishBtn').click(function(){
+				checkBtnEndClick = true;
 				if(soCauDaTraLoi<tongSoCau) {
 					alert('Bạn chưa trả lời hết bài thi')
 					return ;
@@ -146,6 +147,7 @@
 				
 				console.log(countDownDate);
 				countDownDate = new Date().getTime();
+				$('#finishBtn').removeClass("btn-exam");
 				$('#finishBtn').prop("disabled",true);
 				event.preventDefault();
 				var listCauHoi = [];
@@ -164,7 +166,7 @@
 					singleCauHoi["phuongAns"] = listPa;
 					listCauHoi.push(singleCauHoi);
 				})
-	            
+	            console.log(listCauHoi);
 				var urlTarget = /*[[@{'/user/thi/hoanThanh/'+${deThi.idDe}}]]*/"";
 	            
 	           var myJson = JSON.stringify(listCauHoi);
@@ -272,7 +274,7 @@
 			
 			var countDownDate =new Date(/*[[${TimeEnd}]]*/ '0');
 		
-			
+			var checkBtnEndClick = false;
 			console.log( /*[[${TimeEnd}]]*/ '0');
 			// Update the count down every 1 second
 			var x = setInterval(function() {
@@ -291,12 +293,17 @@
 				
 				document.getElementById("timer").innerHTML = hours + " : "
 						+ minutes + " : " + seconds;
-
-				// If the count down is over, write some text 
-				if (distance < 0) {
+				
+				//// If the count down is over, write some text 
+				if(distance < 0){
 					clearInterval(x);
 					document.getElementById("timer").innerHTML = "Hết Giờ";
-
+					$('#finishBtn').removeClass("btn-exam");
+				}
+				///if(time < 0 and btnEnd not click)
+				if (distance < 0 && checkBtnEndClick == false) {
+					
+					
 					//Them tong so cau hoi
 					var tongSoCau = $(".ch").length;
 					var soCauDaTraLoi = 0;
