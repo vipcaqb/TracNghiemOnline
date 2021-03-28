@@ -1,9 +1,12 @@
 
 <html xmlns:th="http://www.thymeleaf.org">
 	<div class="col-5" th:fragment="listCauHoi" style="display: flex;">
-		<a class= "btn btn-sm btn-outline-primary ml-3 mt-3" 
-		th:each="item: ${listCauHoi}" th:utext="${myCounter.getIndexAndIncrease}" 
-		th:href= "@{'/manageExam/'+${idDe}+'/editQuestion/'+${item.idCauHoi}}">1</a>
+	<th:block th:each="item: ${listCauHoi}">
+		<a class= "btn btn-sm btn-primary ml-3 mt-3" th:utext="${myCounter.getIndexAndIncrease}" 
+		th:href= "@{'/manageExam/'+${idDe}+'/editQuestion/'+${item.idCauHoi}}" th:if="${item.idCauHoi}==${cauHoi.idCauHoi}">1</a>
+		<a class= "btn btn-sm btn-outline-primary ml-3 mt-3" th:utext="${myCounter.getIndexAndIncrease}" 
+		th:href= "@{'/manageExam/'+${idDe}+'/editQuestion/'+${item.idCauHoi}}"  th:if="${item.idCauHoi}!=${cauHoi.idCauHoi}">1</a>
+	</th:block>		
 		<a class="btn btn-sm btn-primary mt-3 ml-3" th:href="@{'/manageExam/'+${idDe}+'/addQuestion'}">new</a>
 	</div>
 	</div>

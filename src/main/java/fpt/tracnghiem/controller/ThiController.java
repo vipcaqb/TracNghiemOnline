@@ -97,14 +97,14 @@ public class ThiController {
 		if(page == null || page < 1) {
 			page=1;
 		}
-		Page<DeThi> pageDethi = dethiService.findPaginated(page, MyConstances.HOMEPAGE_SIZE);
+		Page<DeThi> pageDethi = dethiService.findPaginatedNotEmpty(page, MyConstances.HOMEPAGE_SIZE);
 		List<DeThi> dsDethi = pageDethi.getContent();
 
 		List<MonHoc> listMonhoc = (List<MonHoc>) monHocService.getAllMonHoc();
 		List<Lop> listLop = (List<Lop>) lopService.getAllLop();
 		List<TaiKhoan> listTaiKhoan =taiKhoanService.top10TaiKhoan();
 		if(dsDethi.size()==0 && page >1) {
-			pageDethi = dethiService.findPaginated(page-1, MyConstances.HOMEPAGE_SIZE);
+			pageDethi = dethiService.findPaginatedNotEmpty(page-1, MyConstances.HOMEPAGE_SIZE);
 			dsDethi = pageDethi.getContent();
 		}
 		List<TaiKhoan> Top6TaiKhoan = taiKhoanService.findTop6UserMaxPoint(null);
@@ -137,8 +137,12 @@ public class ThiController {
 		}else {
 			 dsDethi =(List<DeThi>) dethiService.findByTenDeContaining(keyword);
 		}
+		List<MonHoc> listMonhoc = (List<MonHoc>) monHocService.getAllMonHoc();
+		List<Lop> listLop = (List<Lop>) lopService.getAllLop();
 		ShowFormFormListExam(mav);
 		mav.addObject("dsDeThi",dsDethi);
+		mav.addObject("listMonhoc", listMonhoc);
+		mav.addObject("listLop", listLop);
 		return mav;
 	}
 	
@@ -170,12 +174,16 @@ public class ThiController {
 		ModelAndView mav = new ModelAndView();
 		//gan du lieu cho dong ho
 		HttpSession session = req.getSession();
+		List<MonHoc> listMonhoc = (List<MonHoc>) monHocService.getAllMonHoc();
+		List<Lop> listLop = (List<Lop>) lopService.getAllLop();
 		DeThi deThi = dethiService.findById(idDe).get();
 		int ThoiGianThi = deThi.getThoiGianThi();
 		Date date = new Date();
 		Timestamp NgayGioKetThuc = new  Timestamp(date.getTime()+ ThoiGianThi *60000);
 		session.setAttribute("NgayGioKetThuc", NgayGioKetThuc);
 		mav.setViewName("redirect:/user/batdauthi/"+idDe);
+		mav.addObject("listLop", listLop);
+		mav.addObject("listMonHoc", listMonhoc);
 		return mav;
 	}
 	
@@ -191,20 +199,9 @@ public class ThiController {
 		HttpSession session = req.getSession();
 		TaiKhoan taiKhoan = null;
 		DeThi deThi = dethiService.findById(idDe).get();
-		
+		List<MonHoc> listMonhoc = (List<MonHoc>) monHocService.getAllMonHoc();
+		List<Lop> listLop = (List<Lop>) lopService.getAllLop();
 		if(session.getAttribute("user")!=null) {
-//			if(session.getAttribute("baiDangThi")==null) {
-//				taiKhoan = (TaiKhoan) session.getAttribute("user");
-//				ThamGiaThi baiDangThi = thiService.batDauThi(taiKhoan, deThi);
-//				session.setAttribute("baiDangThi", baiDangThi);
-//			}else {
-//				ThamGiaThi baiDangThi1 = (ThamGiaThi) session.getAttribute("baiDangThi");
-//				if(baiDangThi1.getDeThi().getIdDe()!= deThi.getIdDe()) {
-//					taiKhoan = (TaiKhoan) session.getAttribute("user");
-//					ThamGiaThi baiDangThi = thiService.batDauThi(taiKhoan, deThi);
-//					session.setAttribute("baiDangThi", baiDangThi);
-//				}
-//			}
 			taiKhoan= (TaiKhoan) session.getAttribute("user");
 			if(session.getAttribute("baiDangThi")==null||session.getAttribute("baiDangThi").equals("")) {
 				
@@ -238,6 +235,8 @@ public class ThiController {
 			mav.addObject("thoiGian", deThi.getThoiGianThi());
 			mav.addObject("listCauHoi", listCauHoi);
 			mav.setViewName("/user/thi/startExam");
+			mav.addObject("listLop", listLop);
+			mav.addObject("listMonHoc", listMonhoc);
 			return mav;
 		}
 		else {
@@ -278,6 +277,7 @@ public class ThiController {
 		kq.setThoiGianThi(deThi.getThoiGianThi());
 		kq.getTongDiem();
 		
+		
 		//Lưu vào db
 		HttpSession session = req.getSession();
 		if(session.getAttribute("baiDangThi")!=null) {
@@ -303,6 +303,8 @@ public class ThiController {
 	ModelAndView findByMonHoc(HttpServletRequest req,@PathVariable int idMonHoc,@Param("keyword") String keyword) {
 		ModelAndView mav = new ModelAndView();
 		List<DeThi> dsDethi=null;
+		List<MonHoc> listMonhoc = (List<MonHoc>) monHocService.getAllMonHoc();
+		List<Lop> listLop = (List<Lop>) lopService.getAllLop();
 		Optional<MonHoc> monHoc = monHocService.FindById(idMonHoc);
 		if(monHoc.isPresent()) {
 			dsDethi =(List<DeThi>) dethiService.findByMonHoc(monHoc.get());
@@ -311,6 +313,8 @@ public class ThiController {
 			dsDethi =dethiService.filterByKeyword(keyword, dsDethi);
 		mav.addObject("dsDeThi",dsDethi);
 		ShowFormFormListExam(mav);
+		mav.addObject("listLop", listLop);
+		mav.addObject("listMonHoc", listMonhoc);
 		return mav;
 		
 	}
@@ -327,6 +331,8 @@ public class ThiController {
 	ModelAndView findByLopHoc(HttpServletRequest req,@PathVariable int idLopHoc,@Param("keyword") String keyword) {
 		ModelAndView mav = new ModelAndView();
 		List<DeThi> dsDethi=null;
+		List<MonHoc> listMonhoc = (List<MonHoc>) monHocService.getAllMonHoc();
+		List<Lop> listLop = (List<Lop>) lopService.getAllLop();
 		Optional<Lop> lop = lopService.findByID(idLopHoc);
 		if(lop.isPresent()) {
 			dsDethi =(List<DeThi>) dethiService.findByLop(lop.get());
@@ -335,6 +341,8 @@ public class ThiController {
 			dsDethi =dethiService.filterByKeyword(keyword, dsDethi);
 		mav.addObject("dsDeThi",dsDethi);
 		ShowFormFormListExam(mav);
+		mav.addObject("listLop", listLop);
+		mav.addObject("listMonHoc", listMonhoc);
 		return mav;
 		
 	}
@@ -352,9 +360,13 @@ public class ThiController {
 		Optional<Role> role = roleService.findByRoleName(MyConstances.ROLE_USER);
 		Optional<DeThi> deThi = dethiService.findById(idDe);
 		List<TaiKhoan> Top6TaiKhoan = taiKhoanService.findTop6UserMaxPoint(role.get());
+		List<MonHoc> listMonhoc = (List<MonHoc>) monHocService.getAllMonHoc();
+		List<Lop> listLop = (List<Lop>) lopService.getAllLop();
 		mav.addObject("TopUser",Top6TaiKhoan);
 		mav.addObject("deThi", deThi.get());
 		mav.setViewName("/user/thi/examDetail");
+		mav.addObject("listLop", listLop);
+		mav.addObject("listMonHoc", listMonhoc);
 		return mav;
 		
 	}

@@ -4,6 +4,8 @@ package fpt.tracnghiem.repository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -23,4 +25,6 @@ public interface DeThiRepository  extends JpaRepository<DeThi, Integer>{
 	List<DeThi> findByLop(Lop lop);
 	List<DeThi> findByMonHoc(MonHoc monHoc);
 	
+	@Query("SELECT DISTINCT d FROM DeThi d INNER JOIN CauHoi c ON d.idDe=c.deThi.idDe")
+	public Page<DeThi> findAllNotEmpty(Pageable pageable);
 }
