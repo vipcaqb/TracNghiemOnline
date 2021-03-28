@@ -266,7 +266,8 @@ public class ThiController {
 			}
 		}
 		
-
+		System.out.println("total"+totalCorrectedQuestions);
+		
 		KetQuaBaiThi kq = new KetQuaBaiThi();
 		kq.setSoCauDung(totalCorrectedQuestions);
 		kq.setTongSoCau(totalQuestions);
@@ -276,8 +277,6 @@ public class ThiController {
 		kq.setTenLop(deThi.getLop().getTenLop());
 		kq.setThoiGianThi(deThi.getThoiGianThi());
 		kq.getTongDiem();
-		
-		
 		//Lưu vào db
 		HttpSession session = req.getSession();
 		if(session.getAttribute("baiDangThi")!=null) {
@@ -371,4 +370,5 @@ public class ThiController {
 		
 	}
 	
+
 }

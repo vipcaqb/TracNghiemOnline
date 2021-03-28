@@ -4,38 +4,50 @@
 <title>Bootstrap Example</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" type="text/css" th:href="@{/css/user-homepage-style.css}">
-<link rel="icon" type="image/png" sizes="192x192"  th:href="@{img/iconn.png}">
-<link rel="stylesheet" type="text/css" th:href="@{/css/user-thi-styles.css}">
-<link rel="icon" type="image/png" sizes="32x32" th:href="@{img/iconn.png}" href="img/iconn.png">
-<link rel="icon" type="image/png" sizes="96x96" th:href="@{img/iconn.png}" href="img/iconn.png">
-<link rel="icon" type="image/png" sizes="16x16" th:href="@{img/iconn.png}" href="img/iconn.png">
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/user-homepage-style.css}">
+<link rel="icon" type="image/png" sizes="192x192"
+	th:href="@{img/iconn.png}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/user-thi-styles.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/imageModal.css}">
+<link rel="icon" type="image/png" sizes="32x32"
+	th:href="@{img/iconn.png}" href="img/iconn.png">
+<link rel="icon" type="image/png" sizes="96x96"
+	th:href="@{img/iconn.png}" href="img/iconn.png">
+<link rel="icon" type="image/png" sizes="16x16"
+	th:href="@{img/iconn.png}" href="img/iconn.png">
 </head>
 <body>
-	<nav th:insert="creator/shared/menu::menu" style="position: sticky;top:0;z-index:30;">
-	</nav>
+
+	<nav th:insert="creator/shared/menu::menu"
+		style="position: sticky; top: 0; z-index: 30;"></nav>
+
 	<div class="row pd-all mx-auto p1">
 		<!-- RIGHT AREA -->
 		<div class="col-sm-4">
 			<div class="result-exam pt-3 pb-3"
-				style="background-color: white;right:40px; position: fixed; border: 2px;box-shadow: black 3px 3px 10px; z-index: 1;width: 350px;">
-				
+				style="background-color: white; right: 40px; position: fixed; border: 2px; box-shadow: black 3px 3px 10px; z-index: 1; width: 350px;">
+
 				<ul class="timeline-list">
 					<li>
 						<div class="content">
-							Thời gian còn lại: <span id="timer" style="font-size: 20px; color: red"></span>
+							Thời gian còn lại: <span id="timer"
+								style="font-size: 20px; color: red"></span>
 							<ul class="listda" style="height: 50vh;">
 								<th:block th:each="cauhoi,position : ${listCauHoi}">
-									<li onclick="scrollToQuestion(3352)">
-									<span class="no-answered questionNumber" data-ng-style="myStylePreview[3352]">
-										<a class="p5 text-dark" th:href="@{'#'+${cauhoi.idCauHoi}}" th:text="${position.index+1}"></a>
-									</span>
-									</li>
+									<li onclick="scrollToQuestion(3352)"><span
+										class="no-answered questionNumber"
+										data-ng-style="myStylePreview[3352]"> <a
+											class="p5 text-dark" th:href="@{'#'+${cauhoi.idCauHoi}}"
+											th:text="${position.index+1}"></a>
+									</span></li>
 								</th:block>
 							</ul>
 						</div>
@@ -50,9 +62,8 @@
 					</li>
 				</ul>
 				<p class="text-center">
-					<button id="finishBtn" type="button" class="btn-exam font-weight-bold">
-						HOÀN THÀNH
-					</button>
+					<button id="finishBtn" type="button"
+						class="btn-exam font-weight-bold">HOÀN THÀNH</button>
 				</p>
 			</div>
 		</div>
@@ -60,11 +71,14 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-sm-9 shadow">
-					<div class="text-center  bg-white text-black round2" id="resultContent">
+					<div class="text-center  bg-white text-black round2"
+						id="resultContent">
 						<h1>
 							<b th:if="${deThi!=null}" th:text="${deThi.tenDe}"> </b>
 						</h1>
-						<p class="name-tech" th:utext="@{'Người đăng tải:'+${session.user.hoVaTen}}"> NguyenThanhBinh</p>
+						<p class="name-tech"
+							th:utext="@{'Người đăng tải:'+${session.user.hoVaTen}}">
+							NguyenThanhBinh</p>
 					</div>
 				</div>
 			</div>
@@ -74,14 +88,31 @@
 					<div th:id="${cauhoi.idCauHoi}">
 						<div class="container ">
 							<div class="row">
-								<div class="col-sm-12 p-5 my-3 bg-white text-black round2 ch" >
+								<div class="col-sm-12 p-5 my-3 bg-white text-black round2 ch">
 									<h4 th:data-idCauHoi="${cauhoi.idCauHoi}">
 										<b th:text="@{'Câu hỏi '+${position.index+1}}">Câu hỏi 1</b>
 									</h4>
-									<p th:text="${cauhoi.noiDung}"></p>
-									<div class="form-group form-check p4" th:each="phuongan,pos : ${cauhoi.phuongAns}">
-										<input class="form-check-input" th:data-idPhuongAn="${phuongan.idPhuongAn}" th:id="@{'ch'+${position.index}+'pa'+${pos.index}}" type="checkbox" name="remember"> 
-										<label class="form-check-label" th:for="@{'ch'+${position.index}+'pa'+${pos.index}}" th:text="@{${pos.index+1}+'. '+${phuongan.noiDung}}"> 
+
+									<th:block th:each="anh :${cauhoi.anhs}">
+										<img class="myImg" th:src="${anh.url}" width="45%" />
+										<div id="myModal" class="modal" style="z-index: 100">
+											<span class="close">&times;</span> <img
+												class="modal-content" id="img01">
+											<div id="caption"></div>
+										</div>
+									</th:block>
+
+									<p style="font-size: 22px;" th:text="${cauhoi.noiDung}"></p>
+									<div class="form-group form-check p4"
+										th:each="phuongan,pos : ${cauhoi.phuongAns}">
+										<input class="form-check-input"
+											th:data-idPhuongAn="${phuongan.idPhuongAn}"
+											th:id="@{'ch'+${position.index}+'pa'+${pos.index}}"
+											type="checkbox" name="remember">&nbsp; <label
+											class="form-check-label"
+											th:for="@{'ch'+${position.index}+'pa'+${pos.index}}"
+											th:text="${phuongan.noiDung}" style="font-size: 18px">
+
 										</label>
 									</div>
 								</div>
@@ -92,16 +123,16 @@
 				</div>
 			</div>
 		</div>
-		</div>
-		<script
-			src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<script
-			src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-		<script
-			src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-		
-	<!-- 	post data -->	
-		<script type="text/javascript" th:inline="javascript">
+	</div>
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<!-- 	post data -->
+	<script type="text/javascript" th:inline="javascript">
 		$(document).ready(function(){
 			//Them tong so cau hoi
 			var tongSoCau = $(".ch").length;
@@ -110,6 +141,7 @@
 			$("#daTraLoi").text(soCauDaTraLoi);
 			
 			$('#finishBtn').click(function(){
+				checkBtnEndClick = true;
 				if(soCauDaTraLoi<tongSoCau) {
 					alert('Bạn chưa trả lời hết bài thi')
 					return ;
@@ -117,6 +149,7 @@
 				
 				console.log(countDownDate);
 				countDownDate = new Date().getTime();
+				$('#finishBtn').removeClass("btn-exam");
 				$('#finishBtn').prop("disabled",true);
 				event.preventDefault();
 				var listCauHoi = [];
@@ -135,7 +168,7 @@
 					singleCauHoi["phuongAns"] = listPa;
 					listCauHoi.push(singleCauHoi);
 				})
-	            
+	            console.log(listCauHoi);
 				var urlTarget = /*[[@{'/user/thi/hoanThanh/'+${deThi.idDe}}]]*/"";
 	            
 	           var myJson = JSON.stringify(listCauHoi);
@@ -207,8 +240,8 @@
 			
 		})
 		</script>
-			
-		<script>
+
+	<script>
 			//smooth scrolling
 			$(' a').on('click', function(event) {
 				if (this.hash !== '') {
@@ -222,7 +255,7 @@
 				}
 			});
 		</script>
-		<script type="text/javascript">
+	<script type="text/javascript">
 			$('#navbar a, .btn ').on('click', function(event) {
 				if (this.hash !== '') {
 					event.preventDefault();
@@ -236,13 +269,14 @@
 			});
 		</script>
 
-		<script th:inline="javascript">
-			/*<![CDATA[*/
-		
+	<script th:inline="javascript">
+	
+	/*<![CDATA[*/
+			
 			
 			var countDownDate =new Date(/*[[${TimeEnd}]]*/ '0');
 		
-			
+			var checkBtnEndClick = false;
 			console.log( /*[[${TimeEnd}]]*/ '0');
 			// Update the count down every 1 second
 			var x = setInterval(function() {
@@ -261,15 +295,143 @@
 				
 				document.getElementById("timer").innerHTML = hours + " : "
 						+ minutes + " : " + seconds;
-
-				// If the count down is over, write some text 
-				if (distance < 0) {
+				
+				//// If the count down is over, write some text 
+				if(distance < 0){
 					clearInterval(x);
 					document.getElementById("timer").innerHTML = "Hết Giờ";
+					$('#finishBtn').removeClass("btn-exam");
+				}
+				///if(time < 0 and btnEnd not click)
+				if (distance < 0 && checkBtnEndClick == false) {
+					
+					
+					//Them tong so cau hoi
+					var tongSoCau = $(".ch").length;
+					var soCauDaTraLoi = 0;
+					$("#tongSoCau").text(tongSoCau);
+					$("#daTraLoi").text(soCauDaTraLoi);
+					
+			
+						
+						$('#finishBtn').prop("disabled",true);
+						
+						var listCauHoi = [];
+						$('.ch').each((i,e) =>{
+							
+							var singleCauHoi = {};
+							singleCauHoi["idCauHoi"]=$(e).find('h4').attr('data-idCauHoi')
+							
+							var listPa= [];
+							$(e).find("input[type='checkbox']").each((i,e)=>{
+								var single = {};
+				                single["idPhuongAn"] = e.getAttribute('data-idPhuongAn');
+				                single["isCorrect"] = e.checked;
+				                listPa.push(single);
+							})
+							singleCauHoi["phuongAns"] = listPa;
+							listCauHoi.push(singleCauHoi);
+						})
+			            
+						var urlTarget = /*[[@{'/user/thi/hoanThanh/'+${deThi.idDe}}]]*/"";
+			            
+			           var myJson = JSON.stringify(listCauHoi);
+			            $.ajax({
+			            	type: 'POST',
+			            	contentType: "application/json",
+			                url: urlTarget,
+			                data: myJson,
+			                dataType: 'json',
+			                cache: false,
+			        		timeout: 600000,
+			        		success: function(data){
+			        			$("#resultContent").html("<h2 class='text-center'>Kết quả bài thi</h2><div class='pb-2'>Tên đề thi:"+
+			        					data.tenDe
+			        					+"</div><div class='pb-2'>Môn : "
+			        					+data.monHoc+
+			        					"</div><div class='pb-2'>"
+			        					+data.tenLop+
+			        					"</div><div class='pb-2'>Tổng số câu hỏi: "
+			        					+data.tongSoCau+
+			        					"</div>"+
+			        					"<div class='pb-2'>Số câu đúng: "
+			        					+data.soCauDung+
+			        					"</div><div class='pb-2'>Thời gian làm bài: "
+			        					+data.thoiGianThi+
+			        					" phút</div><div class='pb-2'>Điểm số: "
+			        					+data.diemSo+
+			        					"</div>"+"<div class='pb-2'> </div><a href='/user/thi/page/1' > Thi tiếp đề khác </a> ");
+			        			$("#resultContent").addClass('pb-5 pt-5')
+			        			console.log(data)
+			        					
+			        			$("#listQuestion").remove()
+			        		},
+			        		error: function(e) {
+				    			alert('Có lỗi xảy ra')
+				    		}
+			            })
+				
+					
+					
+					$('.questionNumber').click(function(){
+						$('.questionNumber').removeClass('active');
+						$(this).addClass('active');
+					})	
+					
+					//Kiem tra so cau da tra loi
+					
+					$("input[type='checkbox']").change(function(){
+						soCauDaTraLoi = tinhSoCauDaTraLoi();
+						console.log(soCauDaTraLoi);
+					})
+					
+					//tinh so cau da tra loi
+					function tinhSoCauDaTraLoi(){
+						var daTraLoi = 0;
+						$(".ch").each(function(){
+							var x =$(this).find("input[type='checkbox']");
+							for(let i = 0 ; i < x.length;i++){
+								if(x[i].checked==true){
+									daTraLoi+=1;
+									break;
+								}
+							}
+						})
+						return daTraLoi;
+					}
+					
+					
 				}
 			}, 1000);
 
 			/*]]>*/
 		</script>
+
+	<script>
+				// Get the modal
+				var modal = document.getElementById("myModal");
+				
+				// Get the image and insert it inside the modal - use its "alt" text as a caption
+				var img = document.getElementsByClassName("myImg");
+				var modalImg = document.getElementById("img01");
+				var captionText = document.getElementById("caption");
+				for(i=0;i<img.length;i++){
+
+					img[i].onclick = function(){
+					  modal.style.display = "block";
+					  modalImg.src = this.src;
+					  captionText.innerHTML = this.alt;
+					}
+				}
+				
+				// Get the <span> element that closes the modal
+				var span = document.getElementsByClassName("close")[0];
+				
+				// When the user clicks on <span> (x), close the modal
+				span.onclick = function() { 
+				  modal.style.display = "none";
+				}
+		</script>
+
 </body>
 </html>

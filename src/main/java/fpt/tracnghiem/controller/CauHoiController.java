@@ -1,5 +1,10 @@
 package fpt.tracnghiem.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -7,6 +12,8 @@ import java.util.Optional;
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -20,9 +27,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.sun.xml.bind.v2.TODO;
 
+import fpt.tracnghiem.entity.Anh;
 import fpt.tracnghiem.entity.CauHoi;
 import fpt.tracnghiem.entity.DeThi;
 import fpt.tracnghiem.entity.PhuongAn;
@@ -53,6 +62,9 @@ public class CauHoiController {
 	 * @param model      the model
 	 * @return the string
 	 */
+	
+	public static String uploadDirectory = System.getProperty("user.dir") +"\\src\\main\\resources\\static\\image\\question\\";
+	
 	@RequestMapping(value = { "/manageExam/{idExam}/manageQuestion/{pageNumber}",
 			"/manageExam/{idExam}/manageQuestion" }, method = RequestMethod.GET)
 
@@ -145,7 +157,8 @@ public class CauHoiController {
 	@ResponseBody
 	public String editQuestion(@ModelAttribute(name = "cauHoi") CauHoi cauHoi,
 			@RequestParam(name = "phuongAn") List<String> listNoiDungPhuongAn,
-			@RequestParam(name = "isCorrect", required = false) List<Integer> listCorrect) {
+			@RequestParam(name = "isCorrect", required = false) List<Integer> listCorrect,
+			@RequestParam("files") MultipartFile[] files) {
 		System.out.println(cauHoi.toString());
 
 		Optional<CauHoi> oCauHoi = cauHoiService.findById(cauHoi.getIdCauHoi());
@@ -172,8 +185,12 @@ public class CauHoiController {
 		listPhuongAnHienTai.forEach(x -> {
 			System.out.println(x.getIsCorrect());
 		});
+		//Thêm ảnh
+		List<Anh> listAnh= null;
+		listAnh = ThemAnh(files, cauHoiHienTai);
+		
 		// Thêm vào db
-		cauHoiService.save(cauHoiHienTai, listPhuongAnHienTai, null, cauHoiHienTai.getDeThi().getIdDe());
+		cauHoiService.save(cauHoiHienTai, listPhuongAnHienTai, listAnh, cauHoiHienTai.getDeThi().getIdDe());
 
 		return "OK";
 	}
@@ -192,7 +209,9 @@ public class CauHoiController {
 	public String addQuestion(@PathVariable(name = "idExam") Integer idDe,
 			@ModelAttribute("cauHoi") @Valid CauHoi cauHoi, BindingResult bindingResulf,
 			@RequestParam(name = "phuongAn") List<String> listNoiDungPhuongAn,
-			@RequestParam(name = "isCorrect", required = false) List<Integer> listCorrect, Model model) {
+			@RequestParam(name = "isCorrect", required = false) List<Integer> listCorrect, 
+			Model model,
+			@RequestParam("files") MultipartFile[] files) {
 
 		int size;
 		// binding if
@@ -227,11 +246,39 @@ public class CauHoiController {
 				}
 			}
 			// Thêm ảnh
-
+			
+			List<Anh> listAnh = null;
+			listAnh = ThemAnh(files, cauHoi);
+			
 			// Thêm câu hỏi
-			cauHoiService.save(cauHoi, listPhuongAn, null, idDe);
+			cauHoiService.save(cauHoi, listPhuongAn, listAnh, idDe);
 			return "redirect:/manageExam/" + idDe + "/addQuestion";
 		}
+	}
+
+	private List<Anh>  ThemAnh(MultipartFile[] files,CauHoi cauHoi) {
+		List<Anh> listAnh = new ArrayList<Anh>();
+		new File(uploadDirectory).mkdir();
+		String imageURL = null;
+		StringBuilder fileNames = new StringBuilder();
+		for(MultipartFile file: files) {
+			imageURL ="/image/question/" +file.getOriginalFilename();
+			Anh anh = new Anh();
+			anh.setUrl(imageURL);
+			anh.setCauHoi(cauHoi);
+			System.out.println(imageURL);
+			Path fileNameAndPath = Paths.get(uploadDirectory, file.getOriginalFilename());
+			fileNames.append(file.getOriginalFilename());
+				try {
+					Files.write(fileNameAndPath, file.getBytes() );
+				} catch (IOException e) {
+					break;
+				}
+		
+			listAnh.add(anh);
+			
+		}
+		return listAnh;
 	}
 
 	/**

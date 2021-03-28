@@ -23,10 +23,12 @@
 		<div class= "row border">
 			<div class="col-7 border-right">
 				<a class="btn btn-danger float-right mt-2" id="deleteQuestion">Xóa</a>
-				<form class=" d-flex flex-column" th:object="${cauHoi}" th:action="@{'/editQuestion'}" method="post">
+				<form class=" d-flex flex-column" th:object="${cauHoi}" th:action="@{'/editQuestion'}" method="post" enctype="multipart/form-data">
 					<p class="pt-2"> Câu hỏi [[${cauHoi.idCauHoi}]]: </p>
-					<input class="mb-2"  type="file">
+					Hình ảnh
+					<input type="file"  name="files" multiple>
 					<input class="hide" type="text" th:field="*{idCauHoi}">
+					<p style="margin-top: 5px"> Nội dung câu hỏi:</p>
 					<textarea th:field="*{noiDung}" required="required" ></textarea>
 					Giải thích:
 					<textarea th:field="*{giaiThich}" required="required" ></textarea>
