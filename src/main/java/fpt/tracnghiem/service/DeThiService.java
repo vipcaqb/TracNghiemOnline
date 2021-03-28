@@ -50,6 +50,18 @@ public class DeThiService {
 	}
 	
 	/**
+	 * Find paginated not empty.
+	 *
+	 * @param pageNo the page no
+	 * @param pageSize the page size
+	 * @return the page
+	 */
+	public Page<DeThi> findPaginatedNotEmpty(int pageNo, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+		return this.deThiRepository.findAllNotEmpty(pageable);
+	}
+	
+	/**
 	 * Find all de thi.
 	 *
 	 * @return the iterable

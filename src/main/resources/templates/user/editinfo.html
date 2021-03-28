@@ -28,7 +28,7 @@
                         <div class="profile-img">
                             <img th:if="${session.user.urlAvatar}!=null" th:src="@{'/getimage/'+${session.user.urlAvatar}}" alt="" style="z-index:-5;">
                             <img th:if="${session.user.urlAvatar}==null" style="z-index:-5;"
-                            th:src="@{'https://ui-avatars.com/api/?name='+${User.hoVaTen}}">
+                            th:src="@{'https://ui-avatars.com/api/?name='+${session.user.hoVaTen}}">
                             <label class="file btn btn-lg btn-primary">
                                 Change Photo
                                 <input style="z-index:10" type="file" name="fileAvatar"> 

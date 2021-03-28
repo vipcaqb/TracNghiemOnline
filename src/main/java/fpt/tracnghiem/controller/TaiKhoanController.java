@@ -98,6 +98,7 @@ public class TaiKhoanController {
 				taiKhoan.setUrlAvatar(photoName);
 				try {
 					taiKhoanService.update(taiKhoan);
+					session.setAttribute("user", taiKhoan);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

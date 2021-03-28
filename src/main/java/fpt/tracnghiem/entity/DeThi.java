@@ -207,4 +207,13 @@ public class DeThi implements Serializable {
 		return thamGiaThi;
 	}
 
+	@Override
+	public String toString() {
+		return "DeThi [idDe=" + idDe + ", tenDe=" + tenDe + ", moTa=" + moTa + ", thoiGianThi=" + thoiGianThi + "]";
+	}
+
+	
+	
+	
+
 }
