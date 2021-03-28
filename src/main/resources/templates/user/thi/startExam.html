@@ -92,6 +92,7 @@
 									<h4 th:data-idCauHoi="${cauhoi.idCauHoi}">
 										<b th:text="@{'Câu hỏi '+${position.index+1}}">Câu hỏi 1</b>
 									</h4>
+
 									<th:block th:each="anh :${cauhoi.anhs}">
 										<img class="myImg" th:src="${anh.url}" width="45%" />
 										<div id="myModal" class="modal" style="z-index: 100">
@@ -111,6 +112,7 @@
 											class="form-check-label"
 											th:for="@{'ch'+${position.index}+'pa'+${pos.index}}"
 											th:text="${phuongan.noiDung}" style="font-size: 18px">
+
 										</label>
 									</div>
 								</div>
@@ -216,7 +218,7 @@
 			
 			$("input[type='checkbox']").change(function(){
 				soCauDaTraLoi = tinhSoCauDaTraLoi();
-				console.log(soCauDaTraLoi);
+				$("#daTraLoi").text(soCauDaTraLoi);
 			})
 			
 			//tinh so cau da tra loi

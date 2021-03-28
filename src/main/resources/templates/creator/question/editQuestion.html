@@ -65,7 +65,8 @@
 			var confirmed = confirm('Are you sure?');
 			var actionStr = /*[[${cauHoi.idCauHoi}]]*/ "abc";
 			if(confirmed){
-				$.post( "/deleteQuestion/"+actionStr, function( data ) {
+				$.post( "/deleteQuestionInside/"+actionStr, function( data ) {
+					window.location.replace("/manageExam/"+data+"/addQuestion");
 				});
 			}
 			else {

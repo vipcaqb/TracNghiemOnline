@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 <link rel="stylesheet" type="text/css" th:href="@{/css/user-homepage-style.css}">
 <link rel="stylesheet" type="text/css" th:href="@{/css/userinfo.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/mystyle.css}">
 <title>Thông tin tài khoản</title>
 </head>
 <body>
@@ -21,15 +22,17 @@
 	</nav>
 	
 	<section class="container emp-profile">
-		<form class="shadow" action="/user/edit" method="post">
+		<form class="shadow" action="/user/edit" method="post"  enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="profile-img">
-                            <img th:src="@{'/image/defaultAvatar.png'}" alt=""/>
-                            <div class="file btn btn-lg btn-primary">
+                            <img th:if="${session.user.urlAvatar}!=null" th:src="@{'/getimage/'+${session.user.urlAvatar}}" alt="" style="z-index:-5;">
+                            <img th:if="${session.user.urlAvatar}==null" style="z-index:-5;"
+                            th:src="@{'https://ui-avatars.com/api/?name='+${session.user.hoVaTen}}">
+                            <label class="file btn btn-lg btn-primary">
                                 Change Photo
-                                <input type="file" />
-                            </div>
+                                <input style="z-index:10" type="file" name="fileAvatar"> 
+                            </label>
                         </div>
                     </div>
                     <div class="col-md-6">

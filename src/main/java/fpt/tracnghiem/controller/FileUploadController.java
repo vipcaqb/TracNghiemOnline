@@ -12,11 +12,16 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
@@ -56,7 +61,7 @@ public class FileUploadController {
 	}
 	
 	/**
-	 * Thực hiện upload file excel
+	 * Thực hiện upload file excel.
 	 *
 	 * @param idDe the id de
 	 * @param model the model
@@ -100,4 +105,30 @@ public class FileUploadController {
 		
 	}
 
+	/**
+	 * Gets the image.
+	 *
+	 * @param photo the photo
+	 * @return the image
+	 */
+	@RequestMapping(value = "getimage/{photo}",method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<ByteArrayResource> getImage(@PathVariable("photo") String photo){
+		if(!photo.equals("")||photo !=null) {
+			try {
+				Path filename = Paths.get("avatar-upload",photo);
+				byte[] buffer = Files.readAllBytes(filename);
+				
+				ByteArrayResource byteArrayResource = new ByteArrayResource(buffer);
+				return ResponseEntity.ok().contentLength(buffer.length)
+						.contentType(MediaType.parseMediaType("image/png"))
+						.body(byteArrayResource);
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return ResponseEntity.badRequest().build();
+	}
 }

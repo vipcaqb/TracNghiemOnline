@@ -29,7 +29,6 @@
 	</section>
 	<div class="mg-main mx-auto ">
 		<div class="row " id="content">
-
 			<div class="col-9 high ">
 				<div class="">
 					<div class="boxcont magb20">
@@ -119,7 +118,7 @@
 						<ul class="list" th:each="User,pos : ${TopUser}">
 							<li>
 								<div class="relative">
-									<img th:if="${User.UrlAvatar}!=null" width="30px" height="30px" th:src="${User.UrlAvatar}"> 
+									<img th:if="${User.UrlAvatar}!=null" width="30px" height="30px" th:src="@{'/getimage/'+${session.user.urlAvatar}}	"> 
 									<img th:unless="${User.UrlAvatar}!=null" width="30px"  height="30px" th:src="@{'https://ui-avatars.com/api/?name='+${User.hoVaTen}}"> 
 									
 									<span

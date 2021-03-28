@@ -130,12 +130,13 @@ public class CauHoiController {
 			return "404";
 		}
 		List<CauHoi> listCauHoi = cauHoiService.findAllByIdDeThi(idDe);
-		model.addAttribute("listCauHoi", listCauHoi);
+		
 
 		CauHoi cauHoi = oCauHoi.get();
 
 		MyCounter myCounter = new MyCounter();
 		MyCounter correctCounter = new MyCounter(0);
+		model.addAttribute("listCauHoi", listCauHoi);
 		model.addAttribute("myCounter", myCounter);
 		model.addAttribute("cauHoi", cauHoi);
 		model.addAttribute("idDe", idDe);
@@ -290,10 +291,26 @@ public class CauHoiController {
 	public String deleteQuestion(@PathVariable(name = "idQuestion") Integer idCauHoi) {
 		Optional<CauHoi> oCauHoi = cauHoiService.findById(idCauHoi);
 		CauHoi cauHoi = null;
+		
 		if (oCauHoi.isPresent()) {
 			cauHoi = oCauHoi.get();
 		}
+		DeThi deThi = cauHoi.getDeThi();
 		cauHoiService.deleteCauHoiByIdCauHoi(idCauHoi);
-		return "redirect:/manageExam";
+		return "redirect:/manageExam/"+ deThi.getIdDe()+"/manageQuestion";
+	}
+	
+	@PostMapping("/deleteQuestionInside/{idQuestion}")
+	@ResponseBody
+	public String deleteQuestionInside(@PathVariable(name="idQuestion") Integer idCauHoi) {
+		Optional<CauHoi> oCauHoi = cauHoiService.findById(idCauHoi);
+		CauHoi cauHoi = null;
+		
+		if (oCauHoi.isPresent()) {
+			cauHoi = oCauHoi.get();
+		}
+		DeThi deThi = cauHoi.getDeThi();
+		cauHoiService.deleteCauHoiByIdCauHoi(idCauHoi);
+		return ""+deThi.getIdDe();
 	}
 }

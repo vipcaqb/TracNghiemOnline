@@ -1,5 +1,11 @@
 package fpt.tracnghiem.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import fpt.tracnghiem.entity.TaiKhoan;
 import fpt.tracnghiem.service.TaiKhoanService;
@@ -70,9 +77,39 @@ public class TaiKhoanController {
 			@RequestParam(name = "email") String email,
 			@RequestParam(name = "sdt") String sdt,
 			@RequestParam(name = "ngaySinh") String ngaySinh,
+			@RequestParam(value = "fileAvatar",required = false) MultipartFile photo,
 			HttpServletRequest req) {
 		HttpSession session = req.getSession();
 		TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("user");
+		String photoName;
+		
+		//thay đổi avatar
+		if(photo!=null) {
+			Path path = Paths.get("avatar-upload/");
+			
+			
+			
+			try {
+				InputStream iS = photo.getInputStream();
+				// Lưu lên server, Tên ảnh = tên username
+				Files.copy(iS, path.resolve(taiKhoan.getUsername()),StandardCopyOption.REPLACE_EXISTING);
+				//Lưu vào db
+				photoName=taiKhoan.getUsername();
+				taiKhoan.setUrlAvatar(photoName);
+				try {
+					taiKhoanService.update(taiKhoan);
+					session.setAttribute("user", taiKhoan);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		//thay đổi thông tin khác
+		
 		taiKhoan.setHoVaTen(hoVaTen);
 		taiKhoan.setEmail(email);
 		taiKhoan.setSdt(sdt);
