@@ -98,7 +98,12 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 			if (x.isPresent()) {
 				tk.setRole(x.get());
 			}
-			taiKhoanRepository.save(tk);
+			try {
+				taiKhoanService.save(tk);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		// tao 1 tai khoan la ROLE_ADMIN
@@ -125,18 +130,41 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 			if (x.isPresent()) {
 				tk.setRole(x.get());
 			}
-			taiKhoanRepository.save(tk);
+			try {
+				taiKhoanService.save(tk);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		//Tao 1 số môn học
 		if(monHocRepository.findByTenMonHoc("Toán").isEmpty()) {
 			monHocRepository.save(new MonHoc("Toán"));
 		}
-		if(monHocRepository.findByTenMonHoc("Văn").isEmpty()) {
-			monHocRepository.save(new MonHoc("Văn"));
+		if(monHocRepository.findByTenMonHoc("Ngữ văn").isEmpty()) {
+			monHocRepository.save(new MonHoc("Ngữ văn"));
 		}
 		if(monHocRepository.findByTenMonHoc("Anh").isEmpty()) {
 			monHocRepository.save(new MonHoc("Anh"));
+		}
+		if(monHocRepository.findByTenMonHoc("Lý").isEmpty()) {
+			monHocRepository.save(new MonHoc("Lý"));
+		}
+		if(monHocRepository.findByTenMonHoc("Hóa").isEmpty()) {
+			monHocRepository.save(new MonHoc("Hóa"));
+		}
+		if(monHocRepository.findByTenMonHoc("Sinh").isEmpty()) {
+			monHocRepository.save(new MonHoc("Sinh"));
+		}
+		if(monHocRepository.findByTenMonHoc("Sử").isEmpty()) {
+			monHocRepository.save(new MonHoc("Sử"));
+		}
+		if(monHocRepository.findByTenMonHoc("Địa").isEmpty()) {
+			monHocRepository.save(new MonHoc("Địa"));
+		}
+		if(monHocRepository.findByTenMonHoc("Âm nhạc").isEmpty()) {
+			monHocRepository.save(new MonHoc("Âm nhạc"));
 		}
 
 	}

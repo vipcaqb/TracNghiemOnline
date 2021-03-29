@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
@@ -20,6 +21,7 @@ import fpt.tracnghiem.entity.DeThi;
 import fpt.tracnghiem.entity.PhuongAn;
 import fpt.tracnghiem.repository.DeThiRepository;
 import fpt.tracnghiem.service.CauHoiService;
+import fpt.tracnghiem.service.DeThiService;
 
 @RestController
 public class TestController {
@@ -28,6 +30,9 @@ public class TestController {
 	
 	@Autowired
 	DeThiRepository deThiRepository;
+	
+	@Autowired
+	DeThiService deThiService;
 	
 	@PostMapping("/testCauHoi")
 	public String test() {
@@ -53,4 +58,18 @@ public class TestController {
 		return "OK";
 	}
 
+	@GetMapping("/test")
+	@ResponseBody
+	public String test2() {
+		String username = "adminacc";
+		Page<DeThi> pageDeThi = deThiService.findPaginatedByUsername(1, 5, username);
+		List<DeThi> listDeThi = pageDeThi.getContent();
+		StringBuilder sb = new StringBuilder();
+		for(DeThi item : listDeThi) {
+			sb.append(item.toString());
+		}
+		System.out.println(sb);
+		return "ok";
+	}
+	
 }

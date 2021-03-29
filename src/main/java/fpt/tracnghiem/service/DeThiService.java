@@ -49,6 +49,11 @@ public class DeThiService {
 		return this.deThiRepository.findAll(pageable);
 	}
 	
+	public Page<DeThi> findPaginatedByUsername(int pageNo, int pageSize, String username){
+		Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+		return this.deThiRepository.findByUsername(pageable, username);
+	}
+	
 	/**
 	 * Find paginated not empty.
 	 *
