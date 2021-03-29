@@ -27,4 +27,7 @@ public interface DeThiRepository  extends JpaRepository<DeThi, Integer>{
 	
 	@Query("SELECT DISTINCT d FROM DeThi d INNER JOIN CauHoi c ON d.idDe=c.deThi.idDe")
 	public Page<DeThi> findAllNotEmpty(Pageable pageable);
+	
+	@Query("SELECT d FROM DeThi d WHERE username_nguoi_tao = ?1")
+	public Page<DeThi> findByUsername(Pageable pageable, String username);
 }

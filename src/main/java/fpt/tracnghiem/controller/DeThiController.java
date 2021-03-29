@@ -60,10 +60,10 @@ public class DeThiController {
 	
 	@Autowired
 	private CauHoiService cauHoiService;
-	@RequestMapping(value = "/manageExam")
-	public String ShowAllContest(Model model) {
-		return findPaginated(1, model);
-	}
+//	@RequestMapping(value = "/manageExam")
+//	public String ShowAllContest(Model model) {
+//		return findPaginated(1, model);
+//	}
 	
 	/**
 	 * Hiển thị giao diện thêm đề thi.
@@ -235,19 +235,35 @@ public class DeThiController {
 	 * @return the string
 	 */
 	@GetMapping(value = {"/manageExam/page/{pageNo}","/manageExam"})
-	public String findPaginated(@PathVariable(value = "pageNo",required = false) Integer pageNo, Model model) {
+	public String findPaginated(@PathVariable(value = "pageNo",required = false) Integer pageNo, Model model,HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		if(session.getAttribute("user") == null) {
+			return "redirect:/login";
+		}
+		
+		TaiKhoan taiKhoan = (TaiKhoan) session.getAttribute("user");
+		String username = taiKhoan.getUsername();
+		
 	    int pageSize = MyConstances.PAGE_SIZE;
 	    Page <DeThi> page;
 	    if(pageNo!=null) {
-	    	page= deThiService.findPaginated(pageNo, pageSize);
+	    	if(taiKhoan.getRole().getRoleName().equals("ROLE_ADMIN")) {
+	    		page = deThiService.findPaginated(pageNo, pageSize);
+	    	}
+	    	else {
+	    		page= deThiService.findPaginatedByUsername(pageNo, pageSize,username);
+	    	}
 	    }
 	    else {
-	    	page= deThiService.findPaginated(1, pageSize);
+	    	if(taiKhoan.getRole().getRoleName().equals("ROLE_ADMIN")) {
+	    		page = deThiService.findPaginated(1, pageSize);
+	    	}
+	    	else {
+	    		page= deThiService.findPaginatedByUsername(1, pageSize,username);
+	    	}
 	    }
 	    List<DeThi> listDeThis = page.getContent();
-
-    	
-
+	    
 	    model.addAttribute("listExam", listDeThis);
 	    if(pageNo!=null) {
 	    	model.addAttribute("currentPage", pageNo);
