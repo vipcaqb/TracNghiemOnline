@@ -41,15 +41,8 @@ public class DeThi implements Serializable {
 	@Column(name="ten_de")
 	@Nationalized
 	@NotBlank(message = "Không được để trống trường này!")
-	@Size(min = 4,max=30 ,message = "Ký tự phải nằm trong khoảng 4-30!")
-	@Pattern(regexp="^[a-zA-Z0-9 aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆ\r\n" + 
-			"fFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTu\r\n" + 
-			"UùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ]*$",message = "Tên đề chứa ký tự không hợp lệ!")
+	@Size(min = 4,max=1000 ,message = "Ký tự phải nằm trong khoảng 4-1000!")
 	private String tenDe;
-	@NotBlank(message = "Không được để trống trường này!")
-	@Pattern(regexp="^[a-zA-Z0-9 aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆ\r\n" + 
-			"fFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTu\r\n" + 
-			"UùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ]*$",message = "Mô tả chứa ký tự không hợp lệ!")
 	@Column(name="mo_ta",length = 1000)
 	@Nationalized
 	private String moTa;
