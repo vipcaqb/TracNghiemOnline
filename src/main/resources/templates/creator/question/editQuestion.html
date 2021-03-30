@@ -31,7 +31,7 @@
 					<p style="margin-top: 5px"> Nội dung câu hỏi:</p>
 					<textarea th:field="*{noiDung}" required="required" ></textarea>
 					Giải thích:
-					<textarea th:field="*{giaiThich}" required="required" ></textarea>
+					<textarea th:field="*{giaiThich}"  ></textarea>
 					Phương án:
 					<div th:each="pa : *{phuongAns}">
 						<input type="text" name="phuongAn" th:value="${pa.noiDung}" required="required" placeholder="Phương án 1" >

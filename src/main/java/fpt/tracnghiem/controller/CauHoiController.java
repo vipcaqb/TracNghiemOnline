@@ -101,8 +101,10 @@ public class CauHoiController {
 	@RequestMapping(value = "/manageExam/{idExam}/addQuestion", method = RequestMethod.GET)
 	public String addQuestionUI(@PathVariable(name = "idExam") Integer idDe, CauHoi cauHoi, Model model) {
 
-		model.addAttribute("idDe", idDe);
-
+		
+		Optional<DeThi> deThi = deThiService.findById(idDe);
+		model.addAttribute("idDe", deThi.get().getIdDe());
+		model.addAttribute("tenDe",deThi.get().getTenDe());
 		List<CauHoi> listCauHoi = cauHoiService.findAllByIdDeThi(idDe);
 		MyCounter myCounter = new MyCounter();
 

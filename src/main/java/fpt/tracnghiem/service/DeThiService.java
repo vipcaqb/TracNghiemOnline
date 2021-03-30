@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,9 +15,11 @@ import fpt.tracnghiem.entity.CauHoi;
 import fpt.tracnghiem.entity.DeThi;
 import fpt.tracnghiem.entity.Lop;
 import fpt.tracnghiem.entity.MonHoc;
+import fpt.tracnghiem.entity.ThamGiaThi;
 import fpt.tracnghiem.model.ExamInformation;
 import fpt.tracnghiem.repository.CauHoiRepository;
 import fpt.tracnghiem.repository.DeThiRepository;
+import fpt.tracnghiem.repository.ThamGiaThiRepository;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -37,6 +40,11 @@ public class DeThiService {
 	@Autowired
 	private CauHoiService cauHoiService;
 	
+	/**
+	 * thamGiaThiService service
+	 */
+	@Autowired
+	private ThamGiaThiService thamGiaThiService;
 	/**
 	 * Find paginated.
 	 *
@@ -116,6 +124,15 @@ public class DeThiService {
 				});
 			}
 		}
+		List<ThamGiaThi> listThamGiaThi = thamGiaThiService.findByDeThi(deThi);
+		if(listThamGiaThi!=null) {
+			if(listThamGiaThi.size()>0) {
+				listThamGiaThi.forEach(x->{
+					thamGiaThiService.DeleteById(x.getIdThamGiaThi());
+				});
+			}
+		}
+		
 		deThiRepository.delete(deThi);
 	}
 	
