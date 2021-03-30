@@ -37,10 +37,7 @@ public class CauHoi implements Serializable {
 	
 	@Column(name="giai_thich",length = 3000)
 	@Nationalized
-	@Size(min = 4,max=1000,message = "Giải thích phải có độ dài từ 4 đến 1000 ký tự!")
 	private String giaiThich;
-	@Size(min = 4,max=1000,message = "Nội dung phải có độ dài từ 4 đến 1000 ký tự!")
-	@Column(name="noi_dung",length = 3000)
 	@Nationalized
 	private String noiDung;
 

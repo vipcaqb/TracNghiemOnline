@@ -46,7 +46,7 @@ public class FileUploadController {
 	
 	/** The upload directory. */
 	public static String uploadDirectory = System.getProperty("user.dir") +"\\src\\main\\resources\\static\\excel\\";
-	
+	public static String uploadImgDirectory = System.getProperty("user.dir") +"\\src\\main\\resources\\static\\image\\question";
 	/**
 	 * Hiển thị giao diện upload file excel.
 	 *
@@ -117,6 +117,27 @@ public class FileUploadController {
 		if(!photo.equals("")||photo !=null) {
 			try {
 				Path filename = Paths.get("avatar-upload",photo);
+				byte[] buffer = Files.readAllBytes(filename);
+				
+				ByteArrayResource byteArrayResource = new ByteArrayResource(buffer);
+				return ResponseEntity.ok().contentLength(buffer.length)
+						.contentType(MediaType.parseMediaType("image/png"))
+						.body(byteArrayResource);
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return ResponseEntity.badRequest().build();
+	}
+	
+	@RequestMapping(value = "getImg/image/question/{photo}",method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<ByteArrayResource> getImg(@PathVariable("photo") String photo){
+		if(!photo.equals("")||photo !=null) {
+			try {
+				Path filename = Paths.get(uploadImgDirectory,photo);
 				byte[] buffer = Files.readAllBytes(filename);
 				
 				ByteArrayResource byteArrayResource = new ByteArrayResource(buffer);

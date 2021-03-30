@@ -94,10 +94,11 @@
 									</h4>
 
 									<th:block th:each="anh :${cauhoi.anhs}">
-										<img class="myImg" th:src="${anh.url}" width="45%" />
+										<img class="myImg" th:src="@{'/getImg/'+${anh.url}}"
+											width="45%" />
 										<div id="myModal" class="modal" style="z-index: 100">
-											<span class="close">&times;</span> <img
-												class="modal-content" id="img01">
+											<span class="close">&times;</span> <img class="modal-content"
+												id="img01">
 											<div id="caption"></div>
 										</div>
 									</th:block>
@@ -108,11 +109,31 @@
 										<input class="form-check-input"
 											th:data-idPhuongAn="${phuongan.idPhuongAn}"
 											th:id="@{'ch'+${position.index}+'pa'+${pos.index}}"
-											type="checkbox" name="remember">&nbsp; <label
-											class="form-check-label"
+											type="checkbox" name="remember">&nbsp;
+										<th:block th:if="${pos.index}==0">
+											<label class="form-check-label"
+												th:for="@{'ch'+${position.index}+'pa'+${pos.index}}" style="font-size: 18px">
+												A, </label>
+										</th:block>
+										<th:block th:if="${pos.index}==1">
+											<label class="form-check-label"
+												th:for="@{'ch'+${position.index}+'pa'+${pos.index}}" style="font-size: 18px">
+												B, </label>
+										</th:block>
+										<th:block th:if="${pos.index}==2">
+											<label class="form-check-label"
+												th:for="@{'ch'+${position.index}+'pa'+${pos.index}}" style="font-size: 18px">
+												C, </label>
+										</th:block>
+										<th:block th:if="${pos.index}==3">
+											<label class="form-check-label"
+												th:for="@{'ch'+${position.index}+'pa'+${pos.index}}" style="font-size: 18px">
+												D, </label>
+										</th:block>
+
+										<label class="form-check-label"
 											th:for="@{'ch'+${position.index}+'pa'+${pos.index}}"
 											th:text="${phuongan.noiDung}" style="font-size: 18px">
-
 										</label>
 									</div>
 								</div>

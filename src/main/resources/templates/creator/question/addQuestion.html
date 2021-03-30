@@ -18,7 +18,7 @@
 	<nav th:insert="creator/shared/sidebar::sidebar"></nav>
 
 	<section class="container">
-		<h4>Đề [[${idDe}]] : Toán nâng cao</h4>
+		<h4>Đề [[${idDe}]] : [[${tenDe}]]</h4>
 		<div class="row border">
 			<div class="col-7">
 
@@ -32,7 +32,7 @@
 					<span th:if="${#fields.hasErrors('noiDung')}"
 						th:errors="*{noiDung}" class="text-danger help-block"></span>
 					Giải thích:
-					<textarea th:field="*{giaiThich}" required="required"></textarea>
+					<textarea th:field="*{giaiThich}" ></textarea>
 					<span th:if="${#fields.hasErrors('giaiThich')}"
 						th:errors="*{giaiThich}" class="text-danger help-block"></span>
 					Phương án:

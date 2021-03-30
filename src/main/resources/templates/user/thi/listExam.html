@@ -78,13 +78,14 @@
 													<th:block th:if="${thamgiathi.taiKhoan!=null and pos.index < 6}">
 														<li th:if="${thamgiathi.taiKhoan.urlAvatar}!=null"><span> 
 														<img
-																
-																width="30px" th:src="${thamgiathi.taiKhoan.urlAvatar}">
+																style="transform: scale(3);"
+																width="30px" th:src="@{'/getimage/'+${thamgiathi.taiKhoan.urlAvatar}}">
 														</span></li>
 														<li th:unless="${thamgiathi.taiKhoan.urlAvatar!=null }" ><span> 
-														<img
-																
-																width="60px" th:src="@{'https://ui-avatars.com/api/?name='+${thamgiathi.taiKhoan.hoVaTen}}">
+														<img 
+														th:src="@{'https://ui-avatars.com/api/?name='+${thamgiathi.taiKhoan.hoVaTen}}"
+														
+														>    
 														</span></li>
 														</th:block>
 													</th:block>
@@ -118,7 +119,7 @@
 						<ul class="list" th:each="User,pos : ${TopUser}">
 							<li>
 								<div class="relative">
-									<img th:if="${User.UrlAvatar}!=null" width="30px" height="30px" th:src="@{'/getimage/'+${session.user.urlAvatar}}	"> 
+									<img th:if="${User.UrlAvatar}!=null" width="30px" height="30px" th:src="@{'/getimage/'+${User.urlAvatar}}	"> 
 									<img th:unless="${User.UrlAvatar}!=null" width="30px"  height="30px" th:src="@{'https://ui-avatars.com/api/?name='+${User.hoVaTen}}"> 
 									
 									<span
