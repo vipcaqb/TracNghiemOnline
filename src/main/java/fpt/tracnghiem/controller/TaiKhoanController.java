@@ -85,27 +85,28 @@ public class TaiKhoanController {
 		
 		//thay đổi avatar
 		if(photo!=null) {
-			Path path = Paths.get("avatar-upload/");
-			
-			
-			
-			try {
-				InputStream iS = photo.getInputStream();
-				// Lưu lên server, Tên ảnh = tên username
-				Files.copy(iS, path.resolve(taiKhoan.getUsername()),StandardCopyOption.REPLACE_EXISTING);
-				//Lưu vào db
-				photoName=taiKhoan.getUsername();
-				taiKhoan.setUrlAvatar(photoName);
-				try {
-					taiKhoanService.update(taiKhoan);
-					session.setAttribute("user", taiKhoan);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+			{
+				if(photo.getSize()>0) {
+					Path path = Paths.get("avatar-upload/");
+					try {
+						InputStream iS = photo.getInputStream();
+						// Lưu lên server, Tên ảnh = tên username
+						Files.copy(iS, path.resolve(taiKhoan.getUsername()),StandardCopyOption.REPLACE_EXISTING);
+						//Lưu vào db
+						photoName=taiKhoan.getUsername();
+						taiKhoan.setUrlAvatar(photoName);
+						try {
+							taiKhoanService.update(taiKhoan);
+							session.setAttribute("user", taiKhoan);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 		}
 		//thay đổi thông tin khác
