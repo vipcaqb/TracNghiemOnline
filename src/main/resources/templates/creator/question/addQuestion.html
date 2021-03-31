@@ -26,7 +26,7 @@
 					th:action="@{'/manageExam/'+${idDe}+'/addQuestion'}" method="post" enctype="multipart/form-data">
 					<h4><strong>Thêm câu hỏi: </strong></h4>
 					<p>Hình ảnh</p>
-					<input type="file"  name="files" multiple>
+					<input type="file"  name="files" multiple accept="image/x-png,image/gif,image/jpeg" >
 					<p style="margin-top: 5px"> Nội dung câu hỏi</p>
 					<textarea th:field="*{noiDung}"></textarea>
 					<span th:if="${#fields.hasErrors('noiDung')}"

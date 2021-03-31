@@ -26,7 +26,7 @@
 				<form class=" d-flex flex-column" th:object="${cauHoi}" th:action="@{'/editQuestion'}" method="post" enctype="multipart/form-data">
 					<p class="pt-2"> Câu hỏi [[${cauHoi.idCauHoi}]]: </p>
 					Hình ảnh
-					<input type="file"  name="files" multiple>
+					<input type="file"  name="files" multiple accept="image/x-png,image/gif,image/jpeg" >
 					<input class="hide" type="text" th:field="*{idCauHoi}">
 					<p style="margin-top: 5px"> Nội dung câu hỏi:</p>
 					<textarea th:field="*{noiDung}" required="required" ></textarea>
